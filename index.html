@@ -201,6 +201,19 @@
   .seg+.seg{border-left:1px solid var(--line);}
   .seg.active{background:var(--accent); color:#fff;}
 
+  /* progress: 3-month goal calendar */
+  .cal-months{display:flex; flex-direction:column; gap:22px; margin-top:6px;}
+  .cal-month{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px;}
+  .cal-month-title{font-family:var(--serif); font-size:14px; font-weight:700; letter-spacing:.04em; color:var(--ink); margin-bottom:10px;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+  .cal-wd{font-size:10px; color:var(--faint); text-align:center; padding-bottom:4px; font-weight:600;}
+  .cal-cell{aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:12px; font-variant-numeric:tabular-nums; border-radius:9px; color:var(--muted); position:relative;}
+  .cal-cell.empty{visibility:hidden;}
+  .cal-cell.today{background:var(--ink); color:var(--on-ink); font-weight:700;}
+  .cal-cell.goal{background:var(--accent-soft); color:var(--accent); font-weight:700;}
+  .cal-cell.goal.today{background:var(--accent); color:#fff;}
+  .cal-cell .dot{position:absolute; bottom:3px; width:4px; height:4px; border-radius:50%; background:currentColor;}
+
   /* toast */
   #toast{position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--on-ink); padding:11px 18px; border-radius:11px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; transition:.25s; z-index:80; box-shadow:var(--shadow); max-width:90vw; text-align:center;}
   #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
@@ -475,7 +488,18 @@
     <div class="subtop"><button class="linkbtn" id="progBack">‹ もどる</button></div>
     <div class="display" style="font-size:30px;">進捗</div>
 
-    <div class="stats3" id="progStats"></div>
+    <div class="section-label">目標・締切</div>
+    <div id="calWrap"></div>
+    <div id="goalList" style="margin-top:12px;"></div>
+    <div class="mapgrid" style="margin-top:10px;">
+      <label class="fld">目標名<input type="text" id="goalName" placeholder="例）IELTS模試" /></label>
+      <label class="fld">締切日<input type="date" id="goalDate" /></label>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn ghost sm grow" id="goalAddBtn">＋ 目標を追加</button>
+    </div>
+
+    <div class="stats3" id="progStats" style="margin-top:32px;"></div>
 
     <div class="section-label">今日の記録</div>
     <div class="row" style="gap:8px; margin:8px 0 4px;">
@@ -494,16 +518,6 @@
 
     <div class="section-label">内訳（全期間）</div>
     <div class="wordlist compact" id="studyBreakdown"></div>
-
-    <div class="section-label">目標・締切</div>
-    <div id="goalList"></div>
-    <div class="mapgrid" style="margin-top:10px;">
-      <label class="fld">目標名<input type="text" id="goalName" placeholder="例）IELTS模試" /></label>
-      <label class="fld">締切日<input type="date" id="goalDate" /></label>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <button class="btn ghost sm grow" id="goalAddBtn">＋ 目標を追加</button>
-    </div>
 
     <div class="section-label">記録ログ（直近20件）</div>
     <div class="wordlist compact" id="studyLog"></div>
@@ -996,7 +1010,8 @@ function parseDateStr(ds){ const [y,m,d]=(ds||todayStr()).split("-").map(Number)
 function addDaysStr(ds,n){ return dateStr(parseDateStr(ds)+n*DAY); }
 function diffDaysFromToday(ds){ return Math.round((parseDateStr(ds)-parseDateStr(todayStr()))/DAY); }
 function weekStartStr(ds){ const t=parseDateStr(ds); const dow=new Date(t).getDay(); const back=(dow+6)%7; return dateStr(t-back*DAY); }
-function fmtHours(min){ return (Math.round((min/60)*100)/100)+"時間"; }
+function fmtHours(min){ min=Math.max(0,Math.round(min||0)); const h=Math.floor(min/60), m=min%60;
+  if(h&&m) return h+"時間"+m+"分"; if(h) return h+"時間"; return m+"分"; }
 
 let studySelDate = todayStr();
 
@@ -1005,12 +1020,39 @@ function studyCat(id){ return APP.study.categories.find(c=>c.id===id) || { id, n
 
 function renderProgress(){
   $("studyDate").value = studySelDate;
+  renderCalendar();
+  renderGoalList();
   renderStudyRows();
   renderProgStats();
   renderStudyChart();
   renderStudyBreakdown();
-  renderGoalList();
   renderStudyLog();
+}
+function renderCalendar(){
+  const el=$("calWrap"); const now=new Date();
+  const goalsByDate={}; APP.goals.forEach(g=>{ (goalsByDate[g.deadline]=goalsByDate[g.deadline]||[]).push(g); });
+  const todayS=todayStr();
+  const wdLabels=["月","火","水","木","金","土","日"];
+  let html='<div class="cal-months">';
+  for(let i=0;i<3;i++){
+    const d=new Date(now.getFullYear(), now.getMonth()+i, 1);
+    const yy=d.getFullYear(), mm=d.getMonth();
+    const startWeekday=(d.getDay()+6)%7;
+    const daysInMonth=new Date(yy,mm+1,0).getDate();
+    html+=`<div class="cal-month"><div class="cal-month-title">${yy}年${mm+1}月</div><div class="cal-grid">`;
+    wdLabels.forEach(w=>html+=`<div class="cal-wd">${w}</div>`);
+    for(let e=0;e<startWeekday;e++) html+='<div class="cal-cell empty"></div>';
+    for(let day=1; day<=daysInMonth; day++){
+      const ds=yy+"-"+String(mm+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
+      const isToday=ds===todayS, gs=goalsByDate[ds];
+      const cls=["cal-cell"]; if(isToday) cls.push("today"); if(gs) cls.push("goal");
+      const title = gs ? gs.map(g=>g.name).join("・") : "";
+      html+=`<div class="${cls.join(" ")}"${title?` title="${escapeHTML(title)}"`:""}">${day}${gs?'<span class="dot"></span>':""}</div>`;
+    }
+    html+="</div></div>";
+  }
+  html+="</div>";
+  el.innerHTML=html;
 }
 function renderStudyRows(){
   const totals = studyDayTotals(studySelDate);
@@ -1103,6 +1145,13 @@ function renderStudyLog(){
     </div>`;
   }).join("");
 }
+function goalProgressPct(g){
+  const start = g.createdAt || todayStr();
+  const total = parseDateStr(g.deadline) - parseDateStr(start);
+  if(total<=0) return 100;
+  const elapsed = parseDateStr(todayStr()) - parseDateStr(start);
+  return Math.max(0, Math.min(100, Math.round(elapsed/total*100)));
+}
 function renderGoalList(){
   const el=$("goalList");
   const goals=[...APP.goals].sort((a,b)=> parseDateStr(a.deadline)-parseDateStr(b.deadline));
@@ -1111,12 +1160,16 @@ function renderGoalList(){
     const d = diffDaysFromToday(g.deadline);
     const text = d>0 ? `あと${d}日` : d===0 ? "本日" : `${-d}日経過`;
     const urgent = d<=7;
-    return `<div class="deckcard" style="cursor:default;">
-      <div class="dc-main">
-        <div class="dc-name">${escapeHTML(g.name)}</div>
-        <div class="dc-chips"><span class="chip${urgent?" due":""}">${text}</span><span class="chip">${g.deadline}</span></div>
+    const pct = goalProgressPct(g);
+    return `<div class="deckcard" style="cursor:default; flex-direction:column; align-items:stretch; gap:0;">
+      <div class="row" style="align-items:center;">
+        <div class="dc-main">
+          <div class="dc-name">${escapeHTML(g.name)}</div>
+          <div class="dc-chips"><span class="chip${urgent?" due":""}">${text}</span><span class="chip">${g.deadline}</span></div>
+        </div>
+        <div class="dc-actions"><button class="linkbtn" data-goaldel="${g.id}">削除</button></div>
       </div>
-      <div class="dc-actions"><button class="linkbtn" data-goaldel="${g.id}">削除</button></div>
+      <div class="progress" style="margin-top:12px;"><i style="width:${pct}%;"></i></div>
     </div>`;
   }).join("");
 }
@@ -1124,8 +1177,8 @@ function addGoal(){
   const name=($("goalName").value||"").trim();
   const deadline=$("goalDate").value;
   if(!name||!deadline){ toast("目標名と締切日を入力してください"); return; }
-  APP.goals.push({ id:rid("goal"), name, deadline });
-  saveAPP(); $("goalName").value=""; $("goalDate").value=""; renderGoalList(); toast("目標を追加しました");
+  APP.goals.push({ id:rid("goal"), name, deadline, createdAt:todayStr() });
+  saveAPP(); $("goalName").value=""; $("goalDate").value=""; renderGoalList(); renderCalendar(); toast("目標を追加しました");
 }
 
 /* =========================================================================
@@ -1147,7 +1200,7 @@ function bind(){
   $("goalList").addEventListener("click",e=>{
     const b=e.target.closest("[data-goaldel]"); if(!b) return;
     if(!confirm("この目標を削除しますか？")) return;
-    APP.goals=APP.goals.filter(g=>g.id!==b.dataset.goaldel); saveAPP(); renderGoalList();
+    APP.goals=APP.goals.filter(g=>g.id!==b.dataset.goaldel); saveAPP(); renderGoalList(); renderCalendar();
   });
   $("studyLog").addEventListener("click",e=>{
     const b=e.target.closest("[data-logdel]"); if(!b) return;
