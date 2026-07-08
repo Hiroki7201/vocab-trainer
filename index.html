@@ -29,7 +29,7 @@
   .brand{font-family:var(--serif); font-size:21px; font-weight:600; cursor:pointer;}
   .brand .dot{color:var(--accent);}
   .spacer{flex:1;}
-  body[data-view="study"] #topbar, body[data-view="settings"] #topbar, body[data-view="audio"] #topbar{display:none;}
+  body[data-view="study"] #topbar, body[data-view="settings"] #topbar, body[data-view="audio"] #topbar, body[data-view="progress"] #topbar{display:none;}
 
   .wrap{max-width:640px; margin:0 auto; padding:6px 22px 90px;}
   .view{display:none; animation:fade .25s ease;}
@@ -213,6 +213,7 @@
 <header id="topbar">
   <div class="brand" id="brand">Recall<span class="dot">.</span></div>
   <span class="spacer"></span>
+  <button class="linkbtn" id="navProgress">進捗</button>
   <button class="linkbtn" id="navSettings">設定</button>
 </header>
 
@@ -468,6 +469,47 @@
   </div>
 </section>
 
+<!-- ============ PROGRESS (進捗) ============ -->
+<section class="view" id="progressView">
+  <div class="study-wrap" style="justify-content:flex-start;">
+    <div class="subtop"><button class="linkbtn" id="progBack">‹ もどる</button></div>
+    <div class="display" style="font-size:30px;">進捗</div>
+
+    <div class="stats3" id="progStats"></div>
+
+    <div class="section-label">今日の記録</div>
+    <div class="row" style="gap:8px; margin:8px 0 4px;">
+      <input type="date" id="studyDate" style="flex:1;" />
+      <button class="btn ghost sm" id="studyToday">今日</button>
+      <button class="btn ghost sm" id="studyYest">昨日</button>
+    </div>
+    <div class="setlist" id="studyRows"></div>
+    <p class="lead" id="studyDayTotal" style="margin-top:0;"></p>
+    <div class="row" style="margin-top:6px;">
+      <button class="btn solid grow" id="studySaveBtn">記録する</button>
+    </div>
+
+    <div class="section-label">推移（週別）</div>
+    <div id="studyChart"></div>
+
+    <div class="section-label">内訳（全期間）</div>
+    <div class="wordlist compact" id="studyBreakdown"></div>
+
+    <div class="section-label">目標・締切</div>
+    <div id="goalList"></div>
+    <div class="mapgrid" style="margin-top:10px;">
+      <label class="fld">目標名<input type="text" id="goalName" placeholder="例）IELTS模試" /></label>
+      <label class="fld">締切日<input type="date" id="goalDate" /></label>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn ghost sm grow" id="goalAddBtn">＋ 目標を追加</button>
+    </div>
+
+    <div class="section-label">記録ログ（直近20件）</div>
+    <div class="wordlist compact" id="studyLog"></div>
+  </div>
+</section>
+
 <!-- ============ AUDIO (聞き流し) ============ -->
 <section class="view" id="audioView">
   <div class="study-wrap">
@@ -510,7 +552,7 @@ const STORE_KEY = "vocab_srs_app_v1";
 const EL_API_BASE = "https://elevenlabs-proxy.h-honda-share.workers.dev";
 const $ = (id) => document.getElementById(id);
 
-let APP = { decks:{}, settings:defaultSettings() };
+let APP = { decks:{}, settings:defaultSettings(), study:defaultStudy(), goals:[] };
 let storageOK = true;
 
 function defaultSettings(){
@@ -519,11 +561,28 @@ function defaultSettings(){
            audio:true, dir:"en2ja", strength:"normal", theme:"light", audioJp:"both",
            elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2" };
 }
+function defaultStudyCategories(){
+  return [
+    { id:"vocab",    name:"単語学習",     color:"#b04e34" },
+    { id:"grammar",  name:"文法学習",     color:"#7c6a4d" },
+    { id:"reading",  name:"リーディング", color:"#4f6d5c" },
+    { id:"writing",  name:"ライティング", color:"#5b7a99" },
+    { id:"speaking", name:"スピーキング", color:"#a67c52" },
+  ];
+}
+function defaultStudy(){ return { categories:defaultStudyCategories(), records:[] }; }
+function normalizeStudy(s){
+  s = s || {};
+  const categories = Array.isArray(s.categories) && s.categories.length ? s.categories : defaultStudyCategories();
+  const records = Array.isArray(s.records) ? s.records : [];
+  return { categories, records };
+}
 function loadAPP(){
   try{
     const raw=localStorage.getItem(STORE_KEY);
     if(raw){ const o=JSON.parse(raw); APP.decks=o.decks||{}; APP.settings=Object.assign(defaultSettings(),o.settings||{});
-      if(typeof APP.settings.repeat==="boolean" && o.settings && o.settings.enRepeat===undefined){ APP.settings.enRepeat=APP.settings.repeat?2:1; } }
+      if(typeof APP.settings.repeat==="boolean" && o.settings && o.settings.enRepeat===undefined){ APP.settings.enRepeat=APP.settings.repeat?2:1; }
+      APP.study = normalizeStudy(o.study); APP.goals = Array.isArray(o.goals) ? o.goals : []; }
   }catch(e){ storageOK=false; }
 }
 function saveAPP(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(APP)); }catch(e){ storageOK=false; } }
@@ -918,6 +977,7 @@ function backup(){ const copy=JSON.parse(JSON.stringify(APP)); if(copy.settings)
   download("recall-backup-"+dateStr(Date.now())+".json", JSON.stringify(copy), "application/json"); toast("バックアップを書き出しました（APIキーは除外）"); }
 function restore(file){ const r=new FileReader(); r.onload=e=>{ try{ const o=JSON.parse(e.target.result); if(!o.decks) throw 0;
   const curKey=APP.settings.elKey; APP.decks=o.decks; APP.settings=Object.assign(defaultSettings(),o.settings||{});
+  APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[];
   if(!APP.settings.elKey&&curKey) APP.settings.elKey=curKey; saveAPP(); applyTheme(); renderHome(); toast("バックアップを読み込みました"); }
   catch(err){ toast("読み込めませんでした（JSON形式を確認）"); } }; r.readAsText(file); }
 function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk,chunk_meaning,mnemonic,example\n"+
@@ -928,12 +988,173 @@ function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk
   "nuance,微妙な差異,/ˈnuːɑːns/,a subtle nuance,微妙なニュアンス,ニュアンス＝微妙な差,a subtle nuance in meaning\n","text/csv;charset=utf-8"); toast("sample_vocab.csv を保存しました"); }
 
 /* =========================================================================
+   進捗（学習時間ログ・目標デッドライン）
+   ========================================================================= */
+function rid(p){ return p+"_"+Date.now().toString(36)+"_"+Math.floor(Math.random()*1000); }
+function todayStr(){ return dateStr(Date.now()); }
+function parseDateStr(ds){ const [y,m,d]=(ds||todayStr()).split("-").map(Number); return new Date(y,m-1,d).getTime(); }
+function addDaysStr(ds,n){ return dateStr(parseDateStr(ds)+n*DAY); }
+function diffDaysFromToday(ds){ return Math.round((parseDateStr(ds)-parseDateStr(todayStr()))/DAY); }
+function weekStartStr(ds){ const t=parseDateStr(ds); const dow=new Date(t).getDay(); const back=(dow+6)%7; return dateStr(t-back*DAY); }
+function fmtHours(min){ return (Math.round((min/60)*100)/100)+"時間"; }
+
+let studySelDate = todayStr();
+
+function studyDayTotals(date){ const o={}; APP.study.records.forEach(r=>{ if(r.date===date) o[r.categoryId]=(o[r.categoryId]||0)+r.minutes; }); return o; }
+function studyCat(id){ return APP.study.categories.find(c=>c.id===id) || { id, name:"（削除済み）", color:"#8a8175" }; }
+
+function renderProgress(){
+  $("studyDate").value = studySelDate;
+  renderStudyRows();
+  renderProgStats();
+  renderStudyChart();
+  renderStudyBreakdown();
+  renderGoalList();
+  renderStudyLog();
+}
+function renderStudyRows(){
+  const totals = studyDayTotals(studySelDate);
+  $("studyRows").innerHTML = APP.study.categories.map(c=>{
+    const mins = Math.min(360, totals[c.id]||0);
+    return `<div class="setrow">
+      <div><div class="lab"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.color};margin-right:7px;"></span>${escapeHTML(c.name)}</div><div class="sub" data-studysub="${c.id}">${fmtHours(mins)}</div></div>
+      <div class="ctl"><input type="range" min="0" max="360" step="15" value="${mins}" data-studycat="${c.id}" /></div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll("#studyRows input[type=range]").forEach(inp=>{
+    inp.oninput=()=>{ const v=+inp.value||0; const sub=$(`[data-studysub="${inp.dataset.studycat}"]`); if(sub) sub.textContent=fmtHours(v); renderStudyDayTotalLabel(); };
+  });
+  renderStudyDayTotalLabel();
+}
+function liveStudySum(){ let t=0; document.querySelectorAll("#studyRows input[type=range]").forEach(i=>t+=(+i.value||0)); return t; }
+function renderStudyDayTotalLabel(){ $("studyDayTotal").textContent = "この日の合計：" + fmtHours(liveStudySum()); }
+function saveStudyDay(){
+  const date = $("studyDate").value || todayStr();
+  const inputs=[...document.querySelectorAll("#studyRows input[type=range]")];
+  APP.study.records = APP.study.records.filter(r=>r.date!==date);
+  let total=0;
+  inputs.forEach(inp=>{ const m=+inp.value||0; if(m>0){ APP.study.records.push({ id:rid("srec"), date, categoryId:inp.dataset.studycat, minutes:m }); total+=m; } });
+  saveAPP();
+  toast(total>0 ? ("記録しました（合計 "+fmtHours(total)+"）") : "この日の記録を空にしました");
+  renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog();
+}
+function renderProgStats(){
+  const recs = APP.study.records;
+  const today = recs.filter(r=>r.date===todayStr()).reduce((a,r)=>a+r.minutes,0);
+  const ws = weekStartStr(todayStr());
+  const week = recs.filter(r=>r.date>=ws).reduce((a,r)=>a+r.minutes,0);
+  const all = recs.reduce((a,r)=>a+r.minutes,0);
+  $("progStats").innerHTML =
+    `<div class="stat"><div class="num accent">${fmtHours(today)}</div><div class="lbl">今日</div></div>
+     <div class="stat"><div class="num">${fmtHours(week)}</div><div class="lbl">今週</div></div>
+     <div class="stat"><div class="num">${fmtHours(all)}</div><div class="lbl">累計</div></div>`;
+}
+function renderStudyChart(){
+  const el=$("studyChart");
+  if(!APP.study.records.length){ el.innerHTML='<div class="empty">まだ記録がありません</div>'; return; }
+  const weeks=[]; let ws=weekStartStr(todayStr());
+  for(let i=0;i<8;i++){ weeks.unshift(ws); ws=addDaysStr(ws,-7); }
+  const totals = weeks.map(w=>{
+    const we=addDaysStr(w,6);
+    return APP.study.records.filter(r=>r.date>=w && r.date<=we).reduce((a,r)=>a+r.minutes,0);
+  });
+  const max = Math.max(...totals,1);
+  el.innerHTML = `<div style="display:flex; align-items:flex-end; gap:6px; height:110px; padding:8px 0;">`
+    + weeks.map((w,i)=>{
+        const h = Math.round((totals[i]/max)*90) + (totals[i]>0?6:0);
+        const label = (parseInt(w.split("-")[1],10))+"/"+(parseInt(w.split("-")[2],10));
+        return `<div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+          <div style="width:100%; max-width:26px; height:${h}px; background:${i===weeks.length-1?"var(--accent)":"var(--faint)"}; border-radius:4px 4px 0 0;" title="${label}週：${fmtHours(totals[i])}"></div>
+          <div style="font-size:10px; color:var(--muted);">${label}</div>
+        </div>`;
+      }).join("")
+    + `</div>`;
+}
+function renderStudyBreakdown(){
+  const el=$("studyBreakdown");
+  const totals={}; let grand=0;
+  APP.study.records.forEach(r=>{ totals[r.categoryId]=(totals[r.categoryId]||0)+r.minutes; grand+=r.minutes; });
+  if(!grand){ el.innerHTML='<div class="empty">まだ記録がありません</div>'; return; }
+  const items = Object.keys(totals).map(id=>({c:studyCat(id), m:totals[id]})).filter(x=>x.m>0).sort((a,b)=>b.m-a.m);
+  el.innerHTML = items.map(({c,m})=>{
+    const pct = Math.round(m/grand*1000)/10;
+    return `<div class="wl" style="cursor:default;">
+      <span class="dot" style="background:${c.color};"></span>
+      <div class="wl-main">
+        <div class="wl-top"><span class="wl-en">${escapeHTML(c.name)}</span><span class="wl-ja">${fmtHours(m)}・${pct}%</span></div>
+        <div class="progress" style="margin-top:7px;"><i style="width:${pct}%; background:${c.color};"></i></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+function renderStudyLog(){
+  const el=$("studyLog");
+  const recs=[...APP.study.records].sort((a,b)=> b.date===a.date ? (b.id>a.id?1:-1) : (b.date>a.date?1:-1)).slice(0,20);
+  if(!recs.length){ el.innerHTML='<div class="empty">まだ記録がありません</div>'; return; }
+  el.innerHTML = recs.map(r=>{
+    const c=studyCat(r.categoryId);
+    return `<div class="wl" style="cursor:default;">
+      <span class="dot" style="background:${c.color};"></span>
+      <div class="wl-main">
+        <div class="wl-top"><span class="wl-en">${escapeHTML(c.name)}</span><span class="wl-ja">${r.date}</span></div>
+        <div class="wl-stats">${fmtHours(r.minutes)}</div>
+      </div>
+      <button class="linkbtn" data-logdel="${r.id}">削除</button>
+    </div>`;
+  }).join("");
+}
+function renderGoalList(){
+  const el=$("goalList");
+  const goals=[...APP.goals].sort((a,b)=> parseDateStr(a.deadline)-parseDateStr(b.deadline));
+  if(!goals.length){ el.innerHTML='<div class="empty">目標はまだありません</div>'; return; }
+  el.innerHTML = goals.map(g=>{
+    const d = diffDaysFromToday(g.deadline);
+    const text = d>0 ? `あと${d}日` : d===0 ? "本日" : `${-d}日経過`;
+    const urgent = d<=7;
+    return `<div class="deckcard" style="cursor:default;">
+      <div class="dc-main">
+        <div class="dc-name">${escapeHTML(g.name)}</div>
+        <div class="dc-chips"><span class="chip${urgent?" due":""}">${text}</span><span class="chip">${g.deadline}</span></div>
+      </div>
+      <div class="dc-actions"><button class="linkbtn" data-goaldel="${g.id}">削除</button></div>
+    </div>`;
+  }).join("");
+}
+function addGoal(){
+  const name=($("goalName").value||"").trim();
+  const deadline=$("goalDate").value;
+  if(!name||!deadline){ toast("目標名と締切日を入力してください"); return; }
+  APP.goals.push({ id:rid("goal"), name, deadline });
+  saveAPP(); $("goalName").value=""; $("goalDate").value=""; renderGoalList(); toast("目標を追加しました");
+}
+
+/* =========================================================================
    イベント結線
    ========================================================================= */
 function goHome(){ stopSpeak(); renderHome(); showView("home"); }
 function bind(){
   $("brand").onclick=goHome; $("navSettings").onclick=()=>{ syncSettingsUI(); showView("settings"); };
   $("setBack").onclick=goHome;
+
+  // 進捗
+  $("navProgress").onclick=()=>{ studySelDate=todayStr(); renderProgress(); showView("progress"); };
+  $("progBack").onclick=goHome;
+  $("studyDate").onchange=e=>{ studySelDate=e.target.value||todayStr(); renderStudyRows(); };
+  $("studyToday").onclick=()=>{ studySelDate=todayStr(); $("studyDate").value=studySelDate; renderStudyRows(); };
+  $("studyYest").onclick=()=>{ studySelDate=addDaysStr(todayStr(),-1); $("studyDate").value=studySelDate; renderStudyRows(); };
+  $("studySaveBtn").onclick=saveStudyDay;
+  $("goalAddBtn").onclick=addGoal;
+  $("goalList").addEventListener("click",e=>{
+    const b=e.target.closest("[data-goaldel]"); if(!b) return;
+    if(!confirm("この目標を削除しますか？")) return;
+    APP.goals=APP.goals.filter(g=>g.id!==b.dataset.goaldel); saveAPP(); renderGoalList();
+  });
+  $("studyLog").addEventListener("click",e=>{
+    const b=e.target.closest("[data-logdel]"); if(!b) return;
+    if(!confirm("この記録を削除しますか？")) return;
+    APP.study.records=APP.study.records.filter(r=>r.id!==b.dataset.logdel); saveAPP();
+    renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog(); renderStudyRows();
+  });
 
   // 取り込み
   $("drop").onclick=()=>$("fileInput").click();
