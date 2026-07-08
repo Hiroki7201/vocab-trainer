@@ -208,7 +208,7 @@
   .cal-grid{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px;}
   .cal-wd{font-size:7.5px; color:var(--faint); text-align:center; padding-bottom:2px; font-weight:600;}
   .cal-cell{aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:9px; font-variant-numeric:tabular-nums; border-radius:4px; color:var(--muted); position:relative;}
-  .cal-cell.empty{visibility:hidden;}
+  .cal-cell.out{color:var(--faint); opacity:.5;}
   .cal-cell.today{background:var(--ink); color:var(--on-ink); font-weight:700;}
   .cal-cell.goal{background:var(--accent-soft); color:var(--accent); font-weight:700;}
   .cal-cell.goal.today{background:var(--accent); color:#fff;}
@@ -1036,20 +1036,21 @@ function renderCalendar(){
   const wdLabels=["月","火","水","木","金","土","日"];
   let html='<div class="cal-months">';
   for(let i=0;i<3;i++){
-    const d=new Date(now.getFullYear(), now.getMonth()+i, 1);
-    const yy=d.getFullYear(), mm=d.getMonth();
-    const startWeekday=(d.getDay()+6)%7;
-    const daysInMonth=new Date(yy,mm+1,0).getDate();
+    const base=new Date(now.getFullYear(), now.getMonth()+i, 1);
+    const yy=base.getFullYear(), mm=base.getMonth();
+    const startWeekday=(base.getDay()+6)%7;
+    const gridStart=new Date(yy, mm, 1-startWeekday);
     const title = (mm===0 ? yy+"年" : "") + (mm+1)+"月";
     html+=`<div class="cal-month"><div class="cal-month-title">${title}</div><div class="cal-grid">`;
     wdLabels.forEach(w=>html+=`<div class="cal-wd">${w}</div>`);
-    for(let e=0;e<startWeekday;e++) html+='<div class="cal-cell empty"></div>';
-    for(let day=1; day<=daysInMonth; day++){
-      const ds=yy+"-"+String(mm+1).padStart(2,"0")+"-"+String(day).padStart(2,"0");
+    for(let c=0;c<42;c++){
+      const d=new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate()+c);
+      const ds=dateStr(d.getTime());
+      const inMonth=d.getMonth()===mm;
       const isToday=ds===todayS, gs=goalsByDate[ds];
-      const cls=["cal-cell"]; if(isToday) cls.push("today"); if(gs) cls.push("goal");
-      const title = gs ? gs.map(g=>g.name).join("・") : "";
-      html+=`<div class="${cls.join(" ")}"${title?` title="${escapeHTML(title)}"`:""}">${day}${gs?'<span class="dot"></span>':""}</div>`;
+      const cls=["cal-cell"]; if(!inMonth) cls.push("out"); if(isToday) cls.push("today"); if(gs) cls.push("goal");
+      const gTitle = gs ? gs.map(g=>g.name).join("・") : "";
+      html+=`<div class="${cls.join(" ")}"${gTitle?` title="${escapeHTML(gTitle)}"`:""}">${d.getDate()}${gs?'<span class="dot"></span>':""}</div>`;
     }
     html+="</div></div>";
   }
