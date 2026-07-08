@@ -1017,12 +1017,18 @@ function bind(){
   $("setElVoice").onchange=e=>{ APP.settings.elVoice=e.target.value; saveAPP(); };
   $("elLoadVoicesBtn").onclick=async()=>{ const key=($("setElKey").value||"").trim(); if(!key){ toast("先にAPIキーを入力してください"); return; }
     APP.settings.elKey=key; saveAPP(); $("elStatus").textContent="取得中...";
-    try{ const res=await fetch("https://api.elevenlabs.io/v1/voices",{headers:{"xi-api-key":key}}); if(!res.ok) throw new Error(res.status);
+    try{ const res=await fetch("https://api.elevenlabs.io/v1/voices",{headers:{"xi-api-key":key}});
+      if(!res.ok){ let detail=""; try{ const j=await res.json(); detail=(j&&j.detail&&(j.detail.message||j.detail.status||JSON.stringify(j.detail)))||""; }catch(e){}
+        throw new Error("HTTP "+res.status+(detail?"："+detail:"")); }
       const j=await res.json(); const vs=j.voices||[]; const sel=$("setElVoice");
       sel.innerHTML=vs.map(v=>`<option value="${escapeHTML(v.voice_id)}">${escapeHTML(v.name)}</option>`).join("");
       if(vs.length){ if(!(APP.settings.elVoice && vs.some(v=>v.voice_id===APP.settings.elVoice))){ APP.settings.elVoice=vs[0].voice_id; } sel.value=APP.settings.elVoice; saveAPP(); }
       $("elStatus").textContent=vs.length+" 件の声を取得しました";
-    }catch(err){ $("elStatus").textContent="取得失敗（キー・通信・CORSを確認。localhost起動推奨）"; toast("声の取得に失敗しました"); } };
+    }catch(err){
+      const msg = err && err.message ? err.message : String(err);
+      $("elStatus").textContent="取得失敗："+msg;
+      toast("声の取得に失敗しました: "+msg);
+    } };
   $("elTestBtn").onclick=()=>{ const key=($("setElKey").value||"").trim(); if(!key||!$("setElVoice").value){ toast("APIキーと声を設定してください"); return; }
     APP.settings.elKey=key; APP.settings.elVoice=$("setElVoice").value; APP.settings.elModel=$("setElModel").value; APP.settings.elEnabled=true; $("setElEnabled").checked=true; saveAPP();
     elWarned=false; speakSeq([enItem("This is a test of natural sounding speech.")]); };
