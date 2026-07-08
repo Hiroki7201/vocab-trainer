@@ -1029,6 +1029,13 @@ function renderProgress(){
   renderStudyBreakdown();
   renderStudyLog();
 }
+function studyDayMinutes(ds){ return APP.study.records.reduce((a,r)=> r.date===ds ? a+r.minutes : a, 0); }
+function heatStyle(mins){
+  const ratio=Math.min(1, mins/300); // 5時間で最大濃度
+  const alpha=(0.15+ratio*0.65).toFixed(2);
+  const txt = ratio>0.5 ? "#fbf9f4" : "#2c4a5e";
+  return `background:rgba(58,105,148,${alpha});color:${txt};`;
+}
 function renderCalendar(){
   const el=$("calWrap"); const now=new Date();
   const goalsByDate={}; APP.goals.forEach(g=>{ (goalsByDate[g.deadline]=goalsByDate[g.deadline]||[]).push(g); });
@@ -1048,13 +1055,17 @@ function renderCalendar(){
       const ds=dateStr(d.getTime());
       const inMonth=d.getMonth()===mm;
       const isToday=ds===todayS, gs=goalsByDate[ds];
+      const isPast=inMonth && !isToday && parseDateStr(ds)<parseDateStr(todayS);
+      const mins=isPast ? studyDayMinutes(ds) : 0;
       const cls=["cal-cell"]; if(!inMonth) cls.push("out"); if(isToday) cls.push("today"); if(gs) cls.push("goal");
-      const gTitle = gs ? gs.map(g=>g.name).join("・") : "";
-      html+=`<div class="${cls.join(" ")}"${gTitle?` title="${escapeHTML(gTitle)}"`:""}">${d.getDate()}${gs?'<span class="dot"></span>':""}</div>`;
+      let style="", tip="";
+      if(gs){ tip=gs.map(g=>g.name).join("・"); }
+      else if(mins>0){ style=heatStyle(mins); tip=fmtHours(mins); }
+      html+=`<div class="${cls.join(" ")}"${style?` style="${style}"`:""}${tip?` title="${escapeHTML(tip)}"`:""}">${d.getDate()}${gs?'<span class="dot"></span>':""}</div>`;
     }
     html+="</div></div>";
   }
-  html+="</div>";
+  html+="</div><div class=\"lead\" style=\"margin-top:8px; font-size:11px;\">青が濃いほど、その日の学習時間が長いことを示します（5時間で最大濃度）</div>";
   el.innerHTML=html;
 }
 function renderStudyRows(){
@@ -1081,7 +1092,7 @@ function saveStudyDay(){
   inputs.forEach(inp=>{ const m=+inp.value||0; if(m>0){ APP.study.records.push({ id:rid("srec"), date, categoryId:inp.dataset.studycat, minutes:m }); total+=m; } });
   saveAPP();
   toast(total>0 ? ("記録しました（合計 "+fmtHours(total)+"）") : "この日の記録を空にしました");
-  renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog();
+  renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog(); renderCalendar();
 }
 function renderProgStats(){
   const recs = APP.study.records;
@@ -1209,7 +1220,7 @@ function bind(){
     const b=e.target.closest("[data-logdel]"); if(!b) return;
     if(!confirm("この記録を削除しますか？")) return;
     APP.study.records=APP.study.records.filter(r=>r.id!==b.dataset.logdel); saveAPP();
-    renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog(); renderStudyRows();
+    renderProgStats(); renderStudyChart(); renderStudyBreakdown(); renderStudyLog(); renderStudyRows(); renderCalendar();
   });
 
   // 取り込み
