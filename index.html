@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f3efe6" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Recall" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icon.svg" />
 <title>Recall — 単語学習（音声＋間隔反復）</title>
 <style>
   :root{
@@ -299,6 +307,7 @@
       <button class="btn ghost sm" id="sortWrongBtn">不正解が多い順</button>
       <button class="btn ghost sm" id="filterTestBtn">この条件でテスト</button>
       <button class="btn ghost sm" id="filterAudioBtn">🔊 聞き流し</button>
+      <button class="btn ghost sm" id="filterPrefetchBtn" title="ElevenLabs音声を事前生成して端末に保存（オフライン再生用）">⬇ 音声を保存</button>
     </div>
     <div class="wordlist" id="wordList"></div>
     <div class="row" style="margin-top:20px;">
@@ -949,6 +958,24 @@ function audioCard(){ return APP.decks[audio.deckId].cards[audio.keys[audio.idx]
 function audioSeq(c){ const s=rep(enItem(c.en), Math.max(1,APP.settings.enRepeat)); const m=APP.settings.audioJp||"both";
   if((m==="both"||m==="core") && c.core) s.push(jaItem(c.core));
   if((m==="both"||m==="ja") && c.ja) s.push(jaItem(c.ja)); return s; }
+/* 音声の事前生成: 表示中の絞り込み対象ぶんをElevenLabsで生成しIndexedDBへ保存（オフライン再生用） */
+async function prefetchAudio(){
+  if(!useEleven()){ toast("標準音声は端末内蔵のため事前保存は不要です（ElevenLabs有効時のみ使います）"); return; }
+  const deck=APP.decks[curListId]; if(!deck||!curFiltered.length){ toast("対象の単語がありません"); return; }
+  const texts=new Set(); const m=APP.settings.audioJp||"both";
+  curFiltered.forEach(k=>{ const c=deck.cards[k]; if(!c) return;
+    if(c.en) texts.add(c.en);
+    if((m==="both"||m==="core") && c.core) texts.add(c.core);
+    if(((m==="both"||m==="ja") || APP.settings.jaRepeat>0) && c.ja) texts.add(c.ja);
+    if(APP.settings.readChunk && c.chunk) texts.add(c.chunk);
+    if(APP.settings.readEx && c.example) texts.add(c.example); });
+  const arr=[...texts]; if(!arr.length){ toast("保存する音声がありません"); return; }
+  const btn=$("filterPrefetchBtn"); btn.disabled=true; let done=0, fail=0;
+  for(const t of arr){ try{ await elBlob(t); }catch(e){ fail++; } done++;
+    btn.textContent=`⬇ ${done}/${arr.length}`; }
+  btn.disabled=false; btn.textContent="⬇ 音声を保存";
+  toast(fail ? `保存完了 ${arr.length-fail}件（失敗${fail}件・通信を確認してください）` : `音声を保存しました（${arr.length}件）。オフラインでも再生できます`);
+}
 function startAudioMode(deckId, keys){ if(!keys||!keys.length){ toast("対象の単語がありません"); return; }
   audio={ deckId, keys:keys.slice(), idx:0, playing:true, loop:true }; $("audioLoop").textContent="🔁 くり返し: ON";
   showView("audio"); audioRender(); audioPlay(); }
@@ -1261,6 +1288,7 @@ function bind(){
   $("sortWrongBtn").onclick=()=>{ listSortWrong=!listSortWrong; $("sortWrongBtn").classList.toggle("activeseg",listSortWrong); renderWordList(); };
   $("filterTestBtn").onclick=()=>{ if(!curFiltered.length){ toast("該当する単語がありません"); return; } startSession(curListId, curFiltered.slice()); };
   $("filterAudioBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startAudioMode(curListId, curFiltered.slice()); };
+  $("filterPrefetchBtn").onclick=prefetchAudio;
   $("listBack").onclick=goHome; $("listAdd").onclick=()=>$("fileInput").click();
   $("listStudy").onclick=()=>startSession(curListId,"daily");
   $("listNew").onclick=()=>startSession(curListId,"new");
@@ -1341,6 +1369,8 @@ function init(){ loadAPP(); applyTheme(); bind(); loadVoices(); renderHome(); sh
   if(!storageOK){ const w=document.createElement("div"); w.className="badge-warn"; w.style.margin="0 0 14px";
     w.textContent="このブラウザでは進捗の自動保存が無効のようです。設定の「バックアップ」をご利用ください。"; $("homeView").prepend(w); } }
 init();
+// オフライン対応: HTTPS配信時のみサービスワーカーを登録（ローカル検証時は不要）
+if("serviceWorker" in navigator && location.protocol==="https:"){ navigator.serviceWorker.register("./sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
