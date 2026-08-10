@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Recall — iPhone引継ぎ</title>
+  <style>
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#171717;background:#f6f4ef}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}
+    main{width:min(520px,100%);background:#fff;border:1px solid #ddd7cc;border-radius:24px;padding:30px;box-shadow:0 18px 50px #0000000d}
+    h1{margin:0 0 10px;font-size:28px} p{margin:0 0 22px;line-height:1.65;color:#67635d}
+    button{width:100%;border:0;border-radius:14px;background:#151515;color:#fff;padding:17px 20px;font-weight:700;font-size:17px;cursor:pointer}
+    #status{margin:18px 0 0;font-size:14px;min-height:24px;color:#67635d}.ok{color:#16733a!important}.error{color:#b42318!important}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>iPhoneへ引き継ぐ</h1>
+    <p>普段Recallを使っているPCブラウザで、下のボタンを1回だけ押してください。</p>
+    <button id="exportBtn" type="button">学習履歴を書き出す</button>
+    <div id="status" role="status"></div>
+  </main>
+  <script>
+  "use strict";
+  const STORE_KEY="vocab_srs_app_v1";
+  const status=document.getElementById("status");
+  document.getElementById("exportBtn").onclick=()=>{
+    try{
+      const raw=localStorage.getItem(STORE_KEY);
+      if(!raw) throw new Error("このブラウザにRecallの履歴がありません。普段Recallを使うブラウザで開いてください。");
+      const data=JSON.parse(raw);
+      if(!data||!data.decks) throw new Error("Recallの履歴形式を確認できませんでした。");
+      if(data.settings) delete data.settings.elKey;
+      const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");
+      a.href=url; a.download="recall-iphone-transfer-"+new Date().toISOString().slice(0,10)+".json";
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+      status.className="ok"; status.textContent="完了しました。Codexに「押した」と返信してください。";
+    }catch(err){ status.className="error"; status.textContent=err&&err.message?err.message:String(err); }
+  };
+  </script>
+</body>
+</html>
