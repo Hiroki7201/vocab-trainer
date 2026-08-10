@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f0e8">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Recall for iPhone</title>
+  <style>
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#181817;background:#f4f0e8;--muted:#706c65;--line:#dcd6cc;--paper:#fffdf8;--ink:#181817;--red:#b42318;--green:#176b3a}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f4f0e8}button,input{font:inherit}
+    header{position:sticky;top:0;z-index:5;display:flex;align-items:center;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;background:#f4f0e8eF;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+    .brand{font-size:22px;font-weight:800}.dot{color:#c84b31}.spacer{flex:1}.link{border:0;background:none;padding:8px;color:var(--muted)}
+    main{width:min(680px,100%);margin:auto;padding:24px 18px calc(32px + env(safe-area-inset-bottom))}.lead{color:var(--muted);line-height:1.6;margin:6px 0 22px}.grid{display:grid;gap:12px}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 28px #2b241608}.deck{width:100%;text-align:left;color:inherit}.deck h2{margin:0 0 6px;font-size:21px}.sub{color:var(--muted);font-size:14px}
+    .btn{border:1px solid var(--ink);border-radius:13px;padding:14px 17px;font-weight:750;background:var(--paper);color:var(--ink)}.solid{background:var(--ink);color:#fff;width:100%}.danger{border-color:#d7aaa4;color:var(--red)}.good{border-color:#9dc5aa;color:var(--green)}
+    .filter{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.field label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}.field input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:18px}
+    .count{font-size:38px;font-weight:800;margin:6px 0 18px}.study{min-height:72vh;display:flex;flex-direction:column}.progress{color:var(--muted);font-size:13px}.word{font-size:clamp(38px,10vw,64px);font-weight:800;line-height:1.08;margin:46px 0 8px;overflow-wrap:anywhere}.ipa{color:var(--muted);font-size:18px}.speak{align-self:flex-start;margin:18px 0;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:10px 14px}
+    .answer{margin:28px 0 20px;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:18px}.ja{font-size:24px;font-weight:750;line-height:1.4}.detail{white-space:pre-wrap;color:var(--muted);line-height:1.6;margin-top:12px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto}.hidden{display:none!important}.error{color:var(--red);white-space:pre-wrap}.ok{color:var(--green)}
+  </style>
+</head>
+<body>
+  <header><div class="brand">Recall<span class="dot">.</span></div><span class="spacer"></span><button class="link hidden" id="homeBtn">ホーム</button></header>
+  <main id="app"><section class="card"><h1>準備中</h1><p class="lead">Lv60・Lv80の弱点語と学習履歴を読み込んでいます。</p></section></main>
+  <script>
+  "use strict";
+  const STORE="recall_iphone_v1",COMPAT="vocab_srs_app_v1",appEl=document.getElementById("app"),homeBtn=document.getElementById("homeBtn");
+  let APP=null,deckId="",queue=[],pos=0,session={correct:0,wrong:0};
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const b64=s=>Uint8Array.from(atob(s.replace(/-/g,"+").replace(/_/g,"/").padEnd(Math.ceil(s.length/4)*4,"=")),c=>c.charCodeAt(0));
+  const decks=()=>Object.values(APP?.decks||{}),cardCount=()=>decks().reduce((n,d)=>n+Object.keys(d.cards||{}).length,0);
+  function save(){APP.updatedAt=Date.now();const raw=JSON.stringify(APP);localStorage.setItem(STORE,raw);localStorage.setItem(COMPAT,raw)}
+  function usable(x){return x&&x.decks&&Object.values(x.decks).length===2&&Object.values(x.decks).reduce((n,d)=>n+Object.keys(d.cards||{}).length,0)===278}
+  function load(){for(const k of [STORE,COMPAT])try{const x=JSON.parse(localStorage.getItem(k)||"null");if(usable(x))return x}catch(e){}return null}
+  async function importHistory(){
+    const q=new URLSearchParams(location.search),id=q.get("m"),secret=location.hash.slice(1);if(!id||!secret)return null;
+    const r=await fetch("./migration/"+encodeURIComponent(id)+".json",{cache:"no-store"});if(!r.ok)throw Error("履歴ファイルを取得できませんでした");const e=await r.json();
+    let ct=e.ct||"";if(e.chunks){const parts=await Promise.all(Array.from({length:Number(e.chunks)},async(_,i)=>{const p=await fetch("./migration/"+encodeURIComponent(id)+"-"+String(i+1).padStart(2,"0")+".txt",{cache:"no-store"});if(!p.ok)throw Error("履歴ファイルの一部を取得できませんでした");return(await p.text()).trim()}));ct=parts.join("")}
+    const key=await crypto.subtle.importKey("raw",b64(secret),"AES-GCM",false,["decrypt"]);const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(e.iv)},key,b64(ct));const x=JSON.parse(new TextDecoder().decode(plain));if(!usable(x))throw Error("履歴の件数が一致しません");history.replaceState(null,"","./iphone-recall.html");return x
+  }
+  function home(){
+    homeBtn.classList.add("hidden");const total=decks().reduce((a,d)=>a+Object.values(d.cards).reduce((n,c)=>n+(c.srs?.wrong||0),0),0);
+    appEl.innerHTML=`<h1>弱点語</h1><p class="lead">Lv60・Lv80から誤答2回以上だけを収録。誤答回数の範囲を選んで学習できます。</p><div class="grid">${decks().map(d=>`<button class="card deck" data-deck="${esc(d.id)}"><h2>${esc(d.name)}</h2><div class="sub">${Object.keys(d.cards).length}語・累計誤答 ${Object.values(d.cards).reduce((n,c)=>n+(c.srs?.wrong||0),0)}回</div></button>`).join("")}</div><p class="sub" style="margin-top:18px">全278語・累計誤答 ${total}回</p>`;
+    appEl.querySelectorAll("[data-deck]").forEach(b=>b.onclick=()=>filterView(b.dataset.deck));
+  }
+  function filterView(id){deckId=id;homeBtn.classList.remove("hidden");const d=APP.decks[id];appEl.innerHTML=`<h1>${esc(d.name)}</h1><p class="lead">不正解回数の下限・上限を選択してください。</p><div class="filter"><div class="field"><label>最少（回）</label><input id="min" type="number" min="0" value="2" inputmode="numeric"></div><div class="field"><label>最多（空欄＝上限なし）</label><input id="max" type="number" min="0" inputmode="numeric"></div></div><div class="sub">該当語数</div><div class="count" id="count"></div><button class="btn solid" id="start">この条件で学習する</button>`;
+    const min=appEl.querySelector("#min"),max=appEl.querySelector("#max"),count=appEl.querySelector("#count");const keys=()=>{const lo=Math.max(0,Number(min.value)||0),hi=max.value===""?Infinity:Math.max(lo,Number(max.value)||0);return Object.values(d.cards).filter(c=>(c.srs?.wrong||0)>=lo&&(c.srs?.wrong||0)<=hi).sort((a,b)=>(b.srs.wrong-a.srs.wrong)).map(c=>c.key)};const refresh=()=>count.textContent=keys().length+"語";min.oninput=refresh;max.oninput=refresh;refresh();appEl.querySelector("#start").onclick=()=>{queue=keys();if(!queue.length){count.textContent="0語（条件を変更してください）";return}queue.sort(()=>Math.random()-.5);pos=0;session={correct:0,wrong:0};showCard()}
+  }
+  function speak(c){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(c.en);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+  function showCard(){if(pos>=queue.length){finish();return}const c=APP.decks[deckId].cards[queue[pos]];appEl.innerHTML=`<section class="study"><div class="progress">${pos+1} / ${queue.length} ・ 不正解 ${c.srs?.wrong||0}回</div><div class="word" id="word"></div><div class="ipa" id="ipa"></div><button class="speak" id="speak">🔊 発音</button><button class="btn solid" id="reveal">答えを見る</button><div class="answer hidden" id="answer"><div class="ja" id="ja"></div><div class="detail" id="detail"></div></div><div class="actions hidden" id="actions"><button class="btn danger" data-result="wrong">間違えた</button><button class="btn good" data-result="correct">正解</button></div></section>`;appEl.querySelector("#word").textContent=c.en;appEl.querySelector("#ipa").textContent=c.ipa||"";appEl.querySelector("#speak").onclick=()=>speak(c);appEl.querySelector("#reveal").onclick=()=>{appEl.querySelector("#ja").textContent=c.ja||"";appEl.querySelector("#detail").textContent=[c.core,c.chunkJa&&c.chunk?c.chunk+" — "+c.chunkJa:"",c.example,c.mnemonic].filter(Boolean).join("\n\n");appEl.querySelector("#answer").classList.remove("hidden");appEl.querySelector("#actions").classList.remove("hidden");appEl.querySelector("#reveal").classList.add("hidden")};appEl.querySelectorAll("[data-result]").forEach(b=>b.onclick=()=>answer(c,b.dataset.result));speak(c)
+  }
+  function answer(c,result){const s=c.srs||(c.srs={interval:0,ef:2.5,reps:0,due:0,correct:0,wrong:0,last:0}),now=Date.now();if(result==="correct"){s.correct++;s.reps++;s.interval=s.reps===1?1:s.reps===2?3:Math.max(7,Math.round((s.interval||3)*(s.ef||2.5)));s.ef=Math.min(3,Number(s.ef||2.5)+.05);s.due=now+s.interval*86400000;session.correct++}else{s.wrong++;s.reps=0;s.interval=0;s.ef=Math.max(1.3,Number(s.ef||2.5)-.2);s.due=now+600000;session.wrong++}s.last=now;save();pos++;showCard()}
+  function finish(){appEl.innerHTML=`<section class="card"><h1>完了</h1><p class="lead">${queue.length}語を学習しました。</p><div class="count">${session.correct}正解</div><p class="sub">間違い ${session.wrong}語</p><button class="btn solid" id="again">条件を選び直す</button></section>`;appEl.querySelector("#again").onclick=()=>filterView(deckId)}
+  function fail(e){homeBtn.classList.add("hidden");appEl.innerHTML=`<section class="card"><h1>読み込めませんでした</h1><p class="error">${esc(e?.message||e)}</p><p class="lead">Codexから届いた最新リンクを、SafariまたはChromeで開き直してください。</p></section>`}
+  homeBtn.onclick=home;
+  (async()=>{try{APP=await importHistory()||load();if(!usable(APP))throw Error("学習履歴がまだ入っていません");save();home()}catch(e){fail(e)}})();
+  </script>
+</body>
+</html>
