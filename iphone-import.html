@@ -33,8 +33,18 @@
       const res=await fetch("./migration/"+encodeURIComponent(id)+".json",{cache:"no-store"});
       if(!res.ok) throw new Error("履歴データを取得できませんでした。");
       const envelope=await res.json();
+      let cipherText=envelope.ct||"";
+      if(envelope.chunks){
+        const parts=await Promise.all(Array.from({length:Number(envelope.chunks)},async(_,i)=>{
+          const part=await fetch("./migration/"+encodeURIComponent(id)+"-"+String(i+1).padStart(2,"0")+".txt",{cache:"no-store"});
+          if(!part.ok) throw new Error("履歴データの一部を取得できませんでした。");
+          return (await part.text()).trim();
+        }));
+        cipherText=parts.join("");
+      }
+      if(!cipherText) throw new Error("暗号化された履歴データがありません。");
       const key=await crypto.subtle.importKey("raw",fromB64(secret),"AES-GCM",false,["decrypt"]);
-      const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:fromB64(envelope.iv)},key,fromB64(envelope.ct));
+      const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:fromB64(envelope.iv)},key,fromB64(cipherText));
       const app=JSON.parse(new TextDecoder().decode(plain));
       const decks=Object.values(app.decks||{}), cards=decks.reduce((n,d)=>n+Object.keys(d.cards||{}).length,0);
       if(decks.length!==2||cards!==278) throw new Error("履歴データの件数を確認できませんでした。");
