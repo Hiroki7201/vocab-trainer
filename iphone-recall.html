@@ -32,8 +32,8 @@
   function save(){APP.updatedAt=Date.now();const raw=JSON.stringify(APP);localStorage.setItem(STORE,raw);localStorage.setItem(COMPAT,raw)}
   function usable(x){return x&&x.decks&&Object.values(x.decks).length===2&&Object.values(x.decks).reduce((n,d)=>n+Object.keys(d.cards||{}).length,0)===278}
   function load(){for(const k of [STORE,COMPAT])try{const x=JSON.parse(localStorage.getItem(k)||"null");if(usable(x))return x}catch(e){}return null}
-  async function importHistory(){
-    const q=new URLSearchParams(location.search),id=q.get("m"),secret=location.hash.slice(1);if(!id||!secret)return null;
+  async function importHistory(secret){
+    const q=new URLSearchParams(location.search),id=q.get("m")||"gDmE4F7HFdR7";if(!secret)return null;
     const r=await fetch("./migration/"+encodeURIComponent(id)+".json",{cache:"no-store"});if(!r.ok)throw Error("履歴ファイルを取得できませんでした");const e=await r.json();
     let ct=e.ct||"";if(e.chunks){const parts=await Promise.all(Array.from({length:Number(e.chunks)},async(_,i)=>{const p=await fetch("./migration/"+encodeURIComponent(id)+"-"+String(i+1).padStart(2,"0")+".txt",{cache:"no-store"});if(!p.ok)throw Error("履歴ファイルの一部を取得できませんでした");return(await p.text()).trim()}));ct=parts.join("")}
     const key=await crypto.subtle.importKey("raw",b64(secret),"AES-GCM",false,["decrypt"]);const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(e.iv)},key,b64(ct));const x=JSON.parse(new TextDecoder().decode(plain));if(!usable(x))throw Error("履歴の件数が一致しません");history.replaceState(null,"","./iphone-recall.html");return x
@@ -52,9 +52,10 @@
   }
   function answer(c,result){const s=c.srs||(c.srs={interval:0,ef:2.5,reps:0,due:0,correct:0,wrong:0,last:0}),now=Date.now();if(result==="correct"){s.correct++;s.reps++;s.interval=s.reps===1?1:s.reps===2?3:Math.max(7,Math.round((s.interval||3)*(s.ef||2.5)));s.ef=Math.min(3,Number(s.ef||2.5)+.05);s.due=now+s.interval*86400000;session.correct++}else{s.wrong++;s.reps=0;s.interval=0;s.ef=Math.max(1.3,Number(s.ef||2.5)-.2);s.due=now+600000;session.wrong++}s.last=now;save();pos++;showCard()}
   function finish(){appEl.innerHTML=`<section class="card"><h1>完了</h1><p class="lead">${queue.length}語を学習しました。</p><div class="count">${session.correct}正解</div><p class="sub">間違い ${session.wrong}語</p><button class="btn solid" id="again">条件を選び直す</button></section>`;appEl.querySelector("#again").onclick=()=>filterView(deckId)}
+  function codeView(message){homeBtn.classList.add("hidden");appEl.innerHTML=`<section class="card"><h1>初回引継ぎ</h1><p class="lead">このチャットにある引継ぎコードをコピーし、下に貼り付けてください。コードはSafari内だけで処理されます。</p><div class="field"><label>引継ぎコード</label><input id="transferCode" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="コードを貼り付け"></div><p class="error" id="codeStatus">${esc(message||"")}</p><button class="btn solid" id="importBtn">履歴を読み込む</button></section>`;const input=appEl.querySelector("#transferCode"),status=appEl.querySelector("#codeStatus"),button=appEl.querySelector("#importBtn");button.onclick=async()=>{const secret=input.value.replace(/\s/g,"");if(!secret){status.textContent="コードを貼り付けてください";return}button.disabled=true;button.textContent="読み込み中...";status.textContent="";try{APP=await importHistory(secret);if(!usable(APP))throw Error("履歴の件数を確認できませんでした");save();home()}catch(e){status.textContent="コードが正しくないか、通信に失敗しました。もう一度貼り付けてください。";button.disabled=false;button.textContent="履歴を読み込む"}}}
   function fail(e){homeBtn.classList.add("hidden");appEl.innerHTML=`<section class="card"><h1>読み込めませんでした</h1><p class="error">${esc(e?.message||e)}</p><p class="lead">Codexから届いた最新リンクを、SafariまたはChromeで開き直してください。</p></section>`}
   homeBtn.onclick=home;
-  (async()=>{try{APP=await importHistory()||load();if(!usable(APP))throw Error("学習履歴がまだ入っていません");save();home()}catch(e){fail(e)}})();
+  (async()=>{try{APP=load();const secret=location.hash.slice(1);if(!usable(APP)&&secret)APP=await importHistory(secret);if(usable(APP)){save();home()}else codeView()}catch(e){codeView(e?.message||e)}})();
   </script>
 </body>
 </html>
