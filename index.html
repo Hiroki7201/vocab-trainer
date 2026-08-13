@@ -456,6 +456,10 @@
         <div class="ctl"><select id="setJaVoice" style="max-width:190px;"></select></div>
       </div>
       <div class="setrow">
+        <div style="flex:1; min-width:0;"><div class="lab">音声の状態</div><div class="sub" id="voiceDiag">確認中…</div></div>
+        <div class="ctl"><button class="btn ghost sm" id="voiceDiagBtn" type="button">再確認</button></div>
+      </div>
+      <div class="setrow">
         <div><div class="lab">音声を有効にする</div><div class="sub">オフで無音モード</div></div>
         <div class="ctl"><input type="checkbox" class="switch" id="setAudio" /></div>
       </div>
@@ -630,10 +634,14 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ if(AP
    音声(TTS)
    ========================================================================= */
 let voices=[];
-function loadVoices(){ voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; populateVoiceSelects(); }
+function loadVoices(){ voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; populateVoiceSelects(); renderVoiceDiag(); }
 if(window.speechSynthesis){ speechSynthesis.onvoiceschanged = loadVoices; }
 function voicesByLang(p){ return voices.filter(v=>(v.lang||"").toLowerCase().startsWith(p)); }
-function getVoice(uri,p){ if(uri){ const v=voices.find(v=>v.voiceURI===uri); if(v) return v; } return voicesByLang(p)[0]||null; }
+/* 端末内蔵(localService)を優先する。Chromeの「Google 〜」はサーバ側で合成するため、
+   社内プロキシ等で通信が落ちると start も error も来ないまま無音で次に進んでしまう。 */
+function localVoicesByLang(p){ return voicesByLang(p).filter(v=>v.localService); }
+function getVoice(uri,p){ if(uri){ const v=voices.find(v=>v.voiceURI===uri); if(v) return v; }
+  return localVoicesByLang(p)[0] || voicesByLang(p)[0] || null; }
 function enLang(){ const v=getVoice(APP.settings.enVoice,"en"); return v?v.lang:"en-US"; }
 function jaLang(){ const v=getVoice(APP.settings.jaVoice,"ja"); return v?v.lang:"ja-JP"; }
 function enItem(t){ return {text:t, lang:enLang(), voiceURI:APP.settings.enVoice, langPrefix:"en"}; }
@@ -642,6 +650,9 @@ function rep(item,n){ const a=[]; n=Math.max(0,n|0); for(let i=0;i<n;i++) a.push
 
 function setSpeaking(on){ document.body.classList.toggle("speaking", on); }
 let speakToken=0, currentAudio=null, elWarned=false;
+/* 読み上げの失敗は今まで握り潰していた。無音の原因を追えるよう記録し、初回だけ通知する。 */
+let ttsDiag={ lastError:"", failures:0, retries:0 }, ttsNotified=false;
+function ttsNotify(msg){ if(ttsNotified) return; ttsNotified=true; toast(msg); }
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function stopSpeak(){ speakToken++; try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
   if(currentAudio){ try{ currentAudio.pause(); }catch(e){} currentAudio=null; } setSpeaking(false); }
@@ -672,39 +683,77 @@ async function elBlob(text){
   if(!isAudioBlob(blob)) throw new Error("ElevenLabs応答が音声形式ではありません（ネットワーク制限の可能性）");
   idbPut(key,blob); return blob;
 }
-function browserSpeak(it){ return new Promise(resolve=>{ if(!window.speechSynthesis){ resolve(); return; }
-  const u=new SpeechSynthesisUtterance(it.text); u.lang=it.lang; u.rate=APP.settings.rate; const v=getVoice(it.voiceURI,it.langPrefix); if(v) u.voice=v;
-  let settled=false, guard=0;
-  const fin=()=>{ if(!settled){ settled=true; clearTimeout(guard); resolve(); } };
-  u.onend=fin; u.onerror=fin;
-  // 読み上げ長の見積りでセーフティタイマーを先に張る（イベント不発・speak例外でも必ず完了させる）
+/* 1発話ぶんを再生。成功なら null、失敗ならその理由の文字列を返す。 */
+function speakOnce(it, voice){ return new Promise(resolve=>{
+  let u;
+  try{ u=new SpeechSynthesisUtterance(it.text);
+    u.lang = voice ? voice.lang : it.lang; u.rate = APP.settings.rate; if(voice) u.voice=voice;
+  }catch(e){ resolve("setup:"+((e&&e.name)||"error")); return; }
+  let settled=false, guard=0, startGuard=0, ping=0, started=false;
+  const fin=(reason)=>{ if(settled) return; settled=true;
+    clearTimeout(guard); clearTimeout(startGuard); clearInterval(ping); resolve(reason||null); };
+  u.onstart=()=>{ started=true; clearTimeout(startGuard); };
+  u.onend=()=>fin(null);
+  u.onerror=(e)=>fin("error:"+((e&&e.error)||"unknown"));
+  // 開始検知。start も speaking も来なければ「無音のまま素通り」した状態とみなして失敗扱いにする
+  startGuard=setTimeout(()=>{ if(!started && !speechSynthesis.speaking) fin("nostart"); }, 1500);
+  // 読み上げ長の見積りでセーフティタイマーを張る（イベント不発・speak例外でも必ず完了させる）
   const est=Math.max(4000, Math.ceil(it.text.length*400/Math.max(0.5,APP.settings.rate)));
-  guard=setTimeout(fin, est);
-  try{ speechSynthesis.speak(u); }catch(e){ fin(); return; }
+  guard=setTimeout(()=>fin(null), est);
+  // Chromeは連続再生中に内部で一時停止状態へ落ちることがあるので定期的にresumeで小突く
+  ping=setInterval(()=>{ try{ if(speechSynthesis.paused) speechSynthesis.resume(); }catch(e){} }, 2000);
+  try{ speechSynthesis.speak(u); }catch(e){ fin("speak-throw"); return; }
   try{ speechSynthesis.resume(); }catch(e){}  // Chromeでcancel直後にspeakが停止状態で詰まる既知バグの保険
 }); }
+/* 失敗したら端末内蔵の音声で1度だけ取り直す。ネットワーク音声の失敗による無音を救う。 */
+async function browserSpeak(it, token){
+  if(!window.speechSynthesis) return;
+  if(token===undefined) token=speakToken;
+  const picked=getVoice(it.voiceURI, it.langPrefix);
+  const r1=await speakOnce(it, picked);
+  if(!r1) return;
+  ttsDiag.failures++; ttsDiag.lastError=(it.langPrefix||"")+" "+r1;
+  if(token!==speakToken){ renderVoiceDiag(); return; }
+  const alt=localVoicesByLang(it.langPrefix).find(v=>!picked || v.voiceURI!==picked.voiceURI);
+  if(alt){
+    ttsDiag.retries++;
+    try{ speechSynthesis.cancel(); }catch(e){}
+    await sleep(120);
+    if(token!==speakToken){ renderVoiceDiag(); return; }
+    const r2=await speakOnce(it, alt);
+    if(!r2){ ttsNotify("音声を再生できなかったため、端末内蔵の音声に切替えました"); renderVoiceDiag(); return; }
+    ttsDiag.lastError=(it.langPrefix||"")+" "+r2;
+  }
+  ttsNotify(it.langPrefix==="en" && !localVoicesByLang("en").length
+    ? "英語の内蔵音声がこの端末にありません。設定の「音声の状態」を確認してください"
+    : "音声を再生できませんでした。設定の「音声の状態」を確認してください");
+  renderVoiceDiag();
+}
 function elevenSpeak(it, token){ return new Promise(resolve=>{
   const fallback=()=>{ if(!elWarned){ elWarned=true; toast("ElevenLabsに接続できず標準音声に切替えました"); }
-    if(token===speakToken) browserSpeak(it).then(resolve); else resolve(); };
+    if(token===speakToken) browserSpeak(it, token).then(resolve); else resolve(); };
   elBlob(it.text).then(blob=>{ if(token!==speakToken){ resolve(); return; }
     if(!isAudioBlob(blob)){ fallback(); return; }
     const url=URL.createObjectURL(blob); const a=new Audio(url); currentAudio=a; a.playbackRate=APP.settings.rate;
     let settled=false;
     const done=()=>{ if(settled) return; settled=true; try{ URL.revokeObjectURL(url); }catch(e){} resolve(); };
-    const failed=()=>{ if(settled) return; settled=true; try{ URL.revokeObjectURL(url); }catch(e){} if(token===speakToken) browserSpeak(it).then(resolve); else resolve(); };
+    const failed=()=>{ if(settled) return; settled=true; try{ URL.revokeObjectURL(url); }catch(e){} if(token===speakToken) browserSpeak(it, token).then(resolve); else resolve(); };
     a.onended=done; a.onerror=failed; a.play().catch(failed);
   }).catch(fallback); }); }
 
 async function speakSeq(items, onDone){
   speakToken++; const token=speakToken;
+  const wasSpeaking = !!(window.speechSynthesis && (speechSynthesis.speaking || speechSynthesis.pending));
   try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
   if(currentAudio){ try{ currentAudio.pause(); }catch(e){} currentAudio=null; }
   if(!APP.settings.audio){ setSpeaking(false); if(onDone)onDone(); return; }
   const seq=items.filter(it=>it&&it.text&&it.text.trim());
   if(!seq.length){ setSpeaking(false); if(onDone)onDone(); return; }
   setSpeaking(true);
-  if(!useEleven()) await sleep(50);
-  for(const it of seq){ if(token!==speakToken) return; try{ if(useEleven()) await elevenSpeak(it, token); else await browserSpeak(it); }catch(e){} }
+  // cancel直後だけ間を置く。バックグラウンドのタブでは setTimeout が最大1分まで
+  // 間引かれるため、無条件のsleepは聞き流しモードでそのまま無音時間になる。
+  if(!useEleven() && wasSpeaking) await sleep(50);
+  for(const it of seq){ if(token!==speakToken) return; try{ if(useEleven()) await elevenSpeak(it, token); else await browserSpeak(it, token); }catch(e){} }
   if(token===speakToken){ setSpeaking(false); if(onDone)onDone(); }
 }
 function frontSeq(c){ return APP.settings.dir==="ja2en" ? rep(jaItem(c.ja),APP.settings.jaRepeat) : rep(enItem(c.en),APP.settings.enRepeat); }
@@ -997,8 +1046,15 @@ async function prefetchAudio(){
   btn.disabled=false; btn.textContent="⬇ 音声を保存";
   toast(fail ? `保存完了 ${arr.length-fail}件（失敗${fail}件・通信を確認してください）` : `音声を保存しました（${arr.length}件）。オフラインでも再生できます`);
 }
+/* 聞き流し中に画面が消えるとブラウザがタイマーを間引き、そのまま無音になるので画面を保持する。 */
+let wakeLock=null;
+async function acquireWakeLock(){ try{ if(navigator.wakeLock && !wakeLock){ wakeLock=await navigator.wakeLock.request("screen");
+  wakeLock.addEventListener("release",()=>{ wakeLock=null; }); } }catch(e){ wakeLock=null; } }
+function releaseWakeLock(){ try{ if(wakeLock) wakeLock.release(); }catch(e){} wakeLock=null; }
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible" && audio && audio.playing) acquireWakeLock(); });
 function startAudioMode(deckId, keys){ if(!keys||!keys.length){ toast("対象の単語がありません"); return; }
   audio={ deckId, keys:keys.slice(), idx:0, playing:true, loop:true }; $("audioLoop").textContent="🔁 くり返し: ON";
+  acquireWakeLock();
   showView("audio"); audioRender(); audioPlay(); }
 function audioRender(){ if(!audio) return; const c=audioCard(); const n=audio.keys.length;
   $("audioBar").style.width=Math.round((audio.idx/n)*100)+"%"; $("audioCount").textContent=(audio.idx+1)+" / "+n;
@@ -1012,15 +1068,27 @@ function audioPlay(){ if(!audio||!audio.playing) return;
 function audioGo(dir){ if(!audio) return; stopSpeak(); let ni=audio.idx+dir;
   if(ni>=audio.keys.length) ni=audio.loop?0:audio.keys.length-1; if(ni<0) ni=audio.keys.length-1;
   audio.idx=ni; audioRender(); if(audio.playing) audioPlay(); }
-function audioToggle(){ if(!audio) return; audio.playing=!audio.playing; if(audio.playing){ audioRender(); audioPlay(); } else { stopSpeak(); audioRender(); } }
-function audioExit(){ stopSpeak(); audio=null; renderHome(); showView("home"); }
+function audioToggle(){ if(!audio) return; audio.playing=!audio.playing;
+  if(audio.playing){ acquireWakeLock(); audioRender(); audioPlay(); } else { releaseWakeLock(); stopSpeak(); audioRender(); } }
+function audioExit(){ releaseWakeLock(); stopSpeak(); audio=null; renderHome(); showView("home"); }
 
 /* =========================================================================
    設定UI
    ========================================================================= */
 function populateVoiceSelects(){ const en=$("setEnVoice"), ja=$("setJaVoice"); if(!en||!ja) return;
-  const fill=(sel,p,cur,lab)=>{ sel.innerHTML=`<option value="">自動（${lab}）</option>`+voicesByLang(p).map(v=>`<option value="${escapeHTML(v.voiceURI)}">${escapeHTML(v.name)}</option>`).join(""); sel.value=cur||""; };
+  const fill=(sel,p,cur,lab)=>{ sel.innerHTML=`<option value="">自動（${lab}・内蔵を優先）</option>`+voicesByLang(p).map(v=>`<option value="${escapeHTML(v.voiceURI)}">${escapeHTML(v.name)}${v.localService?"":"（要通信）"}</option>`).join(""); sel.value=cur||""; };
   fill(en,"en",APP.settings.enVoice,"英語"); fill(ja,"ja",APP.settings.jaVoice,"日本語"); }
+/* 無音の切り分け用。どの音声が使えるか・直近の失敗が何かをそのまま出す。 */
+function renderVoiceDiag(){ const el=$("voiceDiag"); if(!el) return;
+  if(!window.speechSynthesis){ el.textContent="このブラウザは読み上げに対応していません"; return; }
+  const en=voicesByLang("en"), ja=voicesByLang("ja");
+  const enL=localVoicesByLang("en").length, jaL=localVoicesByLang("ja").length;
+  const parts=[`英語 ${en.length}件（内蔵${enL}）`, `日本語 ${ja.length}件（内蔵${jaL}）`];
+  if(!en.length) parts.push("⚠ 英語の音声が見つかりません");
+  else if(!enL) parts.push("⚠ 英語が要通信の音声のみ。社内ネットワークでは無音になることがあります（Windowsに英語の音声を追加すると解消します）");
+  if(ttsDiag.failures) parts.push(`失敗${ttsDiag.failures}件・内蔵へ切替${ttsDiag.retries}件`);
+  if(ttsDiag.lastError) parts.push("直近: "+ttsDiag.lastError);
+  el.textContent=parts.join(" ／ "); }
 function syncSettingsUI(){ const s=APP.settings;
   $("setRate").value=s.rate; $("rateVal").textContent=(+s.rate).toFixed(2);
   $("enRepeatVal").textContent=s.enRepeat; $("jaRepeatVal").textContent=s.jaRepeat;
@@ -1029,7 +1097,7 @@ function syncSettingsUI(){ const s=APP.settings;
   document.querySelectorAll("#segStrength .seg").forEach(b=>b.classList.toggle("active", b.dataset.strength===s.strength));
   $("setElEnabled").checked=s.elEnabled; $("setElKey").value=s.elKey||""; $("setElModel").value=s.elModel||"eleven_multilingual_v2";
   const sv=$("setElVoice"); if(s.elVoice && !Array.from(sv.options).some(o=>o.value===s.elVoice)){ const o=document.createElement("option"); o.value=s.elVoice; o.textContent="(保存済みの声)"; sv.appendChild(o); } sv.value=s.elVoice||"";
-  populateVoiceSelects(); }
+  populateVoiceSelects(); renderVoiceDiag(); }
 
 /* =========================================================================
    バックアップ / サンプル
@@ -1339,6 +1407,8 @@ function bind(){
   $("setReadEx").onchange=e=>{ APP.settings.readEx=e.target.checked; saveAPP(); };
   $("setReadChunk").onchange=e=>{ APP.settings.readChunk=e.target.checked; saveAPP(); };
   $("setAudio").onchange=e=>{ APP.settings.audio=e.target.checked; saveAPP(); };
+  $("voiceDiagBtn").onclick=()=>{ ttsDiag={ lastError:"", failures:0, retries:0 }; ttsNotified=false; loadVoices();
+    speakSeq([enItem("This is the English voice."), jaItem("これは日本語の音声です。")], ()=>renderVoiceDiag()); };
   $("setDir").onchange=e=>{ APP.settings.dir=e.target.value; saveAPP(); if(session&&document.body.dataset.view==="study") renderCard(); };
   $("setAudioJp").onchange=e=>{ APP.settings.audioJp=e.target.value; saveAPP(); };
   $("setEnVoice").onchange=e=>{ APP.settings.enVoice=e.target.value; saveAPP(); };

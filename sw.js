@@ -1,5 +1,5 @@
 // Recall — offline cache (network-first, cache fallback)
-const CACHE = "recall-v1";
+const CACHE = "recall-v2";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.svg"];
 
 self.addEventListener("install", (e) => {
