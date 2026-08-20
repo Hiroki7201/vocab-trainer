@@ -134,6 +134,12 @@
   .detailtoggle:hover{border-color:var(--accent); color:var(--accent);}
   #detailBox{width:100%;}
   .detail{color:var(--muted); font-size:15px; margin-top:14px; max-width:30em; margin-left:auto; margin-right:auto;}
+  /* 例文ブロック（英文＋たたんだ和訳） */
+  .exblock{margin-top:14px; display:flex; flex-direction:column; align-items:center; gap:8px;}
+  .exblock .detail{margin-top:0;}
+  .exblock .detail.ja{color:var(--ink); font-size:14px; text-align:left; border-left:2px solid var(--accent); padding-left:12px; opacity:.9;}
+  .jatoggle{background:transparent; border:1px dashed var(--line); color:var(--muted); border-radius:999px; padding:5px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:var(--sans); line-height:1;}
+  .jatoggle:hover{border-style:solid; border-color:var(--accent); color:var(--accent);}
   .xtras{margin-top:14px; display:flex; flex-direction:column; gap:3px; color:var(--muted); font-size:13px;}
   .xtras b{color:var(--ink); font-weight:600;}
   .readhint{margin-top:14px; color:var(--faint); font-size:13px; letter-spacing:.03em;}
@@ -282,6 +288,7 @@
       <label class="fld">コアイメージ（任意）<select id="selCore"></select></label>
       <label class="fld">覚え方・語呂（任意）<select id="selMnemonic"></select></label>
       <label class="fld">例文（任意）<select id="selEx"></select></label>
+      <label class="fld">例文の和訳（任意）<select id="selExJa"></select></label>
     </div>
     <div class="section-label">答えに表示する補足列（発音記号・品詞など／任意）</div>
     <div class="extras" id="extrasBox"></div>
@@ -317,6 +324,7 @@
       <button class="btn ghost sm" id="listNew">新規</button>
       <button class="btn ghost sm" id="listAll">総ざらい</button>
       <button class="btn ghost sm" id="listWeak">苦手のみ</button>
+      <button class="btn ghost sm" id="listResetWrong" title="このデッキの不正解カウントだけを0に戻す（単語データはそのまま）">不正解リセット</button>
       <button class="btn ghost sm" id="listRename">名前変更</button>
       <button class="btn ghost sm danger" id="listDelete">削除</button>
     </div>
@@ -353,7 +361,11 @@
             <div class="chunk-en" id="aChunkEn"></div>
             <div class="chunk-ja" id="aChunkJa"></div>
           </div>
-          <div class="detail" id="aExample" style="display:none;"></div>
+          <div class="exblock" id="aExample" style="display:none;">
+            <div class="detail" id="aExampleEn"></div>
+            <button class="jatoggle" id="exJaToggle" style="display:none;">＋ 和訳を見る</button>
+            <div class="detail ja" id="aExampleJa" style="display:none;"></div>
+          </div>
           <div class="xtras" id="aExtras"></div>
         </div>
       </div>
@@ -785,6 +797,15 @@ function dateStr(ts){ const d=new Date(ts); return d.getFullYear()+"-"+String(d.
 function deckStats(deck){ const now=Date.now(); let total=0,due=0,fresh=0,master=0;
   for(const k in deck.cards){ const c=deck.cards[k]; total++; if(c.srs.last===0) fresh++; else if(c.srs.due<=now) due++; if(c.srs.interval>=21) master++; }
   return {total,due,fresh,master}; }
+/* 不正解カウントのリセット（デッキ単位）
+   単語データ・正解数・復習スケジュール(due/interval/ef)は保持し、srs.wrong だけを 0 に戻す。
+   「不正解n回以上」フィルタや「苦手のみ」を新しい周回で測り直すための機能。 */
+function deckWrongTotal(deck){ let words=0,times=0;
+  for(const k in deck.cards){ const w=(deck.cards[k].srs&&deck.cards[k].srs.wrong)||0; if(w>0){ words++; times+=w; } }
+  return {words,times}; }
+function resetDeckWrong(deckId){ const d=APP.decks[deckId]; if(!d) return 0; let n=0;
+  for(const k in d.cards){ const c=d.cards[k]; if(!c.srs) c.srs=defaultSRS(); if(c.srs.wrong>0){ c.srs.wrong=0; n++; } }
+  if(n){ d.updatedAt=Date.now(); saveAPP(); } return n; }
 
 /* =========================================================================
    CSV 読み込み（文字コード判定つき）
@@ -830,10 +851,12 @@ function handleFile(file){ if(!file) return; const reader=new FileReader();
     const delim=detectDelimiter(text); const rows=parseCSV(text,delim);
     if(rows.length<1){ toast("データが見つかりませんでした"); return; }
     const hasH=guessHeader(rows[0]); const dataRows=hasH?rows.slice(1):rows; const st=scoreCols(dataRows.length?dataRows:rows);
-    let en=-1, ja=-1, ex=-1, chunk=-1, chunkJa=-1, mnemonic=-1, core=-1, extras=[];
+    let en=-1, ja=-1, ex=-1, exJa=-1, chunk=-1, chunkJa=-1, mnemonic=-1, core=-1, extras=[];
     if(hasH){ const H=rows[0].map(h=>(h||"").trim()); const used=[];
       const find=(re)=>{ for(let i=0;i<H.length;i++){ if(used.includes(i))continue; if(re.test(H[i])){ used.push(i); return i; } } return -1; };
       mnemonic=find(/語呂|ごろ|覚え方|覚え|mnemonic|hint/i);
+      /* 「例文の和訳」は「例文」より先に判定する。逆順だと ex 側が和訳列を先に取ってしまう。 */
+      exJa   =find(/(?:例文|用例|英文|example|sentence).*(?:和訳|日本語訳|日本語|訳|意味|translation|japanese|_ja\b|_jp\b)|(?:和訳|日本語|訳).*(?:例文|用例)/i);
       ex     =find(/例文|example|sentence|用例|英文/i);
       const ipaCol=find(/ipa|発音|phonetic/i); if(ipaCol>=0) extras.push(ipaCol);
       core   =find(/コアイメージ|^コア$|coreimage|essence/i);
@@ -841,9 +864,9 @@ function handleFile(file){ if(!file) return; const reader=new FileReader();
       ja     =find(/意味|日本語|和訳|訳|meaning|japanese|^ja$|^jp$/i);
     }
     if(en<0) en=pickEn(st);
-    if(ja<0){ ja=pickJaFiltered(st,[en,ex,chunk,chunkJa,mnemonic,core].filter(x=>x>=0).concat(extras)); if(ja<0) ja=pickJa(st); }
+    if(ja<0){ ja=pickJaFiltered(st,[en,ex,exJa,chunk,chunkJa,mnemonic,core].filter(x=>x>=0).concat(extras)); if(ja<0) ja=pickJa(st); }
     if(en<0) en=0; if(ja<0) ja=(en===0?1:0);
-    pending={ rows, fileName:file.name, delim, hasHeader:hasH, en, ja, ex, chunk, chunkJa, mnemonic, core, extras };
+    pending={ rows, fileName:file.name, delim, hasHeader:hasH, en, ja, ex, exJa, chunk, chunkJa, mnemonic, core, extras };
     $("deckName").value=file.name.replace(/\.(csv|tsv|txt)$/i,"");
     showView("map"); renderMap(); };
   reader.readAsArrayBuffer(file); }
@@ -862,17 +885,17 @@ function renderMap(){
   html+="</tbody></table>"; $("previewWrap").innerHTML=html;
   const opt=(sel,withNone)=>{ let s=withNone?`<option value="-1">（なし）</option>`:"";
     headers.forEach((h,i)=>{ const smp=colSample(i); s+=`<option value="${i}">${i+1}: ${escapeHTML(h)}${smp?`（例:${escapeHTML(smp)}）`:""}</option>`; }); sel.innerHTML=s; };
-  opt($("selEn"),false); opt($("selJa"),false); opt($("selEx"),true);
+  opt($("selEn"),false); opt($("selJa"),false); opt($("selEx"),true); opt($("selExJa"),true);
   opt($("selCore"),true); opt($("selMnemonic"),true);
-  $("selEn").value=pending.en>=0?pending.en:0; $("selJa").value=pending.ja>=0?pending.ja:0; $("selEx").value=pending.ex;
+  $("selEn").value=pending.en>=0?pending.en:0; $("selJa").value=pending.ja>=0?pending.ja:0; $("selEx").value=pending.ex; $("selExJa").value=(pending.exJa>=0?pending.exJa:-1);
   $("selCore").value=pending.core; $("selMnemonic").value=pending.mnemonic;
-  const taken=new Set([+$("selEn").value,+$("selJa").value,+$("selEx").value,+$("selCore").value,+$("selMnemonic").value]); let ex="";
+  const taken=new Set([+$("selEn").value,+$("selJa").value,+$("selEx").value,+$("selExJa").value,+$("selCore").value,+$("selMnemonic").value]); let ex="";
   headers.forEach((h,i)=>{ if(taken.has(i))return; const chk=pending.extras.includes(i)?"checked":"";
     ex+=`<label><input type="checkbox" data-ex="${i}" ${chk}/> ${escapeHTML(h)}</label>`; });
   $("extrasBox").innerHTML=ex||`<span class="lead" style="margin:0">他に表示できる列はありません</span>`;
   $("mapWarn").innerHTML="";
 }
-function readMapInputs(){ pending.hasHeader=$("hasHeader").checked; pending.en=+$("selEn").value; pending.ja=+$("selJa").value; pending.ex=+$("selEx").value;
+function readMapInputs(){ pending.hasHeader=$("hasHeader").checked; pending.en=+$("selEn").value; pending.ja=+$("selJa").value; pending.ex=+$("selEx").value; pending.exJa=+$("selExJa").value;
   pending.core=+$("selCore").value; pending.mnemonic=+$("selMnemonic").value; pending.chunk=-1; pending.chunkJa=-1;
   pending.extras=[...document.querySelectorAll('#extrasBox input[data-ex]:checked')].map(c=>+c.dataset.ex); }
 function createDeck(){
@@ -882,6 +905,7 @@ function createDeck(){
   for(const r of data){ const en=(r[pending.en]||"").trim(), ja=(r[pending.ja]||"").trim();
     if(!en&&!ja) continue; if(!en||!ja){ skipped++; continue; }
     const key=en.toLowerCase(); const example=pending.ex>=0?(r[pending.ex]||"").trim():"";
+    const exampleJa=pending.exJa>=0?(r[pending.exJa]||"").trim():"";
     const chunk=pending.chunk>=0?(r[pending.chunk]||"").trim():"";
     const chunkJa=pending.chunkJa>=0?(r[pending.chunkJa]||"").trim():"";
     const mnemonic=pending.mnemonic>=0?(r[pending.mnemonic]||"").trim():"";
@@ -889,7 +913,7 @@ function createDeck(){
     const extras={};
     pending.extras.forEach(ci=>{ const v=(r[ci]||"").trim(); if(v) extras[headers[ci]]=v; });
     let ipa=""; for(const k of Object.keys(extras)){ if(/ipa|発音|phonetic/i.test(k)){ ipa=extras[k]; delete extras[k]; break; } }
-    cards[key]={key,en,ja,example,ipa,core,chunk,chunkJa,mnemonic,extras,srs:(cards[key]?cards[key].srs:defaultSRS())}; }
+    cards[key]={key,en,ja,example,exampleJa,ipa,core,chunk,chunkJa,mnemonic,extras,srs:(cards[key]?cards[key].srs:defaultSRS())}; }
   const n=Object.keys(cards).length;
   if(!n){ $("mapWarn").innerHTML=`<div class="badge-warn">有効な単語が見つかりませんでした。列の指定を確認してください。</div>`; return; }
   const id=importDeck(($("deckName").value||"無題のデッキ").trim(), cards);
@@ -978,13 +1002,19 @@ function renderCard(){
     $("aWord").textContent=c.ja; $("aSub").textContent=""; $("aAnswer").textContent=c.en; }
   else{ $("qWord").textContent=c.en; $("qSub").textContent=c.ipa||"";
     $("aWord").textContent=c.en; $("aSub").textContent=c.ipa||""; $("aAnswer").textContent=c.ja; }
-  if(c.example){ $("aExample").style.display=""; $("aExample").textContent=c.example; } else $("aExample").style.display="none";
+  const exEn=c.example||"", exJa=c.exampleJa||"";
+  if(exEn||exJa){ $("aExample").style.display="";
+    $("aExampleEn").textContent=exEn; $("aExampleEn").style.display=exEn?"":"none";
+    /* 和訳はカードを表示するたびに畳んだ状態へ戻す */
+    $("aExampleJa").textContent=exJa; $("aExampleJa").style.display="none";
+    $("exJaToggle").style.display=exJa?"":"none"; $("exJaToggle").textContent="＋ 和訳を見る";
+  } else $("aExample").style.display="none";
   if(c.chunk){ $("aChunk").style.display=""; $("aChunkEn").textContent=c.chunk; $("aChunkJa").textContent=c.chunkJa||""; $("aChunkJa").style.display=c.chunkJa?"":"none"; } else $("aChunk").style.display="none";
   if(c.core){ $("aCore").style.display=""; $("aCore").textContent=c.core; } else $("aCore").style.display="none";
   if(c.mnemonic){ $("aMnemonic").style.display=""; $("aMnemonic").innerHTML='<span class="ml">覚え方</span>'+escapeHTML(c.mnemonic); } else $("aMnemonic").style.display="none";
   const ex=c.extras||{}; const ks=Object.keys(ex);
   $("aExtras").innerHTML = ks.length ? ks.map(k=>`<div><b>${escapeHTML(k)}</b>　${escapeHTML(ex[k])}</div>`).join("") : "";
-  const hasDetail=!!(c.chunk||c.example||ks.length);
+  const hasDetail=!!(c.chunk||c.example||c.exampleJa||ks.length);
   $("detailBox").style.display="none"; $("detailToggle").style.display=hasDetail?"":"none"; $("detailToggle").textContent="＋ チャンク・例文を見る";
   const er=APP.settings.enRepeat, jr=APP.settings.jaRepeat;
   const enL=er>0?`英語 ×${er}`:"", jaL=jr>0?`日本語 ×${jr}`:"";
@@ -998,6 +1028,9 @@ function reveal(){ if(!session||session.phase!=="front") return; session.phase="
   $("frontControls").style.display="none"; $("gradeControls").style.display="flex";
   $("recallAsk").style.display=""; $("frontHint").style.display="none";
   if(APP.settings.autoplay) speakSeq(backSeq(c)); }
+/* 例文の和訳はクリックするまで畳んでおく（先に和訳が見えると想起の練習にならないため） */
+function toggleExampleJa(){ const box=$("aExampleJa"); const willOpen=box.style.display==="none";
+  box.style.display=willOpen?"":"none"; $("exJaToggle").textContent=willOpen?"− 和訳を隠す":"＋ 和訳を見る"; }
 function toggleDetail(){ if(!session||session.phase!=="back") return; const box=$("detailBox"); const willOpen=box.style.display==="none";
   box.style.display=willOpen?"":"none"; $("detailToggle").textContent=willOpen?"− 閉じる":"＋ チャンク・例文を見る";
   if(willOpen && APP.settings.autoplay){ const s=detailSeq(currentCard()); if(s.length) speakSeq(s); } }
@@ -1111,12 +1144,12 @@ function restore(file){ const r=new FileReader(); r.onload=e=>{ try{ const o=JSO
   APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[];
   if(!APP.settings.elKey&&curKey) APP.settings.elKey=curKey; saveAPP(); applyTheme(); renderHome(); toast("バックアップを読み込みました"); }
   catch(err){ toast("読み込めませんでした（JSON形式を確認）"); } }; r.readAsText(file); }
-function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk,chunk_meaning,mnemonic,example\n"+
-  "ubiquitous,どこにでもある,/juːˈbɪkwɪtəs/,a ubiquitous presence,どこにでもある存在,ユビキタス＝どこでもネット,Smartphones are ubiquitous now.\n"+
-  "meticulous,几帳面な / 細心の,/məˈtɪkjələs/,meticulous attention to detail,細部への細心の注意,メチャ几帳面でtick(チェック),She is meticulous about details.\n"+
-  "resilient,回復力のある,/rɪˈzɪliənt/,a resilient economy,回復力のある経済,リ(再び)立ち上がる,The economy proved resilient.\n"+
-  "candor,率直さ,/ˈkændər/,speak with candor,率直に話す,キャンドルの灯りのように正直,He spoke with candor.\n"+
-  "nuance,微妙な差異,/ˈnuːɑːns/,a subtle nuance,微妙なニュアンス,ニュアンス＝微妙な差,a subtle nuance in meaning\n","text/csv;charset=utf-8"); toast("sample_vocab.csv を保存しました"); }
+function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk,chunk_meaning,mnemonic,example,example_ja\n"+
+  "ubiquitous,どこにでもある,/juːˈbɪkwɪtəs/,a ubiquitous presence,どこにでもある存在,ユビキタス＝どこでもネット,Smartphones are ubiquitous now.,スマートフォンは今やどこにでもある。\n"+
+  "meticulous,几帳面な / 細心の,/məˈtɪkjələs/,meticulous attention to detail,細部への細心の注意,メチャ几帳面でtick(チェック),She is meticulous about details.,彼女は細部にまで几帳面だ。\n"+
+  "resilient,回復力のある,/rɪˈzɪliənt/,a resilient economy,回復力のある経済,リ(再び)立ち上がる,The economy proved resilient.,その経済は回復力があると証明された。\n"+
+  "candor,率直さ,/ˈkændər/,speak with candor,率直に話す,キャンドルの灯りのように正直,He spoke with candor.,彼は率直に話した。\n"+
+  "nuance,微妙な差異,/ˈnuːɑːns/,a subtle nuance,微妙なニュアンス,ニュアンス＝微妙な差,a subtle nuance in meaning,意味の微妙な差異\n","text/csv;charset=utf-8"); toast("sample_vocab.csv を保存しました"); }
 
 /* =========================================================================
    進捗（学習時間ログ・目標デッドライン）
@@ -1352,7 +1385,7 @@ function bind(){
   $("backupBtn").onclick=backup;
 
   // マッピング
-  $("mapView").addEventListener("change",e=>{ if(e.target.matches("#selEn,#selJa,#selEx,#selCore,#selMnemonic,#hasHeader")){ readMapInputs(); renderMap(); } });
+  $("mapView").addEventListener("change",e=>{ if(e.target.matches("#selEn,#selJa,#selEx,#selExJa,#selCore,#selMnemonic,#hasHeader")){ readMapInputs(); renderMap(); } });
   $("createDeck").onclick=createDeck; $("cancelMap").onclick=goHome;
 
   // ホーム デッキ操作
@@ -1383,12 +1416,19 @@ function bind(){
   $("listNew").onclick=()=>startSession(curListId,"new");
   $("listAll").onclick=()=>startSession(curListId,"all");
   $("listWeak").onclick=()=>startSession(curListId,"weak");
+  $("listResetWrong").onclick=()=>{ const d=APP.decks[curListId]; if(!d) return; const t=deckWrongTotal(d);
+    if(!t.words){ toast("このデッキに不正解の記録はありません"); return; }
+    if(!confirm(`「${d.name}」の不正解カウントを 0 に戻します。
+対象 ${t.words}語（のべ ${t.times}回）
+
+単語・訳・例文などのデッキ内容と、正解数・復習スケジュールはそのまま残ります。`)) return;
+    const n=resetDeckWrong(curListId); openList(curListId); toast(`${n}語の不正解カウントをリセットしました`); };
   $("listRename").onclick=()=>{ const d=APP.decks[curListId]; const nm=prompt("新しいデッキ名",d.name); if(nm&&nm.trim()){ d.name=nm.trim(); d.updatedAt=Date.now(); saveAPP(); openList(curListId); } };
   $("listDelete").onclick=()=>{ const d=APP.decks[curListId]; if(confirm(`「${d.name}」を削除します。学習進捗も消えます。よろしいですか？`)){ delete APP.decks[curListId]; saveAPP(); goHome(); } };
 
   // 学習
   $("revealBtn").onclick=reveal; $("replayBtn").onclick=()=>speakSeq(frontSeq(currentCard()));
-  $("detailToggle").onclick=toggleDetail;
+  $("detailToggle").onclick=toggleDetail; $("exJaToggle").onclick=toggleExampleJa;
   $("rightBtn").onclick=()=>grade(true); $("wrongBtn").onclick=()=>grade(false);
   $("studyClose").onclick=()=>{ if(session && (session.correct+session.wrong)>0) endSession(); else goHome(); };
   $("audioPrev").onclick=()=>audioGo(-1); $("audioNext").onclick=()=>audioGo(1); $("audioToggle").onclick=audioToggle;
