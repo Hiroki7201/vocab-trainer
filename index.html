@@ -345,6 +345,7 @@
       <div class="card-face" id="frontArea">
         <div class="word" id="qWord"></div>
         <div class="sub" id="qSub"></div>
+        <div class="detail" id="qExample" style="display:none;"></div>
         <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="readhint" id="readHint"></div>
       </div>
@@ -426,10 +427,6 @@
       <div class="setrow">
         <div><div class="lab">出題の向き</div><div class="sub">最初に提示するもの</div></div>
         <div class="ctl"><select id="setDir"><option value="en2ja">英語 → 日本語</option><option value="ja2en">日本語 → 英語</option></select></div>
-      </div>
-      <div class="setrow">
-        <div><div class="lab">読み上げ後に自動でめくる</div><div class="sub">英語の再生が終わると答えを自動表示</div></div>
-        <div class="ctl"><input type="checkbox" class="switch" id="setAutoFlip" /></div>
       </div>
       <div class="setrow">
         <div><div class="lab">カード表示時に自動再生</div><div class="sub">オフなら↻ボタンで再生</div></div>
@@ -597,7 +594,7 @@ let storageOK = true;
 
 function defaultSettings(){
   return { rate:0.9, enVoice:"", jaVoice:"", newPerDay:20,
-           enRepeat:2, jaRepeat:0, autoplay:true, autoFlip:false, readEx:false, readChunk:false,
+           enRepeat:2, jaRepeat:0, autoplay:true, readEx:false, readChunk:false,
            audio:true, dir:"en2ja", strength:"normal", theme:"light", audioJp:"both",
            elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2" };
 }
@@ -1002,6 +999,9 @@ function renderCard(){
     $("aWord").textContent=c.ja; $("aSub").textContent=""; $("aAnswer").textContent=c.en; }
   else{ $("qWord").textContent=c.en; $("qSub").textContent=c.ipa||"";
     $("aWord").textContent=c.en; $("aSub").textContent=c.ipa||""; $("aAnswer").textContent=c.ja; }
+  /* 出題面にも英語例文を出す（日→英の出題では英文が答えを割るため出さない） */
+  const frontEx = dir==="ja2en" ? "" : (c.example||"");
+  $("qExample").textContent=frontEx; $("qExample").style.display=frontEx?"":"none";
   const exEn=c.example||"", exJa=c.exampleJa||"";
   if(exEn||exJa){ $("aExample").style.display="";
     $("aExampleEn").textContent=exEn; $("aExampleEn").style.display=exEn?"":"none";
@@ -1020,8 +1020,8 @@ function renderCard(){
   const enL=er>0?`英語 ×${er}`:"", jaL=jr>0?`日本語 ×${jr}`:"";
   const parts=(dir==="ja2en"?[jaL,enL]:[enL,jaL]).filter(Boolean);
   $("readHint").textContent = parts.join(" → ") || "音声なし";
-  if(APP.settings.autoplay){ const key=c.key, at=session.idx;
-    speakSeq(frontSeq(c), ()=>{ if(APP.settings.autoFlip && session && session.idx===at && session.phase==="front" && currentCard().key===key) reveal(); }); }
+  /* 訳は自動では表示しない。「答えを見る」（クリック/Space）を押したときだけめくる */
+  if(APP.settings.autoplay) speakSeq(frontSeq(c));
 }
 function reveal(){ if(!session||session.phase!=="front") return; session.phase="back"; const c=currentCard();
   $("frontArea").style.display="none"; $("backArea").style.display="";
@@ -1125,7 +1125,7 @@ function renderVoiceDiag(){ const el=$("voiceDiag"); if(!el) return;
 function syncSettingsUI(){ const s=APP.settings;
   $("setRate").value=s.rate; $("rateVal").textContent=(+s.rate).toFixed(2);
   $("enRepeatVal").textContent=s.enRepeat; $("jaRepeatVal").textContent=s.jaRepeat;
-  $("setNewPerDay").value=s.newPerDay; $("setAutoFlip").checked=s.autoFlip; $("setAutoplay").checked=s.autoplay;
+  $("setNewPerDay").value=s.newPerDay; $("setAutoplay").checked=s.autoplay;
   $("setReadEx").checked=s.readEx; $("setReadChunk").checked=s.readChunk; $("setAudio").checked=s.audio; $("setDir").value=s.dir; $("setAudioJp").value=s.audioJp||"both"; $("setTheme").value=s.theme;
   document.querySelectorAll("#segStrength .seg").forEach(b=>b.classList.toggle("active", b.dataset.strength===s.strength));
   $("setElEnabled").checked=s.elEnabled; $("setElKey").value=s.elKey||""; $("setElModel").value=s.elModel||"eleven_multilingual_v2";
@@ -1442,7 +1442,6 @@ function bind(){
   // 設定
   $("setRate").oninput=e=>{ APP.settings.rate=+e.target.value; $("rateVal").textContent=(+e.target.value).toFixed(2); saveAPP(); };
   $("setNewPerDay").onchange=e=>{ APP.settings.newPerDay=Math.max(0,parseInt(e.target.value||"0",10)); saveAPP(); };
-  $("setAutoFlip").onchange=e=>{ APP.settings.autoFlip=e.target.checked; saveAPP(); };
   $("setAutoplay").onchange=e=>{ APP.settings.autoplay=e.target.checked; saveAPP(); };
   $("setReadEx").onchange=e=>{ APP.settings.readEx=e.target.checked; saveAPP(); };
   $("setReadChunk").onchange=e=>{ APP.settings.readChunk=e.target.checked; saveAPP(); };
