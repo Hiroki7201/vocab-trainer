@@ -371,11 +371,14 @@
       <button class="btn solid grow" id="revealBtn">答えを見る</button>
     </div>
     <div class="study-actions" id="gradeControls" style="display:none;">
-      <button class="btn outline-accent grow" id="wrongBtn">覚えてない</button>
-      <button class="btn solid grow" id="rightBtn">覚えてた</button>
+      <button class="btn outline-accent grow" id="wrongBtn" title="覚えてない (&lt;)">覚えてない</button>
+      <button class="btn solid grow" id="rightBtn" title="覚えてた (&gt;)">覚えてた</button>
     </div>
     <div class="khint" id="frontHint">
       <kbd>Space</kbd> 答えを見る ／ <kbd>R</kbd> 再生 ／ <kbd>S</kbd> あとで
+    </div>
+    <div class="khint" id="backHint" style="display:none;">
+      <kbd>&lt;</kbd> 覚えてない ／ <kbd>&gt;</kbd> 覚えてた ／ <kbd>R</kbd> 再生
     </div>
   </div>
 </section>
@@ -988,7 +991,7 @@ function renderCard(){
   $("progBar").style.width=Math.round((done/total)*100)+"%"; $("progText").textContent=`${done+1} / ${total}`;
   $("frontArea").style.display=""; $("backArea").style.display="none";
   $("frontControls").style.display="flex"; $("gradeControls").style.display="none";
-  $("recallAsk").style.display="none"; $("frontHint").style.display="";
+  $("recallAsk").style.display="none"; $("frontHint").style.display=""; $("backHint").style.display="none";
   if(dir==="ja2en"){ $("qWord").textContent=c.ja; $("qSub").textContent="";
     $("aWord").textContent=c.ja; $("aSub").textContent=""; $("aAnswer").textContent=c.en; }
   else{ $("qWord").textContent=c.en; $("qSub").textContent=c.ipa||"";
@@ -1017,7 +1020,7 @@ function renderCard(){
 function reveal(){ if(!session||session.phase!=="front") return; session.phase="back"; const c=currentCard();
   $("frontArea").style.display="none"; $("backArea").style.display="";
   $("frontControls").style.display="none"; $("gradeControls").style.display="flex";
-  $("recallAsk").style.display=""; $("frontHint").style.display="none";
+  $("recallAsk").style.display=""; $("frontHint").style.display="none"; $("backHint").style.display="";
   if(APP.settings.autoplay) speakSeq([...backSeq(c),...detailSeq(c)]); }
 function grade(ok){ if(!session||session.phase!=="back") return; const c=currentCard();
   gradeSRS(c.srs, ok, Date.now()); APP.decks[session.deckId].updatedAt=Date.now(); saveAPP();
@@ -1472,8 +1475,10 @@ function bind(){
     if(document.body.dataset.view!=="study") return; const k=e.key.toLowerCase();
     if(session.phase==="front"){ if(e.key===" "||e.key==="Enter"||e.key==="ArrowDown"){ e.preventDefault(); reveal(); }
       else if(k==="s"){ e.preventDefault(); skip(); } else if(k==="r"){ e.preventDefault(); speakSeq(frontSeq(currentCard())); } }
-    else{ if(k==="1"||e.key==="ArrowLeft"){ e.preventDefault(); grade(false); }
-      else if(k==="2"||e.key==="ArrowRight"||e.key==="Enter"){ e.preventDefault(); grade(true); }
+    /* 採点は < / > 。Shiftの有無・IME・キー配列に左右されないよう物理キー(e.code)でも見る */
+    else{ const code=e.code;
+      if(k==="1"||code==="Comma"||k===","||k==="<"||e.key==="ArrowLeft"){ e.preventDefault(); grade(false); }
+      else if(k==="2"||code==="Period"||k==="."||k===">"||e.key==="ArrowRight"||e.key==="Enter"){ e.preventDefault(); grade(true); }
       else if(k==="r"){ e.preventDefault(); speakSeq(fullSeq(currentCard())); } } });
 }
 
