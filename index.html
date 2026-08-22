@@ -130,16 +130,12 @@
   .chunk-ja{color:var(--muted); font-size:14px;}
   .memo{margin-top:16px; background:var(--surface2); border:1px solid var(--line); border-radius:13px; padding:11px 15px; font-size:14px; color:var(--ink); max-width:30em; margin:16px auto 0; text-align:left;}
   .memo .ml{display:block; font-size:10px; letter-spacing:.16em; color:var(--accent); font-weight:700; margin-bottom:3px;}
-  .detailtoggle{margin-top:20px; background:transparent; border:1px solid var(--line); color:var(--muted); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:var(--sans);}
-  .detailtoggle:hover{border-color:var(--accent); color:var(--accent);}
   #detailBox{width:100%;}
   .detail{color:var(--muted); font-size:15px; margin-top:14px; max-width:30em; margin-left:auto; margin-right:auto;}
-  /* 例文ブロック（英文＋たたんだ和訳） */
+  /* 例文ブロック（英文＋和訳） */
   .exblock{margin-top:14px; display:flex; flex-direction:column; align-items:center; gap:8px;}
   .exblock .detail{margin-top:0;}
   .exblock .detail.ja{color:var(--ink); font-size:14px; text-align:left; border-left:2px solid var(--accent); padding-left:12px; opacity:.9;}
-  .jatoggle{background:transparent; border:1px dashed var(--line); color:var(--muted); border-radius:999px; padding:5px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:var(--sans); line-height:1;}
-  .jatoggle:hover{border-style:solid; border-color:var(--accent); color:var(--accent);}
   .xtras{margin-top:14px; display:flex; flex-direction:column; gap:3px; color:var(--muted); font-size:13px;}
   .xtras b{color:var(--ink); font-weight:600;}
   .readhint{margin-top:14px; color:var(--faint); font-size:13px; letter-spacing:.03em;}
@@ -355,8 +351,7 @@
         <div class="answer" id="aAnswer"></div>
         <div class="coreline" id="aCore" style="display:none;"></div>
         <div class="memo" id="aMnemonic" style="display:none;"></div>
-        <button class="detailtoggle" id="detailToggle" style="display:none;">＋ チャンク・例文を見る</button>
-        <div id="detailBox" style="display:none;">
+        <div id="detailBox">
           <div class="chunkbox" id="aChunk" style="display:none;">
             <div class="minilabel">CHUNK</div>
             <div class="chunk-en" id="aChunkEn"></div>
@@ -364,7 +359,6 @@
           </div>
           <div class="exblock" id="aExample" style="display:none;">
             <div class="detail" id="aExampleEn"></div>
-            <button class="jatoggle" id="exJaToggle" style="display:none;">＋ 和訳を見る</button>
             <div class="detail ja" id="aExampleJa" style="display:none;"></div>
           </div>
           <div class="xtras" id="aExtras"></div>
@@ -1005,17 +999,13 @@ function renderCard(){
   const exEn=c.example||"", exJa=c.exampleJa||"";
   if(exEn||exJa){ $("aExample").style.display="";
     $("aExampleEn").textContent=exEn; $("aExampleEn").style.display=exEn?"":"none";
-    /* 和訳はカードを表示するたびに畳んだ状態へ戻す */
-    $("aExampleJa").textContent=exJa; $("aExampleJa").style.display="none";
-    $("exJaToggle").style.display=exJa?"":"none"; $("exJaToggle").textContent="＋ 和訳を見る";
+    $("aExampleJa").textContent=exJa; $("aExampleJa").style.display=exJa?"":"none";
   } else $("aExample").style.display="none";
   if(c.chunk){ $("aChunk").style.display=""; $("aChunkEn").textContent=c.chunk; $("aChunkJa").textContent=c.chunkJa||""; $("aChunkJa").style.display=c.chunkJa?"":"none"; } else $("aChunk").style.display="none";
   if(c.core){ $("aCore").style.display=""; $("aCore").textContent=c.core; } else $("aCore").style.display="none";
   if(c.mnemonic){ $("aMnemonic").style.display=""; $("aMnemonic").innerHTML='<span class="ml">覚え方</span>'+escapeHTML(c.mnemonic); } else $("aMnemonic").style.display="none";
   const ex=c.extras||{}; const ks=Object.keys(ex);
   $("aExtras").innerHTML = ks.length ? ks.map(k=>`<div><b>${escapeHTML(k)}</b>　${escapeHTML(ex[k])}</div>`).join("") : "";
-  const hasDetail=!!(c.chunk||c.example||c.exampleJa||ks.length);
-  $("detailBox").style.display="none"; $("detailToggle").style.display=hasDetail?"":"none"; $("detailToggle").textContent="＋ チャンク・例文を見る";
   const er=APP.settings.enRepeat, jr=APP.settings.jaRepeat;
   const enL=er>0?`英語 ×${er}`:"", jaL=jr>0?`日本語 ×${jr}`:"";
   const parts=(dir==="ja2en"?[jaL,enL]:[enL,jaL]).filter(Boolean);
@@ -1023,17 +1013,12 @@ function renderCard(){
   /* 訳は自動では表示しない。「答えを見る」（クリック/Space）を押したときだけめくる */
   if(APP.settings.autoplay) speakSeq(frontSeq(c));
 }
+/* めくったら訳・チャンク・例文（英日）・補足まで一度に全部見せる */
 function reveal(){ if(!session||session.phase!=="front") return; session.phase="back"; const c=currentCard();
   $("frontArea").style.display="none"; $("backArea").style.display="";
   $("frontControls").style.display="none"; $("gradeControls").style.display="flex";
   $("recallAsk").style.display=""; $("frontHint").style.display="none";
-  if(APP.settings.autoplay) speakSeq(backSeq(c)); }
-/* 例文の和訳はクリックするまで畳んでおく（先に和訳が見えると想起の練習にならないため） */
-function toggleExampleJa(){ const box=$("aExampleJa"); const willOpen=box.style.display==="none";
-  box.style.display=willOpen?"":"none"; $("exJaToggle").textContent=willOpen?"− 和訳を隠す":"＋ 和訳を見る"; }
-function toggleDetail(){ if(!session||session.phase!=="back") return; const box=$("detailBox"); const willOpen=box.style.display==="none";
-  box.style.display=willOpen?"":"none"; $("detailToggle").textContent=willOpen?"− 閉じる":"＋ チャンク・例文を見る";
-  if(willOpen && APP.settings.autoplay){ const s=detailSeq(currentCard()); if(s.length) speakSeq(s); } }
+  if(APP.settings.autoplay) speakSeq([...backSeq(c),...detailSeq(c)]); }
 function grade(ok){ if(!session||session.phase!=="back") return; const c=currentCard();
   gradeSRS(c.srs, ok, Date.now()); APP.decks[session.deckId].updatedAt=Date.now(); saveAPP();
   session.seen.add(c.key);
@@ -1428,7 +1413,6 @@ function bind(){
 
   // 学習
   $("revealBtn").onclick=reveal; $("replayBtn").onclick=()=>speakSeq(frontSeq(currentCard()));
-  $("detailToggle").onclick=toggleDetail; $("exJaToggle").onclick=toggleExampleJa;
   $("rightBtn").onclick=()=>grade(true); $("wrongBtn").onclick=()=>grade(false);
   $("studyClose").onclick=()=>{ if(session && (session.correct+session.wrong)>0) endSession(); else goHome(); };
   $("audioPrev").onclick=()=>audioGo(-1); $("audioNext").onclick=()=>audioGo(1); $("audioToggle").onclick=audioToggle;
@@ -1490,7 +1474,6 @@ function bind(){
       else if(k==="s"){ e.preventDefault(); skip(); } else if(k==="r"){ e.preventDefault(); speakSeq(frontSeq(currentCard())); } }
     else{ if(k==="1"||e.key==="ArrowLeft"){ e.preventDefault(); grade(false); }
       else if(k==="2"||e.key==="ArrowRight"||e.key==="Enter"){ e.preventDefault(); grade(true); }
-      else if(k==="d"||e.key==="ArrowDown"){ e.preventDefault(); toggleDetail(); }
       else if(k==="r"){ e.preventDefault(); speakSeq(fullSeq(currentCard())); } } });
 }
 
