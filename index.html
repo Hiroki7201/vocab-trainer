@@ -853,7 +853,7 @@ function handleFile(file){ if(!file) return; const reader=new FileReader();
       exJa   =find(/(?:例文|用例|英文|example|sentence).*(?:和訳|日本語訳|日本語|訳|意味|translation|japanese|_ja\b|_jp\b)|(?:和訳|日本語|訳).*(?:例文|用例)/i);
       ex     =find(/例文|example|sentence|用例|英文/i);
       const ipaCol=find(/ipa|発音|phonetic/i); if(ipaCol>=0) extras.push(ipaCol);
-      core   =find(/コアイメージ|^コア$|coreimage|essence/i);
+      core   =find(/コアイメージ|^コア$|^core$|core[ _-]?image|essence/i);
       en     =find(/english|英単語|英語|^word$|word|単語|見出し|spelling|term|^en$/i);
       ja     =find(/意味|日本語|和訳|訳|meaning|japanese|^ja$|^jp$/i);
     }
