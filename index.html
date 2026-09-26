@@ -310,6 +310,20 @@
   .sc-story b{color:var(--accent); cursor:pointer; font-weight:700; border-radius:4px; padding:0 1px;}
   .sc-story b.on{background:var(--accent-soft);}
   @media (max-width:640px){ .sc-grid{grid-template-columns:1fr;} .sc-pin{width:23px; height:23px; font-size:11px;} .sc-wrap{padding:10px 14px 50px;} }
+  body[data-view="sceneIndex"] #topbar, body[data-view="sceneIndex"] #mainWrap{display:none;}
+  .sci-head{display:flex; align-items:baseline; gap:10px; margin:22px 0 10px; font-family:var(--serif); font-size:17px; font-weight:600;}
+  .sci-head .chip{font-family:var(--sans);}
+  .sci-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .sci-grid.sm{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; margin-top:4px;}
+  .sci-card{cursor:pointer; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--surface); transition:.15s; position:relative;}
+  .sci-card:hover{border-color:var(--accent); box-shadow:var(--shadow);}
+  .sci-card img{width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--surface2);}
+  .sci-card .t{padding:8px 10px 10px; font-size:13.5px; font-weight:600; line-height:1.35;}
+  .sci-card .m{font-size:11.5px; color:var(--muted); font-weight:400; margin-top:2px;}
+  .sci-card .m b{color:var(--ok);}
+  .sci-card.last{border-color:var(--accent);}
+  .sc-nav{display:flex; gap:8px; align-items:center; margin-top:22px;}
+  .sc-nav .btn{flex:1;}
   .scenecard{display:flex; gap:14px; align-items:center; padding:10px 12px 10px 10px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); margin-bottom:10px; cursor:pointer; transition:.15s;}
   .scenecard:hover{border-color:var(--accent); box-shadow:var(--shadow);}
   .scenecard img{width:124px; height:69px; object-fit:cover; border-radius:10px; flex:none; background:var(--surface2);}
@@ -744,6 +758,17 @@
   </div>
 </section>
 
+<!-- ============ SCENE INDEX（場面の一覧：デッキ別） ============ -->
+<section class="view" id="sceneIndexView">
+  <div class="sc-wrap">
+    <div class="sc-top">
+      <button class="xbtn" id="sciClose" title="ホームへ (Esc)">×</button>
+      <div style="flex:1; min-width:0;"><div class="sc-title">場面で覚える</div><div class="sc-sub" id="sciSub"></div></div>
+    </div>
+    <div id="sciBody"></div>
+  </div>
+</section>
+
 <!-- ============ SCENE（場面で覚える：絵＋番号＋同じページで訳） ============ -->
 <section class="view" id="sceneView">
   <div class="sc-wrap">
@@ -761,6 +786,11 @@
     <div class="sc-grid" id="scGrid"></div>
     <div class="section-label">ストーリー（英国発音・約1分）</div>
     <div class="sc-story" id="scStoryText"></div>
+    <div class="sc-nav">
+      <button class="btn ghost sm" id="scPrev">‹ 前の場面</button>
+      <button class="btn ghost sm" id="scIndex">一覧</button>
+      <button class="btn ghost sm" id="scNext">次の場面 ›</button>
+    </div>
   </div>
 </section>
 
@@ -1170,8 +1200,11 @@ function renderHome(){
         <div class="dc-chips"><button class="chip act" data-act="all" data-id="${id}">${s.total}語</button><button class="chip due act" data-act="due" data-id="${id}">復習 ${s.due}</button><button class="chip act" data-act="new" data-id="${id}">新規 ${s.fresh}</button>${stum?`<button class="chip act fl-chip" data-act="flashStumble" data-id="${id}" title="直近の瞬間モードで即答できなかった語だけを瞬間モードで">⚡つまずき ${stum}</button>`:""}</div></div>
       <div class="dc-actions"><button class="btn ghost sm" data-act="flash" data-id="${id}" title="瞬間モード（読み上げなし・←/→で即判定）">⚡ ${cont?"続き":"瞬間"}</button><button class="btn solid sm" data-act="study" data-id="${id}">学習</button><button class="btn ghost sm danger" data-act="del" data-id="${id}" title="このデッキを削除">削除</button></div></div>`; }).join("");
   $("sceneSection").style.display=SCN.list.length?"":"none"; $("sceneCount").textContent=SCN.list.length?`${SCN.list.length} SCENES`:"";
-  $("sceneList").innerHTML=SCN.list.map(s=>`<div class="scenecard" data-scene="${escapeHTML(s.id)}"><img src="${escapeHTML(s.image)}" alt="" loading="lazy" />`
-    +`<div class="dc-main"><div class="dc-name">${escapeHTML(s.title)}</div><div class="dc-chips"><span class="chip">${s.words.length}語</span>${s.titleEn?`<span class="chip">${escapeHTML(s.titleEn)}</span>`:""}</div></div></div>`).join("");
+  if(SCN.list.length){ const last=SCN.list.find(x=>x.id===APP.settings.lastScene), cover=last||SCN.list[0], words=SCN.list.reduce((a,x)=>a+x.words.length,0);
+    $("sceneList").innerHTML=`<div class="scenecard" data-sceneindex="1"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" />`
+      +`<div class="dc-main"><div class="dc-name">場面の一覧を開く</div><div class="dc-chips"><span class="chip">${SCN.list.length}場面</span><span class="chip">${words}語</span></div></div></div>`
+      +(last?`<div class="scenecard" data-scene="${escapeHTML(last.id)}"><img src="${escapeHTML(last.thumb||last.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">前回の続き：${escapeHTML(last.title)}</div><div class="dc-chips"><span class="chip">${last.words.length}語</span>${last.deckLabel?`<span class="chip">${escapeHTML(last.deckLabel)}</span>`:""}</div></div></div>`:""); }
+  else $("sceneList").innerHTML="";
   const cta=$("homeCta");
   if(ids.length){ const top=APP.decks[ids[0]];
     cta.innerHTML=`<button class="btn solid grow" style="width:100%" data-act="study" data-id="${ids[0]}">「${escapeHTML(top.name)}」を学習</button>`; }
@@ -1185,7 +1218,7 @@ let curListId=null, listWrongMin=0, listWrongMax=Infinity, listSortWrong=false, 
 function openList(id){ curListId=id; const d=APP.decks[id]; if(!d) return; const s=deckStats(d);
   $("listTitle").textContent=d.name; $("listSub").textContent=`${s.total} words・復習 ${s.due}・新規 ${s.fresh}・瞬間 挑戦 ${flTriedCount(d)}語／直近つまずき ${flStumbleKeys(d).length}語`;
   listRecent="all";
-  $("listScenes").innerHTML=scScenesForDeck(d).map(sn=>`<button class="btn ghost sm" data-scene="${escapeHTML(sn.id)}">🖼 場面で覚える：${escapeHTML(sn.title)}（${sn.words.length}語）</button>`).join("");
+  const dsc=scScenesForDeck(d); $("listScenes").innerHTML=dsc.length?`<div style="width:100%;"><div class="section-label" style="margin:14px 0 6px;">🖼 このデッキの場面（${dsc.length}）</div><div class="sci-grid sm">${dsc.map(sciCardHTML).join("")}</div></div>`:"";
   $("listSearch").value=""; listWrongMin=0; listWrongMax=Infinity; listSortWrong=false; $("wrongMinInput").value="0"; $("wrongMaxInput").value=""; $("sortWrongBtn").classList.remove("activeseg");
   renderWordList(); showView("list"); }
 /* 絞り込みの基準: 通常の正誤（srs.wrong）か、瞬間の正誤（つまずき＝1周目で遅い・×だった回数） */
@@ -1510,8 +1543,30 @@ function scStoryHTML(s){ const idx={}; s.words.forEach((w,i)=>{ idx[w.en.toLower
   const alts=s.words.map(w=>w.en).sort((a,b)=>b.length-a.length).map(e=>e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));
   const re=new RegExp("\\b("+alts.join("|")+")(s|es|ed|ing)?\\b","gi");
   return escapeHTML(s.story||"").replace(re,(m,base)=>`<b data-i="${idx[base.toLowerCase()]}">${m}</b>`); }
-function openScene(id){ const s=SCN.list.find(x=>x.id===id); if(!s) return; stopSpeak();
-  const deckId=scDeckFor(s); sc={ s, deckId, cur:-1, playing:false, storyPos:0 };
+/* 場面ごとの瞬間の成績（直近1周目が即答だった語の数） */
+const scDeckCache={};
+function scDeckCached(s){ const k=s.deck||s.id; if(!(k in scDeckCache)) scDeckCache[k]=scDeckFor(s); return scDeckCache[k]; }
+function scProgress(s){ const deckId=scDeckCached(s); if(!deckId) return null; let ok=0, tried=0;
+  s.words.forEach(w=>{ const c=scCardFor(deckId,w.en), f=c&&c.flash; if(f&&f.s){ tried++; if(f.last1==="ok") ok++; } });
+  return { ok, tried, n:s.words.length }; }
+function sciCardHTML(s){ const pr=scProgress(s), last=APP.settings.lastScene===s.id;
+  const meta = pr ? (pr.tried ? `即答 <b>${pr.ok}</b>/${pr.n}語` : `${pr.n}語・瞬間 未挑戦`) : `${s.words.length}語・デッキ未登録`;
+  return `<div class="sci-card${last?" last":""}" data-scene="${escapeHTML(s.id)}"><img src="${escapeHTML(s.thumb||s.image)}" alt="" loading="lazy" />`
+    +`<div class="t">${escapeHTML(s.title)}<div class="m">${meta}${last?"・前回ここ":""}</div></div></div>`; }
+function openSceneIndex(){ stopSpeak(); for(const k in scDeckCache) delete scDeckCache[k];
+  const groups=[]; SCN.list.forEach(s=>{ const g=s.deckLabel||s.deck||"その他"; let gr=groups.find(x=>x.label===g); if(!gr){ gr={label:g, list:[]}; groups.push(gr); } gr.list.push(s); });
+  const words=SCN.list.reduce((a,s)=>a+s.words.length,0);
+  $("sciSub").textContent=`${SCN.list.length}場面・${words}語　絵を開いて、番号と訳を同じページで覚える`;
+  $("sciBody").innerHTML=groups.map(gr=>`<div class="sci-head">${escapeHTML(gr.label)}<span class="chip">${gr.list.length}場面・${gr.list.reduce((a,s)=>a+s.words.length,0)}語</span></div>`
+    +`<div class="sci-grid">${gr.list.map(sciCardHTML).join("")}</div>`).join("");
+  showView("sceneIndex");
+  const last=document.querySelector("#sciBody .sci-card.last"); if(last) last.scrollIntoView({block:"center"}); }
+function scGo(delta){ if(!sc) return; const i=SCN.list.findIndex(x=>x.id===sc.s.id), j=i+delta; if(j<0||j>=SCN.list.length) return;
+  if(sc.playing&&hq.el) hq.el.pause(); openScene(SCN.list[j].id, sc.from); }
+function openScene(id, from){ const s=SCN.list.find(x=>x.id===id); if(!s) return; stopSpeak();
+  APP.settings.lastScene=id; saveAPP();
+  const deckId=scDeckFor(s); sc={ s, deckId, cur:-1, playing:false, storyPos:0, from:from||"home" };
+  const idx=SCN.list.findIndex(x=>x.id===id); $("scPrev").disabled=idx<=0; $("scNext").disabled=idx>=SCN.list.length-1;
   $("scTitle").textContent=s.title+(s.titleEn?" ・ "+s.titleEn:"");
   $("scSub").textContent=`${s.words.length}語`+(deckId?` ・ ${APP.decks[deckId].name}`:" ・ 対応するデッキがないため、場面データの訳を表示");
   $("scImg").src=s.image; $("scImg").alt=s.titleEn||s.title;
@@ -1523,7 +1578,7 @@ function openScene(id){ const s=SCN.list.find(x=>x.id===id); if(!s) return; stop
       +`<div class="sc-ja">${escapeHTML(ja)}</div>${w.role?`<div class="sc-role">${escapeHTML(w.role)}</div>`:""}${w.hook?`<div class="sc-hook">${escapeHTML(w.hook)}</div>`:""}</div></div>`; }).join("");
   $("scStoryText").innerHTML=scStoryHTML(s); $("scStory").textContent="▶ 物語を聞く";
   $("scFlash").style.display=deckId?"":"none";
-  showView("scene"); }
+  showView("scene"); window.scrollTo(0,0); }
 function scSelect(i, speak){ if(!sc) return; const s=sc.s, w=s.words[i]; if(!w) return; sc.cur=i;
   document.querySelectorAll("#scPins .sc-pin").forEach(b=>b.classList.toggle("on", +b.dataset.i===i));
   document.querySelectorAll("#scGrid .sc-row").forEach(r=>r.classList.toggle("on", +r.dataset.i===i));
@@ -1546,7 +1601,8 @@ function scStoryToggle(){ if(!sc||!sc.s.storyAudio) return; const a=hqElement();
 function scToggleHide(){ const g=$("scGrid"), on=!g.classList.contains("sc-hide"); g.classList.toggle("sc-hide", on);
   g.querySelectorAll(".sc-row.show").forEach(r=>r.classList.remove("show"));
   $("scHide").textContent=on?"訳を表示":"訳を隠す"; if(sc&&sc.cur>=0) scSelect(sc.cur,false); }
-function scClose(){ const a=hq.el; if(a&&sc&&sc.playing) a.pause(); stopSpeak(); sc=null; goHome(); }
+function scClose(){ const a=hq.el; if(a&&sc&&sc.playing) a.pause(); stopSpeak(); const from=sc&&sc.from; sc=null;
+  if(from==="index") openSceneIndex(); else if(from==="list" && curListId && APP.decks[curListId]) openList(curListId); else goHome(); }
 /* 瞬間モードの裏面に、その語の場面の該当部分を拡大して出す */
 function flSceneCrop(c){ const box=$("flScene"), hit=SCN.byWord[(c.en||"").toLowerCase()];
   if(!hit){ box.style.display="none"; return; }
@@ -1880,8 +1936,11 @@ function bind(){
   $("filterFlashBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startFlash(curListId, curFiltered.slice()); };
 
   // 場面で覚える
-  $("sceneList").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene); });
-  $("listScenes").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene); });
+  $("sceneList").addEventListener("click",e=>{ if(e.target.closest("[data-sceneindex]")){ openSceneIndex(); return; } const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "home"); });
+  $("listScenes").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "list"); });
+  $("sciBody").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "index"); });
+  $("sciClose").onclick=goHome; $("scPrev").onclick=()=>scGo(-1); $("scNext").onclick=()=>scGo(1);
+  $("scIndex").onclick=()=>{ if(sc&&sc.playing&&hq.el) hq.el.pause(); stopSpeak(); sc=null; openSceneIndex(); };
   $("scPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(b) scSelect(+b.dataset.i, true); });
   $("scGrid").addEventListener("click",e=>{ const r=e.target.closest(".sc-row"); if(!r) return;
     if($("scGrid").classList.contains("sc-hide")) r.classList.add("show"); scSelect(+r.dataset.i, true); });
@@ -1975,6 +2034,7 @@ function bind(){
   // キーボード
   document.addEventListener("keydown",e=>{
     if(/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+    if(document.body.dataset.view==="sceneIndex"){ if(e.key==="Escape"){ e.preventDefault(); goHome(); } return; }
     if(document.body.dataset.view==="scene"){ if(!sc||e.repeat) return; const n=sc.s.words.length;
       if(e.key==="ArrowRight"){ e.preventDefault(); scSelect(sc.cur<0?0:(sc.cur+1)%n, true); }
       else if(e.key==="ArrowLeft"){ e.preventDefault(); scSelect(sc.cur<0?n-1:(sc.cur-1+n)%n, true); }
