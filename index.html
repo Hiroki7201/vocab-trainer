@@ -523,6 +523,10 @@
         <div><div class="lab">音声を有効にする</div><div class="sub">オフで無音モード</div></div>
         <div class="ctl"><input type="checkbox" class="switch" id="setAudio" /></div>
       </div>
+      <div class="setrow">
+        <div style="flex:1; min-width:0;"><div class="lab">高品質音声（Gemini・英国発音）</div><div class="sub" id="hqStatus">確認中…</div></div>
+        <div class="ctl"><input type="checkbox" class="switch" id="setHQ" /></div>
+      </div>
       <div class="section-label" style="margin:22px 0 4px;">高品質音声（ElevenLabs・任意）</div>
       <div class="setrow">
         <div><div class="lab">ElevenLabsを使う</div><div class="sub">自然な音声。キー未設定なら標準にフォールバック</div></div>
@@ -711,7 +715,7 @@ function defaultSettings(){
   return { rate:0.9, enVoice:"", jaVoice:"", newPerDay:20,
            enRepeat:2, jaRepeat:0, autoplay:true, readEx:false, readChunk:false,
            audio:true, dir:"en2ja", strength:"normal", theme:"light", audioJp:"both",
-           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2", flashLimit:2000 };
+           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2", flashLimit:2000, hqAudio:true };
 }
 function defaultStudyCategories(){
   return [
@@ -782,6 +786,43 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function stopSpeak(){ speakToken++; try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
   if(currentAudio){ try{ currentAudio.pause(); }catch(e){} currentAudio=null; } setSpeaking(false); }
 function useEleven(){ return !!(APP.settings.audio && APP.settings.elEnabled && APP.settings.elKey && APP.settings.elVoice); }
+
+/* 高品質音声（Gemini 3.8 Flash TTS・英国発音で事前生成した mp3）
+   audio/<英文を正規化したSHA-1の先頭12桁>.mp3 を manifest.json で引く。無ければ従来の音声へ。
+   生成は 02_生成スクリプト/03_Recall音声/gemini_tts_recall.py（hqNorm と同じ正規化）。 */
+const hq={ keys:null, meta:null, loading:null, el:null, unlocked:false };
+function useHQ(){ return !!(APP.settings.audio && APP.settings.hqAudio!==false && window.crypto && crypto.subtle); }
+function hqNorm(t){ return (t||"").normalize("NFC").trim().split(/\s+/).join(" "); }
+async function hqKey(t){ const buf=await crypto.subtle.digest("SHA-1", new TextEncoder().encode(hqNorm(t)));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("").slice(0,12); }
+function hqLoad(){ if(hq.loading) return hq.loading;
+  hq.loading=fetch("audio/manifest.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null)
+    .then(m=>{ hq.meta=m; hq.keys=new Set((m&&m.keys)||[]); renderHQStatus(); })
+    .catch(()=>{ hq.keys=new Set(); renderHQStatus(); });
+  return hq.loading; }
+/* iOSは要素ごとにユーザー操作での再生許可が要るので、1つの Audio 要素を最初の操作で解錠して使い回す */
+function hqElement(){ if(!hq.el){ hq.el=new Audio(); hq.el.preload="auto"; } return hq.el; }
+function hqUnlock(){ if(hq.unlocked) return; hq.unlocked=true; const a=hqElement();
+  try{ const n=240, b=new ArrayBuffer(44+n*2), v=new DataView(b), w=(o,str)=>{ for(let i=0;i<str.length;i++) v.setUint8(o+i,str.charCodeAt(i)); };
+    w(0,"RIFF"); v.setUint32(4,36+n*2,true); w(8,"WAVE"); w(12,"fmt "); v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+    v.setUint32(24,24000,true); v.setUint32(28,48000,true); v.setUint16(32,2,true); v.setUint16(34,16,true); w(36,"data"); v.setUint32(40,n*2,true);
+    a.src=URL.createObjectURL(new Blob([b],{type:"audio/wav"})); a.play().then(()=>a.pause()).catch(()=>{}); }catch(e){} }
+/* 収録済みなら再生して true。未収録・失敗なら false（呼び出し側が従来の音声で読む） */
+async function hqSpeak(it, token){
+  if(!useHQ() || it.langPrefix!=="en") return false;
+  await hqLoad(); if(!hq.keys || !hq.keys.size || token!==speakToken) return false;
+  let k; try{ k=await hqKey(it.text); }catch(e){ return false; }
+  if(!hq.keys.has(k) || token!==speakToken) return false;
+  const a=hqElement();
+  return await new Promise(resolve=>{ let settled=false, guard=0;
+    const fin=ok=>{ if(settled) return; settled=true; clearTimeout(guard); a.onended=a.onerror=a.onpause=null; resolve(ok); };
+    a.onended=()=>fin(true); a.onpause=()=>fin(true); a.onerror=()=>fin(false);
+    a.src="audio/"+k+".mp3"; a.playbackRate=APP.settings.rate||1; try{ a.preservesPitch=true; }catch(e){}
+    currentAudio=a; guard=setTimeout(()=>fin(true), 20000);
+    const p=a.play(); if(p&&p.catch) p.catch(()=>fin(false)); }); }
+function renderHQStatus(){ const el=$("hqStatus"); if(!el) return;
+  if(!hq.keys){ el.textContent="確認中…"; return; }
+  el.textContent = hq.keys.size ? `収録 ${hq.keys.size}件（英国発音）。未収録の語は標準音声で読みます` : "収録済みの音声がありません（標準音声で読みます）"; }
 
 /* ElevenLabs 音声キャッシュ (IndexedDB) */
 function idbOpen(){ return new Promise((res,rej)=>{ let r; try{ r=indexedDB.open("recall_tts",1); }catch(e){ rej(e); return; }
@@ -878,7 +919,7 @@ async function speakSeq(items, onDone){
   // cancel直後だけ間を置く。バックグラウンドのタブでは setTimeout が最大1分まで
   // 間引かれるため、無条件のsleepは聞き流しモードでそのまま無音時間になる。
   if(!useEleven() && wasSpeaking) await sleep(50);
-  for(const it of seq){ if(token!==speakToken) return; try{ if(useEleven()) await elevenSpeak(it, token); else await browserSpeak(it, token); }catch(e){} }
+  for(const it of seq){ if(token!==speakToken) return; try{ if(await hqSpeak(it, token)) continue; if(token!==speakToken) return; if(useEleven()) await elevenSpeak(it, token); else await browserSpeak(it, token); }catch(e){} }
   if(token===speakToken){ setSpeaking(false); if(onDone)onDone(); }
 }
 function frontSeq(c){ return APP.settings.dir==="ja2en" ? rep(jaItem(c.ja),APP.settings.jaRepeat) : rep(enItem(c.en),APP.settings.enRepeat); }
@@ -1361,6 +1402,7 @@ function syncSettingsUI(){ const s=APP.settings;
   $("setNewPerDay").value=s.newPerDay; $("setAutoplay").checked=s.autoplay;
   $("setReadEx").checked=s.readEx; $("setReadChunk").checked=s.readChunk; $("setAudio").checked=s.audio; $("setDir").value=s.dir; $("setAudioJp").value=s.audioJp||"both"; $("setTheme").value=s.theme;
   document.querySelectorAll("#segStrength .seg").forEach(b=>b.classList.toggle("active", b.dataset.strength===s.strength));
+  $("setHQ").checked=s.hqAudio!==false; renderHQStatus();
   $("setElEnabled").checked=s.elEnabled; $("setElKey").value=s.elKey||""; $("setElModel").value=s.elModel||"eleven_multilingual_v2";
   const sv=$("setElVoice"); if(s.elVoice && !Array.from(sv.options).some(o=>o.value===s.elVoice)){ const o=document.createElement("option"); o.value=s.elVoice; o.textContent="(保存済みの声)"; sv.appendChild(o); } sv.value=s.elVoice||"";
   populateVoiceSelects(); renderVoiceDiag(); }
@@ -1698,6 +1740,7 @@ function bind(){
   $("setReadEx").onchange=e=>{ APP.settings.readEx=e.target.checked; saveAPP(); };
   $("setReadChunk").onchange=e=>{ APP.settings.readChunk=e.target.checked; saveAPP(); };
   $("setAudio").onchange=e=>{ APP.settings.audio=e.target.checked; saveAPP(); };
+  $("setHQ").onchange=e=>{ APP.settings.hqAudio=e.target.checked; saveAPP(); };
   $("voiceDiagBtn").onclick=()=>{ ttsDiag={ lastError:"", failures:0, retries:0 }; ttsNotified=false; loadVoices();
     speakSeq([enItem("This is the English voice."), jaItem("これは日本語の音声です。")], ()=>renderVoiceDiag()); };
   $("setDir").onchange=e=>{ APP.settings.dir=e.target.value; saveAPP(); if(session&&document.body.dataset.view==="study") renderCard(); };
@@ -1755,7 +1798,8 @@ function bind(){
 }
 
 /* ---------- 起動 ---------- */
-function init(){ loadAPP(); applyTheme(); bind(); loadVoices(); renderHome(); showView("home");
+function init(){ loadAPP(); applyTheme(); bind(); loadVoices(); renderHome(); showView("home"); hqLoad();
+  ["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev, hqUnlock, {once:true, capture:true}));
   if(!storageOK){ const w=document.createElement("div"); w.className="badge-warn"; w.style.margin="0 0 14px";
     w.textContent="このブラウザでは進捗の自動保存が無効のようです。設定の「バックアップ」をご利用ください。"; $("homeView").prepend(w); } }
 init();
