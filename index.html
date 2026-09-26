@@ -37,7 +37,7 @@
   .brand{font-family:var(--serif); font-size:21px; font-weight:600; cursor:pointer;}
   .brand .dot{color:var(--accent);}
   .spacer{flex:1;}
-  body[data-view="study"] #topbar, body[data-view="settings"] #topbar, body[data-view="audio"] #topbar, body[data-view="progress"] #topbar{display:none;}
+  body[data-view="study"] #topbar, body[data-view="settings"] #topbar, body[data-view="audio"] #topbar, body[data-view="progress"] #topbar, body[data-view="flash"] #topbar{display:none;}
 
   .wrap{max-width:640px; margin:0 auto; padding:6px 22px 90px;}
   .view{display:none; animation:fade .25s ease;}
@@ -226,6 +226,58 @@
   .cal-month-total{margin-top:6px; padding-top:5px; border-top:1px solid var(--line); color:var(--faint); font-size:8px; line-height:1.3; text-align:center; font-variant-numeric:tabular-nums; white-space:nowrap;}
   @media (max-width:380px){ .cal-month-title{font-size:9.5px;} .cal-cell{font-size:8px;} }
 
+  /* flash: 瞬間モード（フラッシュカード・読み上げなし・← / → で即判定） */
+  :root{ --ok:#3f7a5a; --on-ok:#fff; }
+  html.dark{ --ok:#79b08f; --on-ok:#14201a; }
+  body[data-view="flash"] #mainWrap{display:none;}
+  .fl-top{display:flex; align-items:center; gap:12px; padding:6px 0 4px;}
+  .fl-round{font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .fl-limit{cursor:pointer;}
+  .fl-stage{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:18px 0 10px; perspective:1400px; min-height:0;}
+  .fcard{position:relative; width:100%; max-width:520px; cursor:pointer; user-select:none; -webkit-user-select:none; touch-action:pan-y; -webkit-tap-highlight-color:transparent;}
+  .fc-inner{display:grid; transition:transform .2s ease; transform-style:preserve-3d;}
+  .fcard.flipped .fc-inner{transform:rotateY(180deg);}
+  .fc-face{grid-area:1/1; min-height:clamp(230px,42vh,320px); background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:0 14px 40px rgba(60,45,30,.10), 0 2px 0 rgba(60,45,30,.04); backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:34px 28px 30px; position:relative; overflow:hidden;}
+  .fc-face::before{content:""; position:absolute; left:0; right:0; top:0; height:5px; background:var(--accent); opacity:.85;}
+  .fc-back{transform:rotateY(180deg); justify-content:flex-start; padding-top:30px;}
+  .fc-corner span{max-width:62%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .fc-corner{position:absolute; top:14px; left:18px; right:18px; display:flex; justify-content:space-between; font-size:11px; letter-spacing:.08em; color:var(--faint); font-weight:700;}
+  .fc-word{font-family:var(--serif); font-size:clamp(38px,9vw,60px); font-weight:600; letter-spacing:-.01em; line-height:1.1; word-break:break-word;}
+  .fc-bword{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--ink);}
+  .fc-ipa{color:var(--muted); font-size:14px; margin-top:2px;}
+  .fc-ja{font-family:var(--serif); color:var(--accent); font-size:clamp(22px,5.4vw,30px); font-weight:600; line-height:1.35; margin-top:12px; word-break:break-word;}
+  .fc-core{margin-top:12px; background:var(--accent-soft); color:var(--ink); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.55; max-width:30em;}
+  .fc-core::before{content:"コア"; display:block; font-size:10px; letter-spacing:.16em; color:var(--accent); font-weight:700; margin-bottom:2px;}
+  .fc-ex{margin-top:14px; text-align:left; max-width:30em; width:100%; border-left:2px solid var(--accent); padding-left:12px;}
+  .fc-ex .en{font-size:14.5px; color:var(--ink); line-height:1.5;}
+  .fc-ex .ja{font-size:13px; color:var(--muted); line-height:1.5; margin-top:3px;}
+  .fc-mn{margin-top:12px; font-size:12.5px; color:var(--muted); line-height:1.55; text-align:left; max-width:30em; width:100%;}
+  .fc-mn b{color:var(--accent); font-size:10px; letter-spacing:.14em; margin-right:6px;}
+  .fc-timer{position:absolute; left:0; right:0; bottom:0; height:4px; background:transparent;}
+  .fc-timer i{display:block; height:100%; width:100%; background:var(--ink); opacity:.18; transform-origin:left; transform:scaleX(1);}
+  .fc-timer.over i{background:var(--accent); opacity:.55;}
+  @keyframes fcTimer{from{transform:scaleX(1);} to{transform:scaleX(0);}}
+  .fcard.enter{animation:fcIn .12s ease-out;}
+  @keyframes fcIn{from{opacity:.2; transform:scale(.97);} to{opacity:1; transform:none;}}
+  .fc-ghost{position:absolute; left:0; right:0; margin:auto; pointer-events:none; z-index:5; transition:transform .2s ease-in, opacity .2s ease-in;}
+  .fc-ghost.go-right{transform:translateX(70%) rotate(9deg); opacity:0;}
+  .fc-ghost.go-left{transform:translateX(-70%) rotate(-9deg); opacity:0;}
+  .fc-ghost.tint-ok .fc-face{border-color:var(--ok); box-shadow:0 0 0 2px var(--ok) inset;}
+  .fc-ghost.tint-ng .fc-face{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent) inset;}
+  .fl-last{min-height:22px; margin-top:12px; font-size:12.5px; color:var(--muted); text-align:center; font-variant-numeric:tabular-nums;}
+  .fl-last .ok{color:var(--ok); font-weight:700;} .fl-last .slow{color:var(--muted); font-weight:700;} .fl-last .ng{color:var(--accent); font-weight:700;}
+  .fl-actions{display:flex; gap:12px; margin-top:10px;}
+  .fl-actions .btn{flex:1; padding:16px 10px; font-size:15px;}
+  .btn.fl-ng{background:transparent; border-color:var(--accent); color:var(--accent);}
+  .btn.fl-ok{background:var(--ok); color:var(--on-ok);}
+  .fl-inter{text-align:center;}
+  .fl-inter .big{font-family:var(--serif); font-size:clamp(34px,8vw,48px); font-weight:600; line-height:1.2;}
+  .fl-inter .lead{margin:10px auto 0;}
+  .fl-sum .stats3{grid-template-columns:repeat(2,1fr);}
+  .fl-sum .wl-ja{max-width:60%;}
+  @media (max-width:480px){ .fc-face{padding:30px 18px 24px; border-radius:18px;} .fl-actions .btn{padding:18px 8px;} .fl-sum .stats3{gap:8px;} }
+  @media (prefers-reduced-motion: reduce){ .fc-inner{transition:none;} .fcard.enter{animation:none;} .fc-ghost{display:none;} }
+
   /* toast */
   #toast{position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--on-ink); padding:11px 18px; border-radius:11px; font-size:14px; font-weight:600; opacity:0; pointer-events:none; transition:.25s; z-index:80; box-shadow:var(--shadow); max-width:90vw; text-align:center;}
   #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
@@ -310,6 +362,7 @@
       <span class="flab">回 ・ 該当 <b id="filterCount">0</b> 語</span>
       <button class="btn ghost sm" id="sortWrongBtn">不正解が多い順</button>
       <button class="btn ghost sm" id="filterTestBtn">この条件でテスト</button>
+      <button class="btn ghost sm" id="filterFlashBtn" title="この条件の単語を瞬間モードで回す">⚡ 瞬間モード</button>
       <button class="btn ghost sm" id="filterAudioBtn">🔊 聞き流し</button>
       <button class="btn ghost sm" id="filterPrefetchBtn" title="ElevenLabs音声を事前生成して端末に保存（オフライン再生用）">⬇ 音声を保存</button>
     </div>
@@ -573,6 +626,70 @@
   </div>
 </section>
 
+<!-- ============ FLASH（瞬間モード：読み上げなし・←/→で即判定・×だけ次の周へ） ============ -->
+<section class="view" id="flashView">
+  <div class="study-wrap">
+    <div class="fl-top">
+      <button class="xbtn" id="flClose" title="中断して保存 (Esc)">×</button>
+      <div class="progress"><i id="flBar"></i></div>
+      <span class="fl-round" id="flRound"></span>
+      <button class="chip act fl-limit" id="flLimit" title="この秒数を超えた→は「遅い」＝次の周でもう一度"></button>
+    </div>
+
+    <div id="flPlay" style="display:flex; flex-direction:column; flex:1;">
+      <div class="fl-stage" id="flStage">
+        <div class="fcard" id="flCard">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-corner"><span id="flDeck"></span><span id="flLeft"></span></div>
+              <div class="fc-word" id="flWord"></div>
+              <div class="fc-timer" id="flTimer"><i></i></div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-bword" id="flBWord"></div>
+              <div class="fc-ipa" id="flIpa"></div>
+              <div class="fc-ja" id="flJa"></div>
+              <div class="fc-core" id="flCore"></div>
+              <div class="fc-ex" id="flEx"><div class="en" id="flExEn"></div><div class="ja" id="flExJa"></div></div>
+              <div class="fc-mn" id="flMn"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fl-last" id="flLast"></div>
+      </div>
+      <div class="fl-actions">
+        <button class="btn fl-ng" id="flNg">← 知らない</button>
+        <button class="btn fl-ok" id="flOk">知ってる →</button>
+      </div>
+      <div class="khint"><kbd>→</kbd> 知ってる ／ <kbd>←</kbd> 知らない（裏を表示） ／ <kbd>Space</kbd> めくる ／ <kbd>Z</kbd> 取り消し ／ <kbd>Esc</kbd> 中断</div>
+    </div>
+
+    <div id="flInter" class="fl-stage fl-inter" style="display:none;">
+      <div class="badge accent" id="flInterBadge"></div>
+      <div class="big" id="flInterBig" style="margin-top:14px;"></div>
+      <p class="lead" id="flInterLead"></p>
+      <div class="study-actions" style="width:100%; max-width:420px;"><button class="btn solid grow" id="flInterGo">次の周へ →</button></div>
+    </div>
+
+    <div id="flSum" class="fl-sum" style="display:none;">
+      <div class="badge accent" style="margin-top:18px;">ALL CLEAR</div>
+      <div class="display" style="font-size:clamp(26px,6.5vw,34px); margin-top:12px;">全語、瞬間で通過。</div>
+      <div class="stats3">
+        <div class="stat"><div class="num" id="flSContacts">0</div><div class="lbl">接点（めくった回数）</div></div>
+        <div class="stat"><div class="num" id="flSMin">0</div><div class="lbl">所要（分）</div></div>
+        <div class="stat"><div class="num" id="flSR1">0%</div><div class="lbl">1周目の即答率</div></div>
+        <div class="stat"><div class="num accent" id="flSStumble">0</div><div class="lbl">つまずいた語</div></div>
+      </div>
+      <div id="flSListWrap">
+        <div class="section-label">今日つまずいた語（1周目で即答できなかった）</div>
+        <div class="wordlist compact" id="flSList"></div>
+      </div>
+      <div class="study-actions"><button class="btn solid grow" id="flSAgain">つまずいた語だけ、もう一度</button></div>
+      <button class="linkbtn center" id="flSHome">ホームに戻る</button>
+    </div>
+  </div>
+</section>
+
 <div id="toast"></div>
 
 <script>
@@ -587,14 +704,14 @@ const STORE_KEY = "vocab_srs_app_v1";
 const EL_API_BASE = "https://elevenlabs-proxy.h-honda-share.workers.dev";
 const $ = (id) => document.getElementById(id);
 
-let APP = { decks:{}, settings:defaultSettings(), study:defaultStudy(), goals:[] };
+let APP = { decks:{}, settings:defaultSettings(), study:defaultStudy(), goals:[], flash:{} };
 let storageOK = true;
 
 function defaultSettings(){
   return { rate:0.9, enVoice:"", jaVoice:"", newPerDay:20,
            enRepeat:2, jaRepeat:0, autoplay:true, readEx:false, readChunk:false,
            audio:true, dir:"en2ja", strength:"normal", theme:"light", audioJp:"both",
-           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2" };
+           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2", flashLimit:2000 };
 }
 function defaultStudyCategories(){
   return [
@@ -617,7 +734,8 @@ function loadAPP(){
     const raw=localStorage.getItem(STORE_KEY);
     if(raw){ const o=JSON.parse(raw); APP.decks=o.decks||{}; APP.settings=Object.assign(defaultSettings(),o.settings||{});
       if(typeof APP.settings.repeat==="boolean" && o.settings && o.settings.enRepeat===undefined){ APP.settings.enRepeat=APP.settings.repeat?2:1; }
-      APP.study = normalizeStudy(o.study); APP.goals = Array.isArray(o.goals) ? o.goals : []; }
+      APP.study = normalizeStudy(o.study); APP.goals = Array.isArray(o.goals) ? o.goals : [];
+      APP.flash = (o.flash && typeof o.flash==="object") ? o.flash : {}; }
   }catch(e){ storageOK=false; }
 }
 function saveAPP(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(APP)); }catch(e){ storageOK=false; } }
@@ -939,7 +1057,7 @@ function renderHome(){
     return `<div class="deckcard" data-act="open" data-id="${id}">
       <div class="dc-main"><div class="dc-name">${escapeHTML(d.name)}</div>
         <div class="dc-chips"><button class="chip act" data-act="all" data-id="${id}">${s.total}語</button><button class="chip due act" data-act="due" data-id="${id}">復習 ${s.due}</button><button class="chip act" data-act="new" data-id="${id}">新規 ${s.fresh}</button></div></div>
-      <div class="dc-actions"><button class="btn solid sm" data-act="study" data-id="${id}">学習</button><button class="btn ghost sm danger" data-act="del" data-id="${id}" title="このデッキを削除">削除</button></div></div>`; }).join("");
+      <div class="dc-actions"><button class="btn ghost sm" data-act="flash" data-id="${id}" title="瞬間モード（読み上げなし・←/→で即判定）">⚡ ${APP.flash&&APP.flash[id]?"続き":"瞬間"}</button><button class="btn solid sm" data-act="study" data-id="${id}">学習</button><button class="btn ghost sm danger" data-act="del" data-id="${id}" title="このデッキを削除">削除</button></div></div>`; }).join("");
   const cta=$("homeCta");
   if(ids.length){ const top=APP.decks[ids[0]];
     cta.innerHTML=`<button class="btn solid grow" style="width:100%" data-act="study" data-id="${ids[0]}">「${escapeHTML(top.name)}」を学習</button>`; }
@@ -1095,6 +1213,132 @@ function audioToggle(){ if(!audio) return; audio.playing=!audio.playing;
 function audioExit(){ releaseWakeLock(); stopSpeak(); audio=null; renderHome(); showView("home"); }
 
 /* =========================================================================
+   瞬間モード（フラッシュカード）
+   ─ 読み上げなし。→=知ってる／←=知らない。制限秒数内の→だけ「即答」としてクリアし、
+     遅い→と←は次の周へ回す。全語が即答になったら終了（佐々木式の絞り込みループ）。
+   ─ SRS反映: ←は不正解（1セッション1回まで）。即答→は期限到来・新規のカードだけ正解。
+     遅い→はSRSに触れない（見た瞬間に出ない語の間隔を伸ばさないため）。
+   ─ 途中経過は APP.flash[deckId] に保存し、同じ単語セットなら続きから再開できる。
+   ========================================================================= */
+const FL_LIMITS=[1500,2000,3000,0]; /* 0 = 制限なし */
+let fl=null, flDrag=null;
+function flSig(keys){ const s=keys.slice().sort().join("\u0001"); let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return keys.length+":"+(h>>>0).toString(36); }
+function flLimit(){ const v=APP.settings.flashLimit; return (typeof v==="number")?v:2000; }
+function flLimitLabel(){ const L=flLimit(); return L>0 ? "⏱ "+(L/1000).toFixed(1)+"秒" : "⏱ 制限なし"; }
+function flState(){ return { round:fl.round, queue:fl.queue, idx:fl.idx, next:fl.next, contacts:fl.contacts, instantR1:fl.instantR1,
+  r1Size:fl.r1Size, stumbled:fl.stumbled, lapsed:fl.lapsed, activeMs:fl.activeMs }; }
+function flPersist(){ if(!fl) return; APP.flash=APP.flash||{};
+  APP.flash[fl.deckId]=Object.assign({ sig:fl.sig, all:fl.all, savedAt:Date.now() }, flState()); saveAPP(); }
+function flCard(){ return APP.decks[fl.deckId].cards[fl.queue[fl.idx]]; }
+function startFlash(deckId, keys, fresh){ const deck=APP.decks[deckId]; if(!deck) return;
+  const all=(keys&&keys.length?keys:Object.keys(deck.cards)).filter(k=>deck.cards[k]);
+  if(!all.length){ toast("対象の単語がありません"); return; }
+  const sig=flSig(all), saved=APP.flash&&APP.flash[deckId];
+  let resume=null;
+  if(!fresh && saved && saved.sig===sig && Array.isArray(saved.queue)){
+    const left=Math.max(0,saved.queue.length-saved.idx)+(saved.idx>=saved.queue.length?saved.next.length:0);
+    if(confirm(`前回の続きがあります（${saved.round}周目・この周の残り ${left}語）。\n続きから再開しますか？\n\n［キャンセル］で最初からやり直します。`)) resume=saved; }
+  const base={ deckId, sig, all, hist:[], lastAct:Date.now(), phase:"front" };
+  if(resume){ const ok=k=>!!deck.cards[k];
+    fl=Object.assign(base, { round:resume.round||1, queue:(resume.queue||[]).filter(ok), idx:0, next:(resume.next||[]).filter(ok),
+      contacts:resume.contacts||0, instantR1:resume.instantR1||0, r1Size:resume.r1Size||all.length,
+      stumbled:(resume.stumbled||[]).filter(ok), lapsed:(resume.lapsed||[]).filter(ok), activeMs:resume.activeMs||0 });
+    /* 削除済みの単語を詰めたぶん idx を補正 */
+    fl.idx=Math.min(resume.queue.slice(0,resume.idx).filter(ok).length, fl.queue.length); }
+  else fl=Object.assign(base, { round:1, queue:shuffle(all), idx:0, next:[], contacts:0, instantR1:0, r1Size:all.length, stumbled:[], lapsed:[], activeMs:0 });
+  stopSpeak(); showView("flash"); flShowPanel("play"); $("flLast").innerHTML=""; $("flLimit").textContent=flLimitLabel();
+  if(fl.idx>=fl.queue.length) flEndRound(); else flRender(); }
+function flShowPanel(p){ $("flPlay").style.display=p==="play"?"flex":"none"; $("flInter").style.display=p==="inter"?"flex":"none"; $("flSum").style.display=p==="sum"?"":"none"; }
+function flTimerStart(){ const t=$("flTimer"), i=t.firstElementChild, L=flLimit(); clearTimeout(flTimerStart._t);
+  t.classList.remove("over"); i.style.animation="none"; i.style.transform=""; void i.offsetWidth;
+  if(L>0){ t.style.display=""; i.style.animation=`fcTimer ${L}ms linear forwards`;
+    flTimerStart._t=setTimeout(()=>{ i.style.animation="none"; i.style.transform="scaleX(1)"; t.classList.add("over"); }, L); }
+  else t.style.display="none"; }
+function flTimerStop(){ clearTimeout(flTimerStart._t); const i=$("flTimer").firstElementChild; const cs=getComputedStyle(i).transform; i.style.animation="none"; i.style.transform=cs==="none"?"":cs; }
+function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard"), inner=card.firstElementChild;
+  fl.phase="front"; fl.marked=null; fl.flipMs=0;
+  inner.style.transition="none"; card.classList.remove("flipped"); void inner.offsetWidth; inner.style.transition="";
+  $("flWord").textContent=c.en; $("flDeck").textContent=deck.name; $("flLeft").textContent=`${fl.idx+1} / ${fl.queue.length}`;
+  $("flBWord").textContent=c.en; $("flIpa").textContent=c.ipa||""; $("flIpa").style.display=c.ipa?"":"none";
+  $("flJa").textContent=c.ja||"";
+  $("flCore").textContent=c.core||""; $("flCore").style.display=c.core?"":"none";
+  $("flExEn").textContent=c.example||""; $("flExJa").textContent=c.exampleJa||""; $("flExJa").style.display=c.exampleJa?"":"none";
+  $("flEx").style.display=(c.example||c.exampleJa)?"":"none";
+  $("flMn").innerHTML=c.mnemonic?'<b>覚え方</b>'+escapeHTML(c.mnemonic):""; $("flMn").style.display=c.mnemonic?"":"none";
+  $("flRound").textContent=`${fl.round}周目`;
+  $("flBar").style.width=Math.round(fl.idx/fl.queue.length*100)+"%";
+  card.classList.remove("enter"); void card.offsetWidth; card.classList.add("enter");
+  flTimerStart(); fl.t0=performance.now(); }
+function flOutcome(ms){ const L=flLimit(); return (L>0 && ms>L) ? "slow" : "ok"; }
+function flApply(c, outcome, ms){ const now=Date.now();
+  fl.hist.push(JSON.stringify({ key:c.key, srs:c.srs, flash:c.flash||null, st:flState() })); if(fl.hist.length>30) fl.hist.shift();
+  const f=c.flash||(c.flash={n:0,ok:0,slow:0,ng:0,lastMs:0,last:0});
+  f.n++; f[outcome]=(f[outcome]||0)+1; f.lastMs=Math.round(ms); f.last=now;
+  if(outcome==="ng"){ if(!fl.lapsed.includes(c.key)){ gradeSRS(c.srs,false,now); fl.lapsed=fl.lapsed.concat(c.key); } }
+  else if(outcome==="ok" && (c.srs.last===0 || c.srs.due<=now)) gradeSRS(c.srs,true,now);
+  fl.contacts++; fl.activeMs+=Math.min(now-(fl.lastAct||now), 20000); fl.lastAct=now;
+  if(outcome!=="ok"){ if(!fl.next.includes(c.key)) fl.next=fl.next.concat(c.key);
+    if(fl.round===1 && !fl.stumbled.includes(c.key)) fl.stumbled=fl.stumbled.concat(c.key); }
+  else if(fl.round===1) fl.instantR1++;
+  APP.decks[fl.deckId].updatedAt=now;
+  const sec=(ms/1000).toFixed(1), en=escapeHTML(c.en);
+  $("flLast").innerHTML = outcome==="ok" ? `<span class="ok">即答</span> ${sec}秒 ・ ${en}`
+    : outcome==="slow" ? `<span class="slow">遅い</span> ${sec}秒 ・ ${en} → 次の周でもう一度`
+    : `<span class="ng">知らない</span> ・ ${en} → 次の周でもう一度`;
+  flPersist(); }
+function flFlip(){ if(!fl) return; const card=$("flCard");
+  if(fl.phase==="front"){ fl.flipMs=performance.now()-fl.t0; fl.phase="back"; flTimerStop(); card.classList.add("flipped"); }
+  else if(fl.phase==="back" && !fl.marked) card.classList.toggle("flipped"); }
+function flTap(){ if(!fl) return; if(fl.phase==="back" && fl.marked) flAdvance("left","tint-ng"); else flFlip(); }
+function flAnswer(know){ if(!fl) return;
+  if(fl.phase==="inter"){ flNextRound(); return; }
+  if(fl.phase!=="front" && fl.phase!=="back") return;
+  const c=flCard();
+  if(fl.phase==="front"){ const ms=performance.now()-fl.t0;
+    if(know){ const o=flOutcome(ms); flApply(c,o,ms); flAdvance("right", o==="ok"?"tint-ok":""); }
+    else { flApply(c,"ng",ms); fl.marked="ng"; fl.phase="back"; flTimerStop(); $("flCard").classList.add("flipped"); }
+    return; }
+  if(fl.marked){ flAdvance(know?"right":"left","tint-ng"); return; }  /* ←で裏を見た後は、どのキーでも次へ */
+  const ms=fl.flipMs;
+  if(know){ const o=flOutcome(ms); flApply(c,o,ms); flAdvance("right", o==="ok"?"tint-ok":""); }
+  else { flApply(c,"ng",ms); flAdvance("left","tint-ng"); } }
+function flAdvance(dir, tint){ const card=$("flCard");
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    const g=card.cloneNode(true); g.removeAttribute("id"); g.querySelectorAll("[id]").forEach(n=>n.removeAttribute("id"));
+    g.classList.remove("enter"); g.classList.add("fc-ghost"); if(tint) g.classList.add(tint);
+    g.style.top=card.offsetTop+"px"; g.style.width=card.offsetWidth+"px"; $("flStage").appendChild(g);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>g.classList.add(dir==="right"?"go-right":"go-left")));
+    setTimeout(()=>g.remove(), 260); }
+  fl.idx++; if(fl.idx>=fl.queue.length) flEndRound(); else { flPersist(); flRender(); } }
+function flEndRound(){ flTimerStop(); if(!fl.next.length){ flDone(); return; }
+  fl.phase="inter"; flPersist(); $("flBar").style.width="100%";
+  $("flInterBadge").textContent=`${fl.round}周目 おわり`;
+  $("flInterBig").textContent=`残り ${fl.next.length}語`;
+  $("flInterLead").textContent= fl.round===1
+    ? `1周目の即答 ${fl.instantR1} / ${fl.r1Size}語。即答できなかった語だけで次の周を回します。全部が即答になったら終了です。`
+    : "即答できなかった語だけで、もう一周。";
+  flShowPanel("inter"); }
+function flNextRound(){ if(!fl||fl.phase!=="inter") return;
+  fl.round++; fl.queue=shuffle(fl.next); fl.next=[]; fl.idx=0; fl.lastAct=Date.now();
+  flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender(); }
+function flDone(){ fl.phase="done"; if(APP.flash) delete APP.flash[fl.deckId]; saveAPP();
+  const deck=APP.decks[fl.deckId], mins=fl.activeMs/60000;
+  $("flSContacts").textContent=fl.contacts; $("flSMin").textContent=mins<10?mins.toFixed(1):Math.round(mins);
+  $("flSR1").textContent=(fl.r1Size?Math.round(fl.instantR1/fl.r1Size*100):0)+"%"; $("flSStumble").textContent=fl.stumbled.length;
+  const rows=fl.stumbled.map(k=>deck.cards[k]).filter(Boolean);
+  $("flSListWrap").style.display=rows.length?"":"none"; $("flSAgain").style.display=rows.length?"":"none";
+  $("flSList").innerHTML=rows.map(c=>`<div class="wl"><span class="dot"></span><div class="wl-main"><div class="wl-top"><span class="wl-en">${escapeHTML(c.en)}</span><span class="wl-ja">${escapeHTML(c.ja)}</span></div></div></div>`).join("");
+  $("flBar").style.width="100%"; flShowPanel("sum"); }
+function flUndo(){ if(!fl||!fl.hist.length||fl.phase==="done") return; const s=JSON.parse(fl.hist.pop());
+  const c=APP.decks[fl.deckId].cards[s.key]; if(c){ c.srs=s.srs; if(s.flash) c.flash=s.flash; else delete c.flash; }
+  Object.assign(fl, s.st); flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender(); toast("1枚取り消しました"); }
+function flExit(){ if(!fl) return; flTimerStop();
+  if(fl.phase!=="done"){ flPersist(); toast("途中経過を保存しました。次回は続きから再開できます"); }
+  fl=null; renderHome(); showView("home"); }
+function flCycleLimit(){ const i=FL_LIMITS.indexOf(flLimit()); APP.settings.flashLimit=FL_LIMITS[(i+1)%FL_LIMITS.length]; saveAPP();
+  $("flLimit").textContent=flLimitLabel(); if(fl&&fl.phase==="front"){ flTimerStart(); fl.t0=performance.now(); } }
+
+/* =========================================================================
    設定UI
    ========================================================================= */
 function populateVoiceSelects(){ const en=$("setEnVoice"), ja=$("setJaVoice"); if(!en||!ja) return;
@@ -1130,7 +1374,7 @@ function backup(){ const copy=JSON.parse(JSON.stringify(APP)); if(copy.settings)
   download("recall-backup-"+dateStr(Date.now())+".json", JSON.stringify(copy), "application/json"); toast("バックアップを書き出しました（APIキーは除外）"); }
 function restore(file){ const r=new FileReader(); r.onload=e=>{ try{ const o=JSON.parse(e.target.result); if(!o.decks) throw 0;
   const curKey=APP.settings.elKey; APP.decks=o.decks; APP.settings=Object.assign(defaultSettings(),o.settings||{});
-  APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[];
+  APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[]; APP.flash=(o.flash&&typeof o.flash==="object")?o.flash:{};
   if(!APP.settings.elKey&&curKey) APP.settings.elKey=curKey; saveAPP(); applyTheme(); renderHome(); toast("バックアップを読み込みました"); }
   catch(err){ toast("読み込めませんでした（JSON形式を確認）"); } }; r.readAsText(file); }
 function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk,chunk_meaning,mnemonic,example,example_ja\n"+
@@ -1386,6 +1630,7 @@ function bind(){
   $("homeView").addEventListener("click",e=>{ const b=e.target.closest("[data-act]"); if(!b) return;
     const id=b.dataset.id, act=b.dataset.act; if(!APP.decks[id]) return;
     if(act==="study") startSession(id,"daily");
+    else if(act==="flash") startFlash(id,null);
     else if(act==="due") startSession(id,"due");
     else if(act==="new") startSession(id,"new");
     else if(act==="all") startSession(id,"all");
@@ -1405,6 +1650,20 @@ function bind(){
   $("filterTestBtn").onclick=()=>{ if(!curFiltered.length){ toast("該当する単語がありません"); return; } startSession(curListId, curFiltered.slice()); };
   $("filterAudioBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startAudioMode(curListId, curFiltered.slice()); };
   $("filterPrefetchBtn").onclick=prefetchAudio;
+  $("filterFlashBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startFlash(curListId, curFiltered.slice()); };
+
+  // 瞬間モード
+  $("flOk").onclick=()=>flAnswer(true); $("flNg").onclick=()=>flAnswer(false);
+  $("flClose").onclick=flExit; $("flLimit").onclick=flCycleLimit; $("flInterGo").onclick=flNextRound;
+  $("flSAgain").onclick=()=>{ if(!fl) return; const id=fl.deckId, ks=fl.stumbled.slice(); fl=null; startFlash(id, ks, true); };
+  $("flSHome").onclick=()=>{ fl=null; goHome(); };
+  const flc=$("flCard");
+  flc.addEventListener("pointerdown",e=>{ if(!fl||(fl.phase!=="front"&&fl.phase!=="back")) return; flDrag={x:e.clientX, dx:0, moved:false}; try{ flc.setPointerCapture(e.pointerId); }catch(_){} });
+  flc.addEventListener("pointermove",e=>{ if(!flDrag) return; flDrag.dx=e.clientX-flDrag.x; if(Math.abs(flDrag.dx)>8) flDrag.moved=true;
+    if(flDrag.moved) flc.style.transform=`translateX(${flDrag.dx}px) rotate(${flDrag.dx/28}deg)`; });
+  const flUp=()=>{ const d=flDrag; flDrag=null; flc.style.transform=""; if(!d) return;
+    if(Math.abs(d.dx)>70) flAnswer(d.dx>0); else if(!d.moved) flTap(); };
+  flc.addEventListener("pointerup",flUp); flc.addEventListener("pointercancel",()=>{ flDrag=null; flc.style.transform=""; });
   $("listBack").onclick=goHome; $("listAdd").onclick=()=>$("fileInput").click();
   $("listStudy").onclick=()=>startSession(curListId,"daily");
   $("listNew").onclick=()=>startSession(curListId,"new");
@@ -1477,6 +1736,13 @@ function bind(){
   // キーボード
   document.addEventListener("keydown",e=>{
     if(/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+    if(document.body.dataset.view==="flash"){ if(!fl||e.repeat||e.metaKey||e.ctrlKey||e.altKey) return; const k=e.key, code=e.code;
+      if(k==="ArrowRight"||code==="Period"||code==="KeyL"){ e.preventDefault(); flAnswer(true); }
+      else if(k==="ArrowLeft"||code==="Comma"||code==="KeyH"){ e.preventDefault(); flAnswer(false); }
+      else if(k===" "||k==="ArrowDown"||k==="ArrowUp"||k==="Enter"){ e.preventDefault(); if(fl.phase==="inter") flNextRound(); else flTap(); }
+      else if(code==="KeyZ"||k==="Backspace"){ e.preventDefault(); flUndo(); }
+      else if(k==="Escape"){ e.preventDefault(); flExit(); }
+      return; }
     if(document.body.dataset.view==="audio"){ if(e.key===" "){e.preventDefault();audioToggle();} else if(e.key==="ArrowLeft"){e.preventDefault();audioGo(-1);} else if(e.key==="ArrowRight"){e.preventDefault();audioGo(1);} return; }
     if(document.body.dataset.view!=="study") return; const k=e.key.toLowerCase();
     if(session.phase==="front"){ if(e.key===" "||e.key==="Enter"||e.key==="ArrowDown"){ e.preventDefault(); reveal(); }
