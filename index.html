@@ -265,6 +265,8 @@
   .fc-ghost.tint-ok .fc-face{border-color:var(--ok); box-shadow:0 0 0 2px var(--ok) inset;}
   .fc-ghost.tint-ng .fc-face{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent) inset;}
   .fl-last{min-height:22px; margin-top:12px; font-size:12.5px; color:var(--muted); text-align:center; font-variant-numeric:tabular-nums;}
+  .wl-stats .okc{color:var(--ok);}
+  .chip.fl-chip{color:var(--ok); border-color:var(--ok);}
   .fl-last .ok{color:var(--ok); font-weight:700;} .fl-last .slow{color:var(--muted); font-weight:700;} .fl-last .ng{color:var(--accent); font-weight:700;}
   .fl-actions{display:flex; gap:12px; margin-top:10px;}
   .fl-actions .btn{flex:1; padding:16px 10px; font-size:15px;}
@@ -355,7 +357,11 @@
     <div class="lead" id="listSub"></div>
     <input type="text" class="search" id="listSearch" placeholder="検索..." />
     <div class="filterbar">
-      <span class="flab">不正解</span>
+      <div class="seg-wrap" id="basisSeg"><button class="seg active" data-basis="srs">通常の正誤</button><button class="seg" data-basis="flash">⚡ 瞬間の正誤</button></div>
+      <div class="seg-wrap" id="recentSeg" style="display:none;"><button class="seg active" data-recent="all">すべて</button><button class="seg" data-recent="stumble" title="直近の瞬間モード（1周目）で遅い・×だった語">直近つまずき</button><button class="seg" data-recent="ng">直近×</button><button class="seg" data-recent="untried">未挑戦</button></div>
+    </div>
+    <div class="filterbar">
+      <span class="flab" id="metricLab" title="">不正解</span>
       <div class="stepper sm"><button data-wf="min" data-d="-1">−</button><input id="wrongMinInput" class="stepinput" type="number" min="0" inputmode="numeric" value="0" /><button data-wf="min" data-d="1">＋</button></div>
       <span class="flab">〜</span>
       <div class="stepper sm"><button data-wf="max" data-d="-1">−</button><input id="wrongMaxInput" class="stepinput" type="number" min="0" inputmode="numeric" placeholder="∞" /><button data-wf="max" data-d="1">＋</button></div>
@@ -374,6 +380,7 @@
       <button class="btn ghost sm" id="listNew">新規</button>
       <button class="btn ghost sm" id="listAll">総ざらい</button>
       <button class="btn ghost sm" id="listWeak">苦手のみ</button>
+      <button class="btn ghost sm" id="listResetFlash" title="このデッキの瞬間モードの記録だけを消す（通常の正誤はそのまま）">瞬間リセット</button>
       <button class="btn ghost sm" id="listResetWrong" title="このデッキの不正解カウントだけを0に戻す（単語データはそのまま）">不正解リセット</button>
       <button class="btn ghost sm" id="listRename">名前変更</button>
       <button class="btn ghost sm danger" id="listDelete">削除</button>
@@ -1094,11 +1101,11 @@ function renderHome(){
   $("deckCount").textContent=ids.length?`${ids.length} DECKS`:"";
   $("deckSection").style.display=ids.length?"":"none";
   const list=$("deckList");
-  list.innerHTML = ids.map(id=>{ const d=APP.decks[id]; const s=deckStats(d);
+  list.innerHTML = ids.map(id=>{ const d=APP.decks[id]; const s=deckStats(d); const stum=flStumbleKeys(d).length, cont=!!flSaved(id, flSig(Object.keys(d.cards)));
     return `<div class="deckcard" data-act="open" data-id="${id}">
       <div class="dc-main"><div class="dc-name">${escapeHTML(d.name)}</div>
-        <div class="dc-chips"><button class="chip act" data-act="all" data-id="${id}">${s.total}語</button><button class="chip due act" data-act="due" data-id="${id}">復習 ${s.due}</button><button class="chip act" data-act="new" data-id="${id}">新規 ${s.fresh}</button></div></div>
-      <div class="dc-actions"><button class="btn ghost sm" data-act="flash" data-id="${id}" title="瞬間モード（読み上げなし・←/→で即判定）">⚡ ${APP.flash&&APP.flash[id]?"続き":"瞬間"}</button><button class="btn solid sm" data-act="study" data-id="${id}">学習</button><button class="btn ghost sm danger" data-act="del" data-id="${id}" title="このデッキを削除">削除</button></div></div>`; }).join("");
+        <div class="dc-chips"><button class="chip act" data-act="all" data-id="${id}">${s.total}語</button><button class="chip due act" data-act="due" data-id="${id}">復習 ${s.due}</button><button class="chip act" data-act="new" data-id="${id}">新規 ${s.fresh}</button>${stum?`<button class="chip act fl-chip" data-act="flashStumble" data-id="${id}" title="直近の瞬間モードで即答できなかった語だけを瞬間モードで">⚡つまずき ${stum}</button>`:""}</div></div>
+      <div class="dc-actions"><button class="btn ghost sm" data-act="flash" data-id="${id}" title="瞬間モード（読み上げなし・←/→で即判定）">⚡ ${cont?"続き":"瞬間"}</button><button class="btn solid sm" data-act="study" data-id="${id}">学習</button><button class="btn ghost sm danger" data-act="del" data-id="${id}" title="このデッキを削除">削除</button></div></div>`; }).join("");
   const cta=$("homeCta");
   if(ids.length){ const top=APP.decks[ids[0]];
     cta.innerHTML=`<button class="btn solid grow" style="width:100%" data-act="study" data-id="${ids[0]}">「${escapeHTML(top.name)}」を学習</button>`; }
@@ -1108,17 +1115,34 @@ function renderHome(){
 /* =========================================================================
    単語リスト
    ========================================================================= */
-let curListId=null, listWrongMin=0, listWrongMax=Infinity, listSortWrong=false, curFiltered=[];
+let curListId=null, listWrongMin=0, listWrongMax=Infinity, listSortWrong=false, curFiltered=[], listBasis="srs", listRecent="all";
 function openList(id){ curListId=id; const d=APP.decks[id]; if(!d) return; const s=deckStats(d);
-  $("listTitle").textContent=d.name; $("listSub").textContent=`${s.total} words・復習 ${s.due}・新規 ${s.fresh}`;
+  $("listTitle").textContent=d.name; $("listSub").textContent=`${s.total} words・復習 ${s.due}・新規 ${s.fresh}・瞬間 挑戦 ${flTriedCount(d)}語／直近つまずき ${flStumbleKeys(d).length}語`;
+  listRecent="all";
   $("listSearch").value=""; listWrongMin=0; listWrongMax=Infinity; listSortWrong=false; $("wrongMinInput").value="0"; $("wrongMaxInput").value=""; $("sortWrongBtn").classList.remove("activeseg");
   renderWordList(); showView("list"); }
+/* 絞り込みの基準: 通常の正誤（srs.wrong）か、瞬間の正誤（つまずき＝1周目で遅い・×だった回数） */
+function syncBasisUI(){ const fb=listBasis==="flash";
+  document.querySelectorAll("#basisSeg .seg").forEach(b=>b.classList.toggle("active", b.dataset.basis===listBasis));
+  document.querySelectorAll("#recentSeg .seg").forEach(b=>b.classList.toggle("active", b.dataset.recent===listRecent));
+  $("recentSeg").style.display=fb?"":"none";
+  $("metricLab").textContent=fb?"つまずき":"不正解"; $("metricLab").title=fb?"瞬間モードの1周目で「遅い」か「×」だった回数":"";
+  $("sortWrongBtn").textContent=fb?"つまずきが多い順":"不正解が多い順"; }
+function flashStatHTML(c){ const f=c.flash; if(!f||!f.s) return `<div class="wl-stats faint">瞬間 未挑戦</div>`;
+  const lab={ok:'<b class="okc">即答</b>', slow:"<b>遅い</b>", ng:'<b class="bad">×</b>'}[f.last1]||"";
+  const sec=(f.last1!=="ng" && f.last1Ms) ? " "+(f.last1Ms/1000).toFixed(1)+"秒" : "";
+  return `<div class="wl-stats">瞬間 ${f.s}回・即答 ${f.fok||0}・遅い ${f.fslow||0}・<b class="bad">× ${f.fng||0}</b>・直近 ${lab}${sec}</div>`; }
 function renderWordList(){ const d=APP.decks[curListId]; if(!d) return; const q=($("listSearch").value||"").toLowerCase();
-  let items=Object.values(d.cards).filter(c=> (!q||c.en.toLowerCase().includes(q)||(c.ja||"").toLowerCase().includes(q)) && (c.srs.wrong>=listWrongMin) && (c.srs.wrong<=listWrongMax));
-  if(listSortWrong) items=items.slice().sort((a,b)=> (b.srs.wrong-a.srs.wrong) || ((b.srs.correct+b.srs.wrong)-(a.srs.correct+a.srs.wrong)) || a.en.localeCompare(b.en));
+  syncBasisUI(); const fb=listBasis==="flash";
+  const metric = fb ? flStumbleOf : (c=>c.srs.wrong);
+  const recentOK = c=>{ if(!fb||listRecent==="all") return true; const l=c.flash&&c.flash.last1;
+    return listRecent==="untried" ? !l : listRecent==="ng" ? l==="ng" : (l==="ng"||l==="slow"); };
+  let items=Object.values(d.cards).filter(c=> (!q||c.en.toLowerCase().includes(q)||(c.ja||"").toLowerCase().includes(q)) && metric(c)>=listWrongMin && metric(c)<=listWrongMax && recentOK(c));
+  if(listSortWrong) items=items.slice().sort((a,b)=> (metric(b)-metric(a))
+    || (fb ? ((b.flash&&b.flash.s)||0)-((a.flash&&a.flash.s)||0) : ((b.srs.correct+b.srs.wrong)-(a.srs.correct+a.srs.wrong))) || a.en.localeCompare(b.en));
   curFiltered=items.map(c=>c.key); $("filterCount").textContent=items.length;
   $("wordList").innerHTML = items.length ? items.map(c=>{ const w=c.srs.wrong, cc=c.srs.correct, t=w+cc;
-    const stats = t>0 ? `<div class="wl-stats">テスト ${t}・正解 ${cc}・<b class="bad">不正解 ${w}</b></div>` : `<div class="wl-stats faint">未テスト</div>`;
+    const stats = fb ? flashStatHTML(c) : t>0 ? `<div class="wl-stats">テスト ${t}・正解 ${cc}・<b class="bad">不正解 ${w}</b></div>` : `<div class="wl-stats faint">未テスト</div>`;
     return `<div class="wl" data-key="${escapeHTML(c.key)}"><span class="dot"></span><div class="wl-main"><div class="wl-top"><span class="wl-en">${escapeHTML(c.en)}</span><span class="wl-ja">${escapeHTML(c.ja)}</span></div>${stats}</div></div>`; }).join("") : `<div class="empty">該当する単語がありません</div>`; }
 
 /* =========================================================================
@@ -1257,9 +1281,9 @@ function audioExit(){ releaseWakeLock(); stopSpeak(); audio=null; renderHome(); 
    瞬間モード（フラッシュカード）
    ─ 読み上げなし。→=知ってる／←=知らない。制限秒数内の→だけ「即答」としてクリアし、
      遅い→と←は次の周へ回す。全語が即答になったら終了（佐々木式の絞り込みループ）。
-   ─ SRS反映: ←は不正解（1セッション1回まで）。即答→は期限到来・新規のカードだけ正解。
-     遅い→はSRSに触れない（見た瞬間に出ない語の間隔を伸ばさないため）。
-   ─ 途中経過は APP.flash[deckId] に保存し、同じ単語セットなら続きから再開できる。
+   ─ 記録はデッキの正誤（srs）とは別に card.flash に持つ。全語が即答になるまで回るので、
+     成績として数えるのは「各セッションの1周目（初見）」の結果だけ（s=回数, fok/fslow/fng, last1=直近）。
+   ─ 途中経過は APP.flash[deckId][単語セットのsig] に保存し、同じセットなら続きから再開できる。
    ========================================================================= */
 const FL_LIMITS=[1500,2000,3000,0]; /* 0 = 制限なし */
 let fl=null, flDrag=null;
@@ -1267,26 +1291,39 @@ function flSig(keys){ const s=keys.slice().sort().join("\u0001"); let h=0; for(l
 function flLimit(){ const v=APP.settings.flashLimit; return (typeof v==="number")?v:2000; }
 function flLimitLabel(){ const L=flLimit(); return L>0 ? "⏱ "+(L/1000).toFixed(1)+"秒" : "⏱ 制限なし"; }
 function flState(){ return { round:fl.round, queue:fl.queue, idx:fl.idx, next:fl.next, contacts:fl.contacts, instantR1:fl.instantR1,
-  r1Size:fl.r1Size, stumbled:fl.stumbled, lapsed:fl.lapsed, activeMs:fl.activeMs }; }
-function flPersist(){ if(!fl) return; APP.flash=APP.flash||{};
-  APP.flash[fl.deckId]=Object.assign({ sig:fl.sig, all:fl.all, savedAt:Date.now() }, flState()); saveAPP(); }
+  r1Size:fl.r1Size, stumbled:fl.stumbled, activeMs:fl.activeMs }; }
+/* 途中経過は単語セットごと（デッキ全体・つまずき語・絞り込み…）。旧形式（デッキ直下に1件）はここで移行する */
+function flStore(deckId){ APP.flash=APP.flash||{}; let st=APP.flash[deckId];
+  if(st && typeof st.sig==="string"){ st={[st.sig]:st}; APP.flash[deckId]=st; }
+  return st||(APP.flash[deckId]={}); }
+function flSaved(deckId, sig){ const st=APP.flash&&APP.flash[deckId]; if(!st) return null;
+  return typeof st.sig==="string" ? (st.sig===sig?st:null) : (st[sig]||null); }
+function flPersist(){ if(!fl) return; const st=flStore(fl.deckId);
+  st[fl.sig]=Object.assign({ sig:fl.sig, all:fl.all, savedAt:Date.now() }, flState());
+  const ks=Object.keys(st); if(ks.length>6) ks.sort((a,b)=>(st[a].savedAt||0)-(st[b].savedAt||0)).slice(0,ks.length-6).forEach(k=>delete st[k]);
+  saveAPP(); }
+function flDrop(deckId, sig){ const st=flStore(deckId); delete st[sig]; if(!Object.keys(st).length) delete APP.flash[deckId]; }
+/* デッキ単位の瞬間の成績 */
+function flStumbleKeys(d){ return Object.keys(d.cards).filter(k=>{ const f=d.cards[k].flash; return f && (f.last1==="ng"||f.last1==="slow"); }); }
+function flTriedCount(d){ let n=0; for(const k in d.cards){ const f=d.cards[k].flash; if(f&&f.s) n++; } return n; }
+function flStumbleOf(c){ const f=c.flash; return f ? (f.fslow||0)+(f.fng||0) : 0; }
 function flCard(){ return APP.decks[fl.deckId].cards[fl.queue[fl.idx]]; }
 function startFlash(deckId, keys, fresh){ const deck=APP.decks[deckId]; if(!deck) return;
   const all=(keys&&keys.length?keys:Object.keys(deck.cards)).filter(k=>deck.cards[k]);
   if(!all.length){ toast("対象の単語がありません"); return; }
-  const sig=flSig(all), saved=APP.flash&&APP.flash[deckId];
+  const sig=flSig(all), saved=flSaved(deckId, sig);
   let resume=null;
-  if(!fresh && saved && saved.sig===sig && Array.isArray(saved.queue)){
+  if(!fresh && saved && Array.isArray(saved.queue)){
     const left=Math.max(0,saved.queue.length-saved.idx)+(saved.idx>=saved.queue.length?saved.next.length:0);
     if(confirm(`前回の続きがあります（${saved.round}周目・この周の残り ${left}語）。\n続きから再開しますか？\n\n［キャンセル］で最初からやり直します。`)) resume=saved; }
   const base={ deckId, sig, all, hist:[], lastAct:Date.now(), phase:"front" };
   if(resume){ const ok=k=>!!deck.cards[k];
     fl=Object.assign(base, { round:resume.round||1, queue:(resume.queue||[]).filter(ok), idx:0, next:(resume.next||[]).filter(ok),
       contacts:resume.contacts||0, instantR1:resume.instantR1||0, r1Size:resume.r1Size||all.length,
-      stumbled:(resume.stumbled||[]).filter(ok), lapsed:(resume.lapsed||[]).filter(ok), activeMs:resume.activeMs||0 });
+      stumbled:(resume.stumbled||[]).filter(ok), activeMs:resume.activeMs||0 });
     /* 削除済みの単語を詰めたぶん idx を補正 */
     fl.idx=Math.min(resume.queue.slice(0,resume.idx).filter(ok).length, fl.queue.length); }
-  else fl=Object.assign(base, { round:1, queue:shuffle(all), idx:0, next:[], contacts:0, instantR1:0, r1Size:all.length, stumbled:[], lapsed:[], activeMs:0 });
+  else fl=Object.assign(base, { round:1, queue:shuffle(all), idx:0, next:[], contacts:0, instantR1:0, r1Size:all.length, stumbled:[], activeMs:0 });
   stopSpeak(); showView("flash"); flShowPanel("play"); $("flLast").innerHTML=""; $("flLimit").textContent=flLimitLabel();
   if(fl.idx>=fl.queue.length) flEndRound(); else flRender(); }
 function flShowPanel(p){ $("flPlay").style.display=p==="play"?"flex":"none"; $("flInter").style.display=p==="inter"?"flex":"none"; $("flSum").style.display=p==="sum"?"":"none"; }
@@ -1313,10 +1350,9 @@ function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard
 function flOutcome(ms){ const L=flLimit(); return (L>0 && ms>L) ? "slow" : "ok"; }
 function flApply(c, outcome, ms){ const now=Date.now();
   fl.hist.push(JSON.stringify({ key:c.key, srs:c.srs, flash:c.flash||null, st:flState() })); if(fl.hist.length>30) fl.hist.shift();
-  const f=c.flash||(c.flash={n:0,ok:0,slow:0,ng:0,lastMs:0,last:0});
-  f.n++; f[outcome]=(f[outcome]||0)+1; f.lastMs=Math.round(ms); f.last=now;
-  if(outcome==="ng"){ if(!fl.lapsed.includes(c.key)){ gradeSRS(c.srs,false,now); fl.lapsed=fl.lapsed.concat(c.key); } }
-  else if(outcome==="ok" && (c.srs.last===0 || c.srs.due<=now)) gradeSRS(c.srs,true,now);
+  const f=c.flash||(c.flash={n:0,lastMs:0,last:0,s:0,fok:0,fslow:0,fng:0});
+  f.n=(f.n||0)+1; f.lastMs=Math.round(ms); f.last=now;
+  if(fl.round===1){ const fk="f"+outcome; f.s=(f.s||0)+1; f[fk]=(f[fk]||0)+1; f.last1=outcome; f.last1At=now; f.last1Ms=Math.round(ms); }
   fl.contacts++; fl.activeMs+=Math.min(now-(fl.lastAct||now), 20000); fl.lastAct=now;
   if(outcome!=="ok"){ if(!fl.next.includes(c.key)) fl.next=fl.next.concat(c.key);
     if(fl.round===1 && !fl.stumbled.includes(c.key)) fl.stumbled=fl.stumbled.concat(c.key); }
@@ -1362,7 +1398,7 @@ function flEndRound(){ flTimerStop(); if(!fl.next.length){ flDone(); return; }
 function flNextRound(){ if(!fl||fl.phase!=="inter") return;
   fl.round++; fl.queue=shuffle(fl.next); fl.next=[]; fl.idx=0; fl.lastAct=Date.now();
   flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender(); }
-function flDone(){ fl.phase="done"; if(APP.flash) delete APP.flash[fl.deckId]; saveAPP();
+function flDone(){ fl.phase="done"; flDrop(fl.deckId, fl.sig); saveAPP();
   const deck=APP.decks[fl.deckId], mins=fl.activeMs/60000;
   $("flSContacts").textContent=fl.contacts; $("flSMin").textContent=mins<10?mins.toFixed(1):Math.round(mins);
   $("flSR1").textContent=(fl.r1Size?Math.round(fl.instantR1/fl.r1Size*100):0)+"%"; $("flSStumble").textContent=fl.stumbled.length;
@@ -1673,6 +1709,7 @@ function bind(){
     const id=b.dataset.id, act=b.dataset.act; if(!APP.decks[id]) return;
     if(act==="study") startSession(id,"daily");
     else if(act==="flash") startFlash(id,null);
+    else if(act==="flashStumble") startFlash(id, flStumbleKeys(APP.decks[id]));
     else if(act==="due") startSession(id,"due");
     else if(act==="new") startSession(id,"new");
     else if(act==="all") startSession(id,"all");
@@ -1692,6 +1729,13 @@ function bind(){
   $("filterTestBtn").onclick=()=>{ if(!curFiltered.length){ toast("該当する単語がありません"); return; } startSession(curListId, curFiltered.slice()); };
   $("filterAudioBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startAudioMode(curListId, curFiltered.slice()); };
   $("filterPrefetchBtn").onclick=prefetchAudio;
+  $("basisSeg").onclick=e=>{ const b=e.target.closest(".seg[data-basis]"); if(!b) return; listBasis=b.dataset.basis; listRecent="all";
+    listWrongMin=0; listWrongMax=Infinity; $("wrongMinInput").value="0"; $("wrongMaxInput").value=""; renderWordList(); };
+  $("recentSeg").onclick=e=>{ const b=e.target.closest(".seg[data-recent]"); if(!b) return; listRecent=b.dataset.recent; renderWordList(); };
+  $("listResetFlash").onclick=()=>{ const d=APP.decks[curListId]; if(!d) return; const n=flTriedCount(d);
+    if(!n && !(APP.flash&&APP.flash[curListId])){ toast("このデッキに瞬間モードの記録はありません"); return; }
+    if(!confirm(`「${d.name}」の瞬間モードの記録（${n}語ぶん）と途中経過を消します。\n通常の正誤・復習スケジュールはそのまま残ります。`)) return;
+    for(const k in d.cards) delete d.cards[k].flash; if(APP.flash) delete APP.flash[curListId]; saveAPP(); openList(curListId); toast("瞬間モードの記録をリセットしました"); };
   $("filterFlashBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startFlash(curListId, curFiltered.slice()); };
 
   // 瞬間モード
