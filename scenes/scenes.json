@@ -1,0 +1,130 @@
+{
+ "version": 1,
+ "scenes": [
+  {
+   "id": "agri-01",
+   "title": "農家の1年",
+   "titleEn": "A Year on the Farm",
+   "deck": "02_理系_気象・環境・農業",
+   "image": "scenes/agri-01.webp",
+   "w": 1600,
+   "h": 893,
+   "story": "On Hill Farm, the year begins in early spring. Tom hitches his old horse to the plow and turns over the heavy soil in the long field. A week later, his daughter Amy walks along the furrows and sows the seeds by hand. Soon, rows of tiny green seedlings push up through the earth. The summer is dry, so Tom opens the narrow irrigation channel, and cool water runs between the rows. By July, the wheat stands tall and golden, and beside it the barley bends in the wind, its long whiskers shining in the sun. When the grain is ripe, the whole family comes out to reap it with sickles. Across the lane, apples hang heavy in the orchard, and grapes darken on the vines of the little vineyard. The cows spend their days grazing in the meadow. In autumn, grass from the meadow is cut, dried and stored as hay in the big red barn, to feed the animals through the winter. The leftover stalks of the wheat are tied into bales of straw, which make warm beds for the cows.",
+   "storyAudio": "scenes/agri-01-story.mp3",
+   "words": [
+    {
+     "en": "plow",
+     "x": 0.395,
+     "y": 0.5197,
+     "ja": "すき／耕す",
+     "role": "春・最初の仕事",
+     "hook": "英綴りは plough。馬が引く道具"
+    },
+    {
+     "en": "sow",
+     "x": 0.5425,
+     "y": 0.5376,
+     "ja": "種をまく",
+     "role": "春・手でまく",
+     "hook": "You reap what you sow（まいた種は自分で刈る＝自業自得）で reap と対"
+    },
+    {
+     "en": "seedling",
+     "x": 0.26,
+     "y": 0.8602,
+     "ja": "苗",
+     "role": "春・芽が出る",
+     "hook": "seed＋-ling（小さいもの：duckling＝子ガモ）"
+    },
+    {
+     "en": "irrigation",
+     "x": 0.67,
+     "y": 0.5018,
+     "ja": "灌漑",
+     "role": "夏・水路",
+     "hook": "ir(=in)＋rigare（水をやる）→「中へ水を引く」"
+    },
+    {
+     "en": "wheat",
+     "x": 0.8,
+     "y": 0.4749,
+     "ja": "小麦",
+     "role": "夏・畑A",
+     "hook": "パンの麦。穂がつるっとしている"
+    },
+    {
+     "en": "barley",
+     "x": 0.845,
+     "y": 0.8333,
+     "ja": "大麦",
+     "role": "夏・畑B",
+     "hook": "ビールの麦。長いヒゲ（芒）が目印"
+    },
+    {
+     "en": "ripe",
+     "x": 0.78,
+     "y": 0.3539,
+     "ja": "熟した",
+     "role": "夏の終わり",
+     "hook": "収穫どき"
+    },
+    {
+     "en": "reap",
+     "x": 0.9225,
+     "y": 0.4211,
+     "ja": "刈り取る",
+     "role": "収穫",
+     "hook": "sow と対（上のことわざ）"
+    },
+    {
+     "en": "orchard",
+     "x": 0.625,
+     "y": 0.1613,
+     "ja": "果樹園",
+     "role": "小道の向こう",
+     "hook": "木に実る（りんご）"
+    },
+    {
+     "en": "vineyard",
+     "x": 0.86,
+     "y": 0.2061,
+     "ja": "ブドウ園",
+     "role": "小道の向こう",
+     "hook": "つる（vine）＋yard（庭）"
+    },
+    {
+     "en": "meadow",
+     "x": 0.35,
+     "y": 0.2599,
+     "ja": "牧草地",
+     "role": "牛が草を食む",
+     "hook": "graze（草を食む）とセット"
+    },
+    {
+     "en": "hay",
+     "x": 0.175,
+     "y": 0.2957,
+     "ja": "干し草",
+     "role": "秋・冬の**餌**",
+     "hook": "刈って干した草"
+    },
+    {
+     "en": "barn",
+     "x": 0.065,
+     "y": 0.1434,
+     "ja": "納屋",
+     "role": "干し草の置き場",
+     "hook": "大きな赤い小屋"
+    },
+    {
+     "en": "straw",
+     "x": 0.07,
+     "y": 0.4301,
+     "ja": "わら",
+     "role": "秋・牛の**寝床**",
+     "hook": "麦の茎の残り（ストローも中空の茎）"
+    }
+   ]
+  }
+ ]
+}
