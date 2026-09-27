@@ -264,6 +264,13 @@
   .fc-ghost.go-left{transform:translateX(-70%) rotate(-9deg); opacity:0;}
   .fc-ghost.tint-ok .fc-face{border-color:var(--ok); box-shadow:0 0 0 2px var(--ok) inset;}
   .fc-ghost.tint-ng .fc-face{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent) inset;}
+  .fc-verdict{position:absolute; top:12px; right:14px; font-size:11px; font-weight:700; letter-spacing:.06em; padding:3px 9px; border-radius:999px; display:none;}
+  .fcard.confirming .fc-verdict{display:inline-block;}
+  .fc-verdict.ok{background:var(--ok); color:var(--on-ok);} .fc-verdict.slow{background:var(--line); color:var(--ink);} .fc-verdict.ng{background:var(--accent); color:#fff;}
+  .fc-cbar{position:absolute; left:0; right:0; bottom:0; height:4px; display:none;}
+  .fcard.confirming .fc-cbar{display:block;}
+  .fc-cbar i{display:block; height:100%; background:var(--ok); opacity:.7; transform-origin:left;}
+  @keyframes fcConfirm{from{transform:scaleX(1);} to{transform:scaleX(0);}}
   .fl-last{min-height:22px; margin-top:12px; font-size:12.5px; color:var(--muted); text-align:center; font-variant-numeric:tabular-nums;}
   .wl-stats .okc{color:var(--ok);}
   .chip.fl-chip{color:var(--ok); border-color:var(--ok);}
@@ -701,6 +708,7 @@
       <div class="progress"><i id="flBar"></i></div>
       <span class="fl-round" id="flRound"></span>
       <button class="chip act fl-limit" id="flLimit" title="この秒数を超えた→は「遅い」＝次の周でもう一度"></button>
+      <button class="chip act fl-limit" id="flPeek" title="→のあと答えを一瞬見せる時間（→で即次へ・←で「間違えてた」に訂正）"></button>
     </div>
 
     <div id="flPlay" style="display:flex; flex-direction:column; flex:1;">
@@ -713,6 +721,8 @@
               <div class="fc-timer" id="flTimer"><i></i></div>
             </div>
             <div class="fc-face fc-back">
+              <span class="fc-verdict" id="flVerdict"></span>
+              <div class="fc-cbar" id="flCBar"><i></i></div>
               <div class="fc-bword" id="flBWord"></div>
               <div class="fc-ipa" id="flIpa"></div>
               <div class="fc-ja" id="flJa"></div>
@@ -729,7 +739,7 @@
         <button class="btn fl-ng" id="flNg">← 知らない</button>
         <button class="btn fl-ok" id="flOk">知ってる →</button>
       </div>
-      <div class="khint"><kbd>→</kbd> 知ってる ／ <kbd>←</kbd> 知らない（裏を表示） ／ <kbd>Space</kbd> めくる ／ <kbd>Z</kbd> 取り消し ／ <kbd>Esc</kbd> 中断</div>
+      <div class="khint"><kbd>→</kbd> 知ってる（答えを一瞬表示） ／ <kbd>←</kbd> 知らない（裏を表示） ／ <kbd>Space</kbd> めくる ／ <kbd>Z</kbd> 取り消し ／ <kbd>Esc</kbd> 中断</div>
     </div>
 
     <div id="flInter" class="fl-stage fl-inter" style="display:none;">
@@ -815,7 +825,7 @@ function defaultSettings(){
   return { rate:0.9, enVoice:"", jaVoice:"", newPerDay:20,
            enRepeat:2, jaRepeat:0, autoplay:true, readEx:false, readChunk:false,
            audio:true, dir:"en2ja", strength:"normal", theme:"light", audioJp:"both",
-           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2", flashLimit:2000, hqAudio:true };
+           elEnabled:false, elKey:"", elVoice:"", elModel:"eleven_multilingual_v2", flashLimit:2000, flashPeek:1200, hqAudio:true };
 }
 function defaultStudyCategories(){
   return [
@@ -1390,6 +1400,27 @@ let fl=null, flDrag=null;
 function flSig(keys){ const s=keys.slice().sort().join("\u0001"); let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return keys.length+":"+(h>>>0).toString(36); }
 function flLimit(){ const v=APP.settings.flashLimit; return (typeof v==="number")?v:2000; }
 function flLimitLabel(){ const L=flLimit(); return L>0 ? "⏱ "+(L/1000).toFixed(1)+"秒" : "⏱ 制限なし"; }
+/* →のあと答えを見せる時間（0=見せずに即次へ） */
+const FL_PEEKS=[1200,2000,700,0];
+function flPeek(){ const v=APP.settings.flashPeek; return (typeof v==="number")?v:1200; }
+function flPeekLabel(){ const v=flPeek(); return v>0 ? "👁 答え "+(v/1000).toFixed(1)+"秒" : "👁 答え なし"; }
+function flCyclePeek(){ const i=FL_PEEKS.indexOf(flPeek()); APP.settings.flashPeek=FL_PEEKS[(i+1)%FL_PEEKS.length]; saveAPP(); $("flPeek").textContent=flPeekLabel(); }
+/* →で知ってると答えたあと、裏面（答え）を一瞬見せてから次へ。その間 →/Space で即次へ、← で「間違えてた」に訂正 */
+function flConfirmStart(outcome, ms){ const card=$("flCard"), v=$("flVerdict"), bar=$("flCBar").firstElementChild, T=flPeek();
+  fl.phase="confirm"; fl.confirm={ outcome, ms }; flTimerStop();
+  v.className="fc-verdict "+outcome; v.textContent= outcome==="ok" ? "即答 ✓" : "遅い → 次の周";
+  card.classList.add("flipped","confirming");
+  $("flLast").insertAdjacentHTML("beforeend", ` <span class="slow">／ 違ったら ←</span>`);
+  bar.style.animation="none"; void bar.offsetWidth; bar.style.animation=`fcConfirm ${T}ms linear forwards`;
+  clearTimeout(fl.confirmT); fl.confirmT=setTimeout(()=>flConfirmEnd(), T); }
+function flConfirmClear(){ if(!fl) return; clearTimeout(fl.confirmT); fl.confirmT=0; $("flCard").classList.remove("confirming"); }
+function flConfirmEnd(){ if(!fl||fl.phase!=="confirm") return; const o=fl.confirm.outcome; flConfirmClear(); flAdvance("right", o==="ok"?"tint-ok":""); }
+function flConfirmWrong(){ if(!fl||fl.phase!=="confirm") return; const ms=fl.confirm.ms; flConfirmClear();
+  const snap=JSON.parse(fl.hist.pop()), c=APP.decks[fl.deckId].cards[snap.key];
+  if(c){ if(snap.flash) c.flash=snap.flash; else delete c.flash; }
+  Object.assign(fl, snap.st);
+  flApply(c,"ng",ms); fl.marked="ng"; fl.phase="back";
+  $("flLast").innerHTML=`<span class="ng">知らない（訂正）</span> ・ ${escapeHTML(c.en)} → 次の周でもう一度`; }
 function flState(){ return { round:fl.round, queue:fl.queue, idx:fl.idx, next:fl.next, contacts:fl.contacts, instantR1:fl.instantR1,
   r1Size:fl.r1Size, stumbled:fl.stumbled, activeMs:fl.activeMs }; }
 /* 途中経過は単語セットごと（デッキ全体・つまずき語・絞り込み…）。旧形式（デッキ直下に1件）はここで移行する */
@@ -1424,7 +1455,7 @@ function startFlash(deckId, keys, fresh){ const deck=APP.decks[deckId]; if(!deck
     /* 削除済みの単語を詰めたぶん idx を補正 */
     fl.idx=Math.min(resume.queue.slice(0,resume.idx).filter(ok).length, fl.queue.length); }
   else fl=Object.assign(base, { round:1, queue:shuffle(all), idx:0, next:[], contacts:0, instantR1:0, r1Size:all.length, stumbled:[], activeMs:0 });
-  stopSpeak(); showView("flash"); flShowPanel("play"); $("flLast").innerHTML=""; $("flLimit").textContent=flLimitLabel();
+  stopSpeak(); showView("flash"); flShowPanel("play"); $("flLast").innerHTML=""; $("flLimit").textContent=flLimitLabel(); $("flPeek").textContent=flPeekLabel();
   if(fl.idx>=fl.queue.length) flEndRound(); else flRender(); }
 function flShowPanel(p){ $("flPlay").style.display=p==="play"?"flex":"none"; $("flInter").style.display=p==="inter"?"flex":"none"; $("flSum").style.display=p==="sum"?"":"none"; }
 function flTimerStart(){ const t=$("flTimer"), i=t.firstElementChild, L=flLimit(); clearTimeout(flTimerStart._t);
@@ -1434,7 +1465,7 @@ function flTimerStart(){ const t=$("flTimer"), i=t.firstElementChild, L=flLimit(
   else t.style.display="none"; }
 function flTimerStop(){ clearTimeout(flTimerStart._t); const i=$("flTimer").firstElementChild; const cs=getComputedStyle(i).transform; i.style.animation="none"; i.style.transform=cs==="none"?"":cs; }
 function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard"), inner=card.firstElementChild;
-  fl.phase="front"; fl.marked=null; fl.flipMs=0;
+  flConfirmClear(); fl.phase="front"; fl.marked=null; fl.flipMs=0;
   inner.style.transition="none"; card.classList.remove("flipped"); void inner.offsetWidth; inner.style.transition="";
   $("flWord").textContent=c.en; $("flDeck").textContent=deck.name; $("flLeft").textContent=`${fl.idx+1} / ${fl.queue.length}`;
   $("flBWord").textContent=c.en; $("flIpa").textContent=c.ipa||""; $("flIpa").style.display=c.ipa?"":"none";
@@ -1467,13 +1498,14 @@ function flApply(c, outcome, ms){ const now=Date.now();
 function flFlip(){ if(!fl) return; const card=$("flCard");
   if(fl.phase==="front"){ fl.flipMs=performance.now()-fl.t0; fl.phase="back"; flTimerStop(); card.classList.add("flipped"); }
   else if(fl.phase==="back" && !fl.marked) card.classList.toggle("flipped"); }
-function flTap(){ if(!fl) return; if(fl.phase==="back" && fl.marked) flAdvance("left","tint-ng"); else flFlip(); }
+function flTap(){ if(!fl) return; if(fl.phase==="confirm"){ flConfirmEnd(); return; } if(fl.phase==="back" && fl.marked) flAdvance("left","tint-ng"); else flFlip(); }
 function flAnswer(know){ if(!fl) return;
   if(fl.phase==="inter"){ flNextRound(); return; }
+  if(fl.phase==="confirm"){ if(know) flConfirmEnd(); else flConfirmWrong(); return; }
   if(fl.phase!=="front" && fl.phase!=="back") return;
   const c=flCard();
   if(fl.phase==="front"){ const ms=performance.now()-fl.t0;
-    if(know){ const o=flOutcome(ms); flApply(c,o,ms); flAdvance("right", o==="ok"?"tint-ok":""); }
+    if(know){ const o=flOutcome(ms); flApply(c,o,ms); if(flPeek()>0) flConfirmStart(o,ms); else flAdvance("right", o==="ok"?"tint-ok":""); }
     else { flApply(c,"ng",ms); fl.marked="ng"; fl.phase="back"; flTimerStop(); $("flCard").classList.add("flipped"); }
     return; }
   if(fl.marked){ flAdvance(know?"right":"left","tint-ng"); return; }  /* ←で裏を見た後は、どのキーでも次へ */
@@ -1507,10 +1539,10 @@ function flDone(){ fl.phase="done"; flDrop(fl.deckId, fl.sig); saveAPP();
   $("flSListWrap").style.display=rows.length?"":"none"; $("flSAgain").style.display=rows.length?"":"none";
   $("flSList").innerHTML=rows.map(c=>`<div class="wl"><span class="dot"></span><div class="wl-main"><div class="wl-top"><span class="wl-en">${escapeHTML(c.en)}</span><span class="wl-ja">${escapeHTML(c.ja)}</span></div></div></div>`).join("");
   $("flBar").style.width="100%"; flShowPanel("sum"); }
-function flUndo(){ if(!fl||!fl.hist.length||fl.phase==="done") return; const s=JSON.parse(fl.hist.pop());
+function flUndo(){ if(!fl||!fl.hist.length||fl.phase==="done") return; flConfirmClear(); const s=JSON.parse(fl.hist.pop());
   const c=APP.decks[fl.deckId].cards[s.key]; if(c){ c.srs=s.srs; if(s.flash) c.flash=s.flash; else delete c.flash; }
   Object.assign(fl, s.st); flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender(); toast("1枚取り消しました"); }
-function flExit(){ if(!fl) return; flTimerStop();
+function flExit(){ if(!fl) return; flTimerStop(); flConfirmClear();
   if(fl.phase!=="done"){ flPersist(); toast("途中経過を保存しました。次回は続きから再開できます"); }
   fl=null; renderHome(); showView("home"); }
 function flCycleLimit(){ const i=FL_LIMITS.indexOf(flLimit()); APP.settings.flashLimit=FL_LIMITS[(i+1)%FL_LIMITS.length]; saveAPP();
@@ -1951,11 +1983,11 @@ function bind(){
 
   // 瞬間モード
   $("flOk").onclick=()=>flAnswer(true); $("flNg").onclick=()=>flAnswer(false);
-  $("flClose").onclick=flExit; $("flLimit").onclick=flCycleLimit; $("flInterGo").onclick=flNextRound;
+  $("flClose").onclick=flExit; $("flLimit").onclick=flCycleLimit; $("flPeek").onclick=flCyclePeek; $("flInterGo").onclick=flNextRound;
   $("flSAgain").onclick=()=>{ if(!fl) return; const id=fl.deckId, ks=fl.stumbled.slice(); fl=null; startFlash(id, ks, true); };
   $("flSHome").onclick=()=>{ fl=null; goHome(); };
   const flc=$("flCard");
-  flc.addEventListener("pointerdown",e=>{ if(!fl||(fl.phase!=="front"&&fl.phase!=="back")) return; flDrag={x:e.clientX, dx:0, moved:false}; try{ flc.setPointerCapture(e.pointerId); }catch(_){} });
+  flc.addEventListener("pointerdown",e=>{ if(!fl||(fl.phase!=="front"&&fl.phase!=="back"&&fl.phase!=="confirm")) return; flDrag={x:e.clientX, dx:0, moved:false}; try{ flc.setPointerCapture(e.pointerId); }catch(_){} });
   flc.addEventListener("pointermove",e=>{ if(!flDrag) return; flDrag.dx=e.clientX-flDrag.x; if(Math.abs(flDrag.dx)>8) flDrag.moved=true;
     if(flDrag.moved) flc.style.transform=`translateX(${flDrag.dx}px) rotate(${flDrag.dx/28}deg)`; });
   const flUp=()=>{ const d=flDrag; flDrag=null; flc.style.transform=""; if(!d) return;
