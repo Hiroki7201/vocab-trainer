@@ -329,6 +329,7 @@
   .sci-card .m{font-size:11.5px; color:var(--muted); font-weight:400; margin-top:2px;}
   .sci-card .m b{color:var(--ok);}
   .sci-card.last{border-color:var(--accent);}
+  .xbtn:disabled{opacity:.35; cursor:default;}
   .sc-nav{display:flex; gap:8px; align-items:center; margin-top:22px;}
   .sc-nav .btn{flex:1;}
   .scenecard{display:flex; gap:14px; align-items:center; padding:10px 12px 10px 10px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); margin-bottom:10px; cursor:pointer; transition:.15s;}
@@ -785,6 +786,8 @@
     <div class="sc-top">
       <button class="xbtn" id="scClose" title="閉じる (Esc)">×</button>
       <div style="flex:1; min-width:0;"><div class="sc-title" id="scTitle"></div><div class="sc-sub" id="scSub"></div></div>
+      <button class="xbtn" id="scPrevTop" title="前の場面">‹</button>
+      <button class="xbtn" id="scNextTop" title="次の場面">›</button>
     </div>
     <div class="sc-imgbox" id="scImgBox"><img id="scImg" alt="" /><div id="scPins"></div></div>
     <div class="sc-actions">
@@ -1593,15 +1596,23 @@ function openSceneIndex(){ stopSpeak(); for(const k in scDeckCache) delete scDec
     +`<div class="sci-grid">${gr.list.map(sciCardHTML).join("")}</div>`).join("");
   showView("sceneIndex");
   const last=document.querySelector("#sciBody .sci-card.last"); if(last) last.scrollIntoView({block:"center"}); }
+/* 物語の音声を止めて、イベントの付け替え前に前の場面のハンドラを外す */
+function scStopStory(){ const a=hq.el; if(!a) return; a.onended=a.onpause=a.onerror=null; try{ a.pause(); }catch(e){} }
 function scGo(delta){ if(!sc) return; const i=SCN.list.findIndex(x=>x.id===sc.s.id), j=i+delta; if(j<0||j>=SCN.list.length) return;
-  if(sc.playing&&hq.el) hq.el.pause(); openScene(SCN.list[j].id, sc.from); }
-function openScene(id, from){ const s=SCN.list.find(x=>x.id===id); if(!s) return; stopSpeak();
+  scStopStory(); openScene(SCN.list[j].id, sc.from); }
+/* 画像の先読み（次・前の場面を裏で読み込んでおく） */
+function scPreload(i){ [i+1,i-1].forEach(j=>{ const x=SCN.list[j]; if(x){ const im=new Image(); im.src=x.image; } }); }
+function openScene(id, from){ const s=SCN.list.find(x=>x.id===id); if(!s) return; scStopStory(); stopSpeak();
   APP.settings.lastScene=id; saveAPP();
   const deckId=scDeckFor(s); sc={ s, deckId, cur:-1, playing:false, storyPos:0, from:from||"home" };
-  const idx=SCN.list.findIndex(x=>x.id===id); $("scPrev").disabled=idx<=0; $("scNext").disabled=idx>=SCN.list.length-1;
+  const idx=SCN.list.findIndex(x=>x.id===id); $("scPrev").disabled=$("scPrevTop").disabled=idx<=0; $("scNext").disabled=$("scNextTop").disabled=idx>=SCN.list.length-1;
   $("scTitle").textContent=s.title+(s.titleEn?" ・ "+s.titleEn:"");
-  $("scSub").textContent=`${s.words.length}語`+(deckId?` ・ ${APP.decks[deckId].name}`:" ・ 対応するデッキがないため、場面データの訳を表示");
-  $("scImg").src=s.image; $("scImg").alt=s.titleEn||s.title;
+  const grp=SCN.list.filter(x=>(x.deck||"")===(s.deck||"")), gi=grp.indexOf(s)+1;
+  $("scSub").textContent=`${s.deckLabel||""} ${gi}/${grp.length}場面 ・ ${s.words.length}語`+(deckId?"":" ・ デッキ未登録のため場面データの訳を表示");
+  const img=$("scImg"); img.onload=null; img.alt=s.titleEn||s.title;
+  if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sc&&sc.s===s) img.src=s.image; }; full.src=s.image; }
+  else img.src=s.image;
+  scPreload(idx);
   $("scPins").innerHTML=s.words.map((w,i)=>`<button class="sc-pin" data-i="${i}" style="left:${w.x*100}%; top:${w.y*100}%;" title="${escapeHTML(w.en)}">${i+1}</button>`).join("")
     +`<div class="sc-bubble" id="scBubble" style="display:none;"></div>`;
   $("scGrid").classList.remove("sc-hide"); $("scHide").textContent="訳を隠す";
@@ -1633,7 +1644,7 @@ function scStoryToggle(){ if(!sc||!sc.s.storyAudio) return; const a=hqElement();
 function scToggleHide(){ const g=$("scGrid"), on=!g.classList.contains("sc-hide"); g.classList.toggle("sc-hide", on);
   g.querySelectorAll(".sc-row.show").forEach(r=>r.classList.remove("show"));
   $("scHide").textContent=on?"訳を表示":"訳を隠す"; if(sc&&sc.cur>=0) scSelect(sc.cur,false); }
-function scClose(){ const a=hq.el; if(a&&sc&&sc.playing) a.pause(); stopSpeak(); const from=sc&&sc.from; sc=null;
+function scClose(){ scStopStory(); stopSpeak(); const from=sc&&sc.from; sc=null;
   if(from==="index") openSceneIndex(); else if(from==="list" && curListId && APP.decks[curListId]) openList(curListId); else goHome(); }
 /* 瞬間モードの裏面に、その語の場面の該当部分を拡大して出す */
 function flSceneCrop(c){ const box=$("flScene"), hit=SCN.byWord[(c.en||"").toLowerCase()];
@@ -1971,15 +1982,15 @@ function bind(){
   $("sceneList").addEventListener("click",e=>{ if(e.target.closest("[data-sceneindex]")){ openSceneIndex(); return; } const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "home"); });
   $("listScenes").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "list"); });
   $("sciBody").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "index"); });
-  $("sciClose").onclick=goHome; $("scPrev").onclick=()=>scGo(-1); $("scNext").onclick=()=>scGo(1);
-  $("scIndex").onclick=()=>{ if(sc&&sc.playing&&hq.el) hq.el.pause(); stopSpeak(); sc=null; openSceneIndex(); };
+  $("sciClose").onclick=goHome; $("scPrev").onclick=$("scPrevTop").onclick=()=>scGo(-1); $("scNext").onclick=$("scNextTop").onclick=()=>scGo(1);
+  $("scIndex").onclick=()=>{ scStopStory(); stopSpeak(); sc=null; openSceneIndex(); };
   $("scPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(b) scSelect(+b.dataset.i, true); });
   $("scGrid").addEventListener("click",e=>{ const r=e.target.closest(".sc-row"); if(!r) return;
     if($("scGrid").classList.contains("sc-hide")) r.classList.add("show"); scSelect(+r.dataset.i, true); });
   $("scStoryText").addEventListener("click",e=>{ const b=e.target.closest("b[data-i]"); if(b) scSelect(+b.dataset.i, true); });
   $("scStory").onclick=scStoryToggle; $("scHide").onclick=scToggleHide; $("scClose").onclick=scClose;
   $("scFlash").onclick=()=>{ if(!sc||!sc.deckId) return; const ks=sc.s.words.map(w=>scCardFor(sc.deckId,w.en)).filter(Boolean).map(c=>c.key);
-    const id=sc.deckId; if(sc.playing) hq.el.pause(); sc=null; startFlash(id, ks); };
+    const id=sc.deckId; scStopStory(); sc=null; startFlash(id, ks); };
 
   // 瞬間モード
   $("flOk").onclick=()=>flAnswer(true); $("flNg").onclick=()=>flAnswer(false);
