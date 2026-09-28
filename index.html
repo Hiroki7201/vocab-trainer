@@ -1597,7 +1597,7 @@ function openSceneIndex(){ stopSpeak(); for(const k in scDeckCache) delete scDec
   showView("sceneIndex");
   const last=document.querySelector("#sciBody .sci-card.last"); if(last) last.scrollIntoView({block:"center"}); }
 /* 物語の音声を止めて、イベントの付け替え前に前の場面のハンドラを外す */
-function scStopStory(){ const a=hq.el; if(!a) return; a.onended=a.onpause=a.onerror=null; try{ a.pause(); }catch(e){} }
+function scStopStory(){ if(scAud){ try{ scAud.pause(); }catch(e){} } }
 function scGo(delta){ if(!sc) return; const i=SCN.list.findIndex(x=>x.id===sc.s.id), j=i+delta; if(j<0||j>=SCN.list.length) return;
   scStopStory(); openScene(SCN.list[j].id, sc.from); }
 /* 画像の先読み（次・前の場面を裏で読み込んでおく） */
@@ -1613,6 +1613,7 @@ function openScene(id, from){ const s=SCN.list.find(x=>x.id===id); if(!s) return
   if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sc&&sc.s===s) img.src=s.image; }; full.src=s.image; }
   else img.src=s.image;
   scPreload(idx);
+  const sa=scAudio(); sa.pause(); if(s.storyAudio){ sa.src=new URL(s.storyAudio, location.href).href; } sc.storyPos=0;
   $("scPins").innerHTML=s.words.map((w,i)=>`<button class="sc-pin" data-i="${i}" style="left:${w.x*100}%; top:${w.y*100}%;" title="${escapeHTML(w.en)}">${i+1}</button>`).join("")
     +`<div class="sc-bubble" id="scBubble" style="display:none;"></div>`;
   $("scGrid").classList.remove("sc-hide"); $("scHide").textContent="訳を隠す";
@@ -1629,18 +1630,28 @@ function scSelect(i, speak){ if(!sc) return; const s=sc.s, w=s.words[i]; if(!w) 
   const hidden=$("scGrid").classList.contains("sc-hide") && !document.querySelector(`#scGrid .sc-row[data-i="${i}"]`).classList.contains("show");
   const c=scCardFor(sc.deckId,w.en), ja=(c&&c.ja)||w.ja||"", bub=$("scBubble");
   bub.innerHTML=`<b>${escapeHTML(w.en)}</b>${hidden?"":escapeHTML(ja)}`; bub.style.left=(w.x*100)+"%"; bub.style.top=(w.y*100)+"%"; bub.style.display="";
-  if(speak){ if(sc.playing) hqElement().pause(); speakSeq([enItem(w.en)]); } }
-function scStoryToggle(){ if(!sc||!sc.s.storyAudio) return; const a=hqElement();
-  if(sc.playing){ a.pause(); return; }
-  stopSpeak();
-  const url=new URL(sc.s.storyAudio, location.href).href, same=a.src===url;
-  a.onended=()=>{ if(!sc) return; sc.playing=false; sc.storyPos=0; $("scStory").textContent="▶ 物語を聞く"; };
-  a.onpause=()=>{ if(!sc) return; sc.playing=false; if(!a.ended){ sc.storyPos=a.currentTime; $("scStory").textContent="▶ 続きを聞く"; } };
-  a.onerror=()=>{ if(sc){ sc.playing=false; $("scStory").textContent="▶ 物語を聞く"; } toast("物語の音声を再生できませんでした"); };
-  if(!same){ a.src=url; const pos=sc.storyPos||0; if(pos) a.addEventListener("loadedmetadata",()=>{ try{ a.currentTime=pos; }catch(e){} },{once:true}); }
-  a.playbackRate=1; currentAudio=a;
-  const p=a.play(); sc.playing=true; $("scStory").textContent="⏸ 一時停止";
-  if(p&&p.catch) p.catch(()=>{ if(sc){ sc.playing=false; $("scStory").textContent="▶ 物語を聞く"; } }); }
+  if(speak){ scStopStory(); speakSeq([enItem(w.en)]); } }
+/* 物語は単語の発音（hq.el）とは別の専用 Audio で鳴らす。
+   発音側のハンドラ付け替え・iOSの解錠処理・再生速度の変更と干渉しないようにするため。 */
+let scAud=null;
+function scAudio(){ if(!scAud){ scAud=new Audio(); scAud.preload="auto";
+    scAud.addEventListener("playing",()=>{ if(sc){ sc.playing=true; $("scStory").textContent="⏸ 一時停止"; } });
+    scAud.addEventListener("waiting",()=>{ if(sc&&sc.playing) $("scStory").textContent="… 読み込み中"; });
+    scAud.addEventListener("pause",()=>{ if(!sc) return; sc.playing=false; sc.storyPos=scAud.ended?0:scAud.currentTime;
+      $("scStory").textContent= scAud.ended||!sc.storyPos ? "▶ 物語を聞く" : "▶ 続きを聞く"; });
+    scAud.addEventListener("error",()=>{ if(sc){ sc.playing=false; $("scStory").textContent="▶ 物語を聞く"; }
+      const e=scAud.error; toast("物語の音声を読み込めませんでした"+(e?`（エラー${e.code}）`:"")); }); }
+  return scAud; }
+function scStoryToggle(){ if(!sc||!sc.s.storyAudio) return; const a=scAudio();
+  if(!a.paused){ a.pause(); return; }
+  stopSpeak();  /* 単語の発音が鳴っていたら止める */
+  const url=new URL(sc.s.storyAudio, location.href).href;
+  if(a.src!==url){ a.src=url; sc.storyPos=0; }
+  a.playbackRate=1;
+  $("scStory").textContent="… 読み込み中";
+  const p=a.play();
+  if(p&&p.catch) p.catch(err=>{ if(sc){ sc.playing=false; $("scStory").textContent="▶ 物語を聞く"; }
+    toast("物語を再生できませんでした（"+((err&&err.name)||"不明")+"）。もう一度押してください"); }); }
 function scToggleHide(){ const g=$("scGrid"), on=!g.classList.contains("sc-hide"); g.classList.toggle("sc-hide", on);
   g.querySelectorAll(".sc-row.show").forEach(r=>r.classList.remove("show"));
   $("scHide").textContent=on?"訳を表示":"訳を隠す"; if(sc&&sc.cur>=0) scSelect(sc.cur,false); }
