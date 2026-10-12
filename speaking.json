@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "S01",
+    "title": "I think ... because ...",
+    "meaning": "私は〜と思います。理由は〜です",
+    "nuance": "自分の立場と理由を、最短でセットにする基本形。",
+    "coreImage": "意見の旗を立て、その下に理由を一本置く。",
+    "ielts": {
+      "en": "I think communities are valuable because they help people discover different perspectives.",
+      "ja": "コミュニティには、違う視点に出会える価値があると思います。",
+      "chunks": [
+        "I think",
+        "communities are valuable",
+        "because they help people",
+        "discover different perspectives."
+      ]
+    },
+    "business": {
+      "en": "I think we should review one example first because it will help us agree on the format.",
+      "ja": "形式の認識をそろえられるので、まず一例をレビューすべきだと思います。",
+      "chunks": [
+        "I think",
+        "we should review",
+        "one example first",
+        "because it will help us",
+        "agree on the format."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S02",
+    "title": "The main reason is that ...",
+    "meaning": "一番の理由は〜です",
+    "nuance": "理由が複数あっても、まず重要なものを一つ選ぶ。",
+    "coreImage": "いくつかある理由の中から、一番大きい一本を取り出す。",
+    "ielts": {
+      "en": "The main reason is that I want to express my ideas more clearly in English.",
+      "ja": "一番の理由は、自分の考えを英語でもっと明確に伝えたいからです。",
+      "chunks": [
+        "The main reason",
+        "is that",
+        "I want to express",
+        "my ideas",
+        "more clearly",
+        "in English."
+      ]
+    },
+    "business": {
+      "en": "The main reason is that the current process involves too many manual checks.",
+      "ja": "一番の理由は、現状の業務に手作業の確認が多すぎるからです。",
+      "chunks": [
+        "The main reason",
+        "is that",
+        "the current process",
+        "involves too many manual checks."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S03",
+    "title": "For me, what matters most is ...",
+    "meaning": "私にとって一番大事なのは〜です",
+    "nuance": "一般的な正解ではなく、自分の判断基準を示す。",
+    "coreImage": "複数の評価項目のうち、一つに太い丸をつける。",
+    "ielts": {
+      "en": "For me, what matters most is being able to use what I learn in real conversations.",
+      "ja": "私にとって一番大事なのは、学んだことを実際の会話で使えることです。",
+      "chunks": [
+        "For me,",
+        "what matters most",
+        "is being able to use",
+        "what I learn",
+        "in real conversations."
+      ]
+    },
+    "business": {
+      "en": "For me, what matters most is whether the reader can understand the main point.",
+      "ja": "私が一番重視するのは、読み手が要点を理解できるかどうかです。",
+      "chunks": [
+        "For me,",
+        "what matters most",
+        "is whether the reader",
+        "can understand",
+        "the main point."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S04",
+    "title": "I tend to ... when ...",
+    "meaning": "〜のとき、私は〜する傾向があります",
+    "nuance": "alwaysほど断定せず、普段の傾向を話す。",
+    "coreImage": "ある状況になると、自分が自然に進みやすい方向。",
+    "ielts": {
+      "en": "I tend to remember an expression better when I use it in a conversation.",
+      "ja": "会話の中で使った表現は、比較的覚えやすいです。",
+      "chunks": [
+        "I tend to remember",
+        "an expression better",
+        "when I use it",
+        "in a conversation."
+      ]
+    },
+    "business": {
+      "en": "I tend to add examples when an explanation feels too abstract.",
+      "ja": "説明が抽象的だと感じると、具体例を足すことが多いです。",
+      "chunks": [
+        "I tend to add examples",
+        "when an explanation",
+        "feels too abstract."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S05",
+    "title": "One thing I find ... is ...",
+    "meaning": "私が〜だと感じることの一つは〜です",
+    "nuance": "役立つこと、難しいこと、面白いことを自分の実感として述べる。",
+    "coreImage": "経験の引き出しから、一つ取り出して見せる。",
+    "ielts": {
+      "en": "One thing I find difficult is explaining a complicated idea without stopping.",
+      "ja": "難しいと感じることの一つは、複雑な考えを止まらず説明することです。",
+      "chunks": [
+        "One thing I find difficult",
+        "is explaining",
+        "a complicated idea",
+        "without stopping."
+      ]
+    },
+    "business": {
+      "en": "One thing I find useful is separating confirmed facts from assumptions.",
+      "ja": "役立つと感じるのは、確認済みの事実と仮定を分けることです。",
+      "chunks": [
+        "One thing I find useful",
+        "is separating",
+        "confirmed facts",
+        "from assumptions."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S06",
+    "title": "For example, ...",
+    "meaning": "例えば〜です",
+    "nuance": "抽象的な話を、相手が想像できる場面に落とす。",
+    "coreImage": "広い話に、具体的な一点へ向かうズームをかける。",
+    "ielts": {
+      "en": "For example, I could use ten new words in a short story and read it aloud.",
+      "ja": "例えば、新しい単語を10個使って短い話を作り、音読できます。",
+      "chunks": [
+        "For example,",
+        "I could use",
+        "ten new words",
+        "in a short story",
+        "and read it aloud."
+      ]
+    },
+    "business": {
+      "en": "For example, missing receipts can delay the review even if the other documents are ready.",
+      "ja": "例えば、他の資料がそろっていても、領収書の不足で確認が遅れることがあります。",
+      "chunks": [
+        "For example,",
+        "missing receipts",
+        "can delay the review",
+        "even if",
+        "the other documents are ready."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S07",
+    "title": "What I mean is ...",
+    "meaning": "私が言いたいのは〜です",
+    "nuance": "説明を言い直したり、取り違えられた意図を戻したりする。",
+    "coreImage": "少しずれた話の焦点を、中心へ戻す。",
+    "ielts": {
+      "en": "What I mean is that I want to use English naturally, not just understand it.",
+      "ja": "言いたいのは、英語を理解するだけでなく、自然に使えるようになりたいということです。",
+      "chunks": [
+        "What I mean",
+        "is that",
+        "I want to use",
+        "English naturally,",
+        "not just understand it."
+      ]
+    },
+    "business": {
+      "en": "What I mean is that we should reduce the preparation time, not move the deadline.",
+      "ja": "言いたいのは、期限を変えるのではなく、準備にかかる時間を短くしたいということです。",
+      "chunks": [
+        "What I mean",
+        "is that",
+        "we should reduce",
+        "the preparation time,",
+        "not move the deadline."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S08",
+    "title": "This means that ...",
+    "meaning": "これは、つまり〜ということです",
+    "nuance": "事実や変化から、その結果・意味合いを説明する。",
+    "coreImage": "起きたことから、だからどうなるかへ一本つなぐ。",
+    "ielts": {
+      "en": "The course is online. This means that I can study without travelling.",
+      "ja": "その講座はオンラインなので、移動せずに勉強できます。",
+      "chunks": [
+        "The course is online.",
+        "This means that",
+        "I can study",
+        "without travelling."
+      ]
+    },
+    "business": {
+      "en": "The review starts a day later. This means that we have less time to prepare the report.",
+      "ja": "レビュー開始が一日遅れるので、報告資料の準備時間が短くなります。",
+      "chunks": [
+        "The review starts",
+        "a day later.",
+        "This means that",
+        "we have less time",
+        "to prepare the report."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S09",
+    "title": "One way to ... is to ...",
+    "meaning": "〜する方法の一つは、〜することです",
+    "nuance": "唯一の正解と断定せず、具体的な方法を提案する。",
+    "coreImage": "目的地までの道を、一本示す。",
+    "ielts": {
+      "en": "One way to make language practice more relevant is to talk about your own work.",
+      "ja": "語学練習を自分に身近なものにする方法の一つは、自分の仕事について話すことです。",
+      "chunks": [
+        "One way",
+        "to make language practice",
+        "more relevant",
+        "is to talk about",
+        "your own work."
+      ]
+    },
+    "business": {
+      "en": "One way to reduce errors is to use the same checklist every month.",
+      "ja": "ミスを減らす方法の一つは、毎月同じチェックリストを使うことです。",
+      "chunks": [
+        "One way",
+        "to reduce errors",
+        "is to use",
+        "the same checklist",
+        "every month."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S10",
+    "title": "The goal is to ... rather than ...",
+    "meaning": "目的は〜することであって、〜することではありません",
+    "nuance": "目的と、目的に見えてしまっている別のものを切り分ける。",
+    "coreImage": "ゴールの位置を、正しい方へ置き直す。",
+    "ielts": {
+      "en": "The goal is to communicate clearly rather than use difficult words.",
+      "ja": "目的は難しい単語を使うことよりも、分かりやすく伝えることです。",
+      "chunks": [
+        "The goal is",
+        "to communicate clearly",
+        "rather than",
+        "use difficult words."
+      ]
+    },
+    "business": {
+      "en": "The goal is to show where the process gets delayed rather than list every task.",
+      "ja": "目的は全作業を列挙することよりも、どこで業務が滞るかを示すことです。",
+      "chunks": [
+        "The goal is",
+        "to show",
+        "where the process gets delayed",
+        "rather than",
+        "list every task."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S11",
+    "title": "Compared with ..., ...",
+    "meaning": "〜と比べると、〜です",
+    "nuance": "何と比べているのかを先に示す。",
+    "coreImage": "比較の基準を左に置き、もう一方を見る。",
+    "ielts": {
+      "en": "Compared with studying alone, joining a group gives me more chances to speak.",
+      "ja": "一人で勉強するのと比べると、グループに参加する方が話す機会が増えます。",
+      "chunks": [
+        "Compared with studying alone,",
+        "joining a group",
+        "gives me more chances",
+        "to speak."
+      ]
+    },
+    "business": {
+      "en": "Compared with the previous version, this chart makes the sequence much clearer.",
+      "ja": "前の版と比べると、この図は作業の順序がずっと分かりやすいです。",
+      "chunks": [
+        "Compared with the previous version,",
+        "this chart",
+        "makes the sequence",
+        "much clearer."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S12",
+    "title": "X ..., whereas Y ...",
+    "meaning": "〜は〜する一方、〜は…です",
+    "nuance": "二つの特徴を、同じ観点で対比する。tends toを加えると必然ではなく傾向を表す。",
+    "coreImage": "左右の皿に、それぞれの特徴を一つずつ載せる。",
+    "ielts": {
+      "en": "Studying alone tends to give me more flexibility, whereas group lessons give me more interaction.",
+      "ja": "独学は融通が利きやすい一方、グループレッスンでは人とやり取りできます。",
+      "chunks": [
+        "Studying alone",
+        "tends to give me",
+        "more flexibility,",
+        "whereas group lessons",
+        "give me more interaction."
+      ]
+    },
+    "business": {
+      "en": "The summary focuses on the main decisions, whereas the appendix provides the details.",
+      "ja": "要約は主要な判断事項を扱い、一方、別紙には詳細を載せます。",
+      "chunks": [
+        "The summary",
+        "focuses on the main decisions,",
+        "whereas the appendix",
+        "provides the details."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S13",
+    "title": "Although ..., ...",
+    "meaning": "〜ではあるものの、〜です",
+    "nuance": "相手が予想しそうな結論と違う面もある、と示す。",
+    "coreImage": "一つ認めた上で、もう一つ大事な面を出す。",
+    "ielts": {
+      "en": "Although learning apps are convenient, I still value face-to-face conversations.",
+      "ja": "学習アプリは便利ですが、対面での会話にも価値を感じます。",
+      "chunks": [
+        "Although learning apps are convenient,",
+        "I still value",
+        "face-to-face conversations."
+      ]
+    },
+    "business": {
+      "en": "Although revenue increased, the profit margin fell.",
+      "ja": "売上は増えたものの、利益率は低下しました。",
+      "chunks": [
+        "Although revenue increased,",
+        "the profit margin fell."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S14",
+    "title": "... can ..., but that doesn't necessarily mean ...",
+    "meaning": "〜は可能ですが、だからといって必ず〜とは限りません",
+    "nuance": "一つのメリットから、別の結論へ飛びすぎるのを防ぐ。",
+    "coreImage": "途中で飛躍している矢印に、一度ブレーキをかける。",
+    "ielts": {
+      "en": "AI can make studying easier, but that doesn't necessarily mean we learn more.",
+      "ja": "AIで勉強が楽になっても、必ず学ぶ量が増えるとは限りません。",
+      "chunks": [
+        "AI can make",
+        "studying easier,",
+        "but that doesn't necessarily mean",
+        "we learn more."
+      ]
+    },
+    "business": {
+      "en": "Automation can save time, but that doesn't necessarily mean every check should be removed.",
+      "ja": "自動化で時間を減らせても、すべての確認をなくしてよいとは限りません。",
+      "chunks": [
+        "Automation can save time,",
+        "but that doesn't necessarily mean",
+        "every check",
+        "should be removed."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S15",
+    "title": "It depends on whether ...",
+    "meaning": "〜かどうかによります",
+    "nuance": "曖昧に逃げるのではなく、判断を分ける条件を示す。",
+    "coreImage": "分かれ道の標識に、何が違えば結論が変わるかを書く。",
+    "ielts": {
+      "en": "It depends on whether the learner has chances to use English outside the classroom.",
+      "ja": "教室の外で英語を使う機会があるかどうかによります。",
+      "chunks": [
+        "It depends on whether",
+        "the learner has chances",
+        "to use English",
+        "outside the classroom."
+      ]
+    },
+    "business": {
+      "en": "It depends on whether we can obtain the missing data by Friday.",
+      "ja": "不足データを金曜までに入手できるかどうかによります。",
+      "chunks": [
+        "It depends on whether",
+        "we can obtain",
+        "the missing data",
+        "by Friday."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S16",
+    "title": "Assuming ..., ...",
+    "meaning": "〜と仮定すると、〜です",
+    "nuance": "検討のために、一つの前提を仮置きする。",
+    "coreImage": "計算する前に、土台の条件を固定する。",
+    "ielts": {
+      "en": "Assuming the course is affordable, I'd consider taking it.",
+      "ja": "受講料が払える範囲なら、その講座を検討したいです。",
+      "chunks": [
+        "Assuming the course is affordable,",
+        "I'd consider taking it."
+      ]
+    },
+    "business": {
+      "en": "Assuming the interest rate stays the same, we can use it for the forecast.",
+      "ja": "金利が変わらないと仮定するなら、その金利を予測に使えます。",
+      "chunks": [
+        "Assuming the interest rate",
+        "stays the same,",
+        "we can use it",
+        "for the forecast."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S17",
+    "title": "If ..., ...",
+    "meaning": "もし〜なら、〜です／〜します",
+    "nuance": "実際に起こり得る条件と、その場合の対応をつなぐ。",
+    "coreImage": "スイッチが入ったら、次の動きが始まる。",
+    "ielts": {
+      "en": "If I have ten minutes between meetings, I'll use them to practise speaking.",
+      "ja": "会議の間に10分あれば、話す練習に使います。",
+      "chunks": [
+        "If I have ten minutes",
+        "between meetings,",
+        "I'll use them",
+        "to practise speaking."
+      ]
+    },
+    "business": {
+      "en": "If the documents arrive late, we'll need to shorten the preparation time.",
+      "ja": "資料が遅れれば、準備時間を短くする必要があります。",
+      "chunks": [
+        "If the documents arrive late,",
+        "we'll need to shorten",
+        "the preparation time."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S18",
+    "title": "If I were ..., I'd ...",
+    "meaning": "もし私が〜なら、〜します",
+    "nuance": "今の現実とは別の立場に、想像で移って考える。ここでのwereは過去の出来事ではない。",
+    "coreImage": "別の人の椅子に座って、その人の選択肢を見る。",
+    "ielts": {
+      "en": "If I were a business owner, I'd ask what people would still pay for in an age of AI.",
+      "ja": "経営者なら、AIがある時代でも人は何にお金を払うかを考えます。",
+      "chunks": [
+        "If I were",
+        "a business owner,",
+        "I'd ask",
+        "what people would still pay for",
+        "in an age of AI."
+      ]
+    },
+    "business": {
+      "en": "If I were reading this for the first time, I'd want a short explanation of the background.",
+      "ja": "初めて読む立場なら、背景の短い説明がほしいです。",
+      "chunks": [
+        "If I were reading this",
+        "for the first time,",
+        "I'd want",
+        "a short explanation",
+        "of the background."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S19",
+    "title": "... might ... because ...",
+    "meaning": "〜が理由で、〜かもしれません",
+    "nuance": "理由のある可能性を示し、確定事項とは分ける。",
+    "coreImage": "まだ実線にできないつながりを、点線で示す。",
+    "ielts": {
+      "en": "Learning through stories might work better for me because the words have a clear context.",
+      "ja": "単語に文脈があるので、物語を使う方が自分には合うかもしれません。",
+      "chunks": [
+        "Learning through stories",
+        "might work better for me",
+        "because the words",
+        "have a clear context."
+      ]
+    },
+    "business": {
+      "en": "The review might take longer because some receipts are missing.",
+      "ja": "領収書が一部不足しているので、確認に時間がかかるかもしれません。",
+      "chunks": [
+        "The review might take longer",
+        "because some receipts are missing."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S20",
+    "title": "I'd need to ... before ...",
+    "meaning": "〜する前に、〜する必要があります",
+    "nuance": "すぐ結論を出さず、判断に必要な条件を明らかにする。",
+    "coreImage": "判断へ進む前に通る、確認の関門。",
+    "ielts": {
+      "en": "I'd need to try both methods before deciding which one suits me.",
+      "ja": "どちらが自分に合うか決める前に、両方試す必要があります。",
+      "chunks": [
+        "I'd need to try",
+        "both methods",
+        "before deciding",
+        "which one suits me."
+      ]
+    },
+    "business": {
+      "en": "I'd need to check the contract before confirming the deadline.",
+      "ja": "期限を確定する前に、契約を確認する必要があります。",
+      "chunks": [
+        "I'd need to check",
+        "the contract",
+        "before confirming the deadline."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S21",
+    "title": "The key question is whether ...",
+    "meaning": "重要なのは、〜かどうかです",
+    "nuance": "たくさんある話題から、判断の中心を一つ選ぶ。",
+    "coreImage": "散らばった論点の中央に、一本の軸を置く。",
+    "ielts": {
+      "en": "The key question is whether technology helps people build meaningful relationships.",
+      "ja": "重要なのは、技術が人との意味のある関係づくりに役立つかどうかです。",
+      "chunks": [
+        "The key question",
+        "is whether",
+        "technology helps people",
+        "build meaningful relationships."
+      ]
+    },
+    "business": {
+      "en": "The key question is whether the proposed process can meet the monthly deadline.",
+      "ja": "重要なのは、提案した業務フローで毎月の期限を守れるかどうかです。",
+      "chunks": [
+        "The key question",
+        "is whether",
+        "the proposed process",
+        "can meet the monthly deadline."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S22",
+    "title": "What we know is ... / What we still need to find out is ...",
+    "meaning": "分かっているのは〜で、まだ確認が必要なのは〜です",
+    "nuance": "既知と未知を分けて、次の検討を明確にする。",
+    "coreImage": "机の上を、確認済みとこれから確認の二つに分ける。",
+    "ielts": {
+      "en": "What we know is that the app offers feedback. What we still need to find out is how useful that feedback is.",
+      "ja": "アプリにフィードバック機能があることは分かっています。役立つ程度はまだ確認が必要です。",
+      "chunks": [
+        "What we know",
+        "is that",
+        "the app offers feedback.",
+        "What we still need",
+        "to find out",
+        "is how useful",
+        "that feedback is."
+      ]
+    },
+    "business": {
+      "en": "What we know is that the file was saved. What we still need to find out is whether the figures are correct.",
+      "ja": "保存済みなのは分かっています。数字が正しいかは、まだ確認が必要です。",
+      "chunks": [
+        "What we know",
+        "is that",
+        "the file was saved.",
+        "What we still need",
+        "to find out",
+        "is whether",
+        "the figures are correct."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S23",
+    "title": "I'd keep ... but change ...",
+    "meaning": "〜は残して、〜を変えます",
+    "nuance": "全面否定せず、維持する部分と改善する部分を分ける。",
+    "coreImage": "残すところを青、直すところを赤で囲む。",
+    "ielts": {
+      "en": "I'd keep the online materials but change how much time we spend on discussion.",
+      "ja": "オンライン教材は残して、話し合いに使う時間を変えます。",
+      "chunks": [
+        "I'd keep",
+        "the online materials",
+        "but change",
+        "how much time",
+        "we spend on discussion."
+      ]
+    },
+    "business": {
+      "en": "I'd keep the structure but change the wording to make it easier to understand.",
+      "ja": "構成は残して、理解しやすい表現に変えます。",
+      "chunks": [
+        "I'd keep the structure",
+        "but change the wording",
+        "to make it easier",
+        "to understand."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S24",
+    "title": "I'd break ... down into ...",
+    "meaning": "〜を、〜に分けて考えます",
+    "nuance": "大きすぎる目標や課題を、扱える単位にする。何をしやすくしたいかに合わせて分ける。",
+    "coreImage": "大きな塊を、手で持てる大きさに切り分ける。",
+    "ielts": {
+      "en": "I'd break my language-learning goal down into smaller weekly targets.",
+      "ja": "語学の目標を、週ごとの小さな目標に分けます。",
+      "chunks": [
+        "I'd break my language-learning goal down",
+        "into smaller weekly targets."
+      ]
+    },
+    "business": {
+      "en": "I'd break the process down into collecting documents, checking them, and approving the results.",
+      "ja": "業務を、資料収集・確認・結果の承認に分けます。",
+      "chunks": [
+        "I'd break the process down",
+        "into collecting documents,",
+        "checking them,",
+        "and approving the results."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S25",
+    "title": "... so that ...",
+    "meaning": "〜できるように、〜します",
+    "nuance": "行動と、その先で実現したい状態をつなぐ。",
+    "coreImage": "手前の行動から、奥の目的へ向かう矢印。",
+    "ielts": {
+      "en": "I practise familiar topics so that I can focus on expressing my ideas.",
+      "ja": "自分の考えを表すことに集中できるよう、身近な話題で練習します。",
+      "chunks": [
+        "I practise familiar topics",
+        "so that",
+        "I can focus on",
+        "expressing my ideas."
+      ]
+    },
+    "business": {
+      "en": "Let's label each step clearly so that a new team member can follow the process.",
+      "ja": "新しい担当者が業務を追えるよう、各工程に分かりやすい名前をつけましょう。",
+      "chunks": [
+        "Let's label each step clearly",
+        "so that",
+        "a new team member",
+        "can follow the process."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S26",
+    "title": "I used to ..., but now ...",
+    "meaning": "以前は〜でしたが、今は〜です",
+    "nuance": "過去と現在の変化を、一度に伝える。used toの後ろは動詞の原形。",
+    "coreImage": "昔と今の二枚の写真を並べる。",
+    "ielts": {
+      "en": "I used to focus mainly on vocabulary, but now I also want to practise speaking.",
+      "ja": "以前は主に単語に集中していましたが、今は話す練習もしたいです。",
+      "chunks": [
+        "I used to focus",
+        "mainly on vocabulary,",
+        "but now",
+        "I also want",
+        "to practise speaking."
+      ]
+    },
+    "business": {
+      "en": "We used to review each department separately, but now we also look at how information moves between them.",
+      "ja": "以前は部署ごとに確認していましたが、今は部署間の情報の流れも見ています。",
+      "chunks": [
+        "We used to review",
+        "each department separately,",
+        "but now",
+        "we also look at",
+        "how information moves",
+        "between them."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S27",
+    "title": "I've been ..., and next I'd like to ...",
+    "meaning": "これまで〜してきて、次は〜したいです",
+    "nuance": "最近までの取り組みから、次の一歩へつなぐ。",
+    "coreImage": "進んできた道の先に、次の目印を立てる。",
+    "ielts": {
+      "en": "I've been exploring ways to learn vocabulary more efficiently, and next I'd like to work on speaking.",
+      "ja": "単語を効率よく学ぶ方法を探してきました。次は話す力にも取り組みたいです。",
+      "chunks": [
+        "I've been exploring ways",
+        "to learn vocabulary",
+        "more efficiently,",
+        "and next",
+        "I'd like",
+        "to work on speaking."
+      ]
+    },
+    "business": {
+      "en": "We've been mapping the current process, and next we'd like to test the proposed changes.",
+      "ja": "現状の業務を整理してきたので、次は改善案を試したいです。",
+      "chunks": [
+        "We've been mapping",
+        "the current process,",
+        "and next",
+        "we'd like to test",
+        "the proposed changes."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S28",
+    "title": "Before ..., I'd ...",
+    "meaning": "〜する前に、まず〜します",
+    "nuance": "先走らず、準備や確認の順番を示す。",
+    "coreImage": "先の大きな一歩の前に、小さな一歩を置く。",
+    "ielts": {
+      "en": "Before choosing a course, I'd try a sample lesson.",
+      "ja": "講座を選ぶ前に、体験レッスンを受けます。",
+      "chunks": [
+        "Before choosing a course,",
+        "I'd try",
+        "a sample lesson."
+      ]
+    },
+    "business": {
+      "en": "Before changing the whole process, I'd test the idea on one task.",
+      "ja": "業務全体を変える前に、一つの作業で試します。",
+      "chunks": [
+        "Before changing the whole process,",
+        "I'd test the idea",
+        "on one task."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S29",
+    "title": "For now, ..., but ...",
+    "meaning": "今の段階では〜ですが、その後は〜です",
+    "nuance": "現在の方針を、永久の決定と区別する。",
+    "coreImage": "今の足場を置き、先へ進む余地も残す。",
+    "ielts": {
+      "en": "For now, I'm focusing on familiar topics, but later I'd like to discuss more abstract ideas.",
+      "ja": "今は身近な話題に集中していますが、その後は抽象的な話もしたいです。",
+      "chunks": [
+        "For now,",
+        "I'm focusing on",
+        "familiar topics,",
+        "but later",
+        "I'd like to discuss",
+        "more abstract ideas."
+      ]
+    },
+    "business": {
+      "en": "For now, let's use this format, but we can revise it after the first review.",
+      "ja": "一旦この形式を使い、最初のレビュー後に修正しましょう。",
+      "chunks": [
+        "For now,",
+        "let's use this format,",
+        "but we can revise it",
+        "after the first review."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S30",
+    "title": "Looking ahead, I'd like to ...",
+    "meaning": "今後を考えると、〜したいです",
+    "nuance": "現在の作業から一段引いて、将来の方向性を話す。",
+    "coreImage": "目の前から顔を上げて、少し先の景色を見る。",
+    "ielts": {
+      "en": "Looking ahead, I'd like to use English comfortably in both work and everyday life.",
+      "ja": "今後は、仕事でも日常でも無理なく英語を使えるようになりたいです。",
+      "chunks": [
+        "Looking ahead,",
+        "I'd like to use",
+        "English comfortably",
+        "in both work",
+        "and everyday life."
+      ]
+    },
+    "business": {
+      "en": "Looking ahead, we'd like to make the process less dependent on any one person.",
+      "ja": "今後は、特定の一人に依存しにくい業務にしたいです。",
+      "chunks": [
+        "Looking ahead,",
+        "we'd like to make",
+        "the process",
+        "less dependent on",
+        "any one person."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S31",
+    "title": "be + adjective + enough to ...",
+    "meaning": "〜できるほど十分に…だ",
+    "nuance": "行動に必要な水準を満たしていると伝える。enoughは形容詞の後に置き、続くtoで何が可能かを示す。",
+    "coreImage": "能力や条件のメーターが、行動できる線を越えている。",
+    "ielts": {
+      "en": "The room was quiet enough to record a short interview.",
+      "ja": "その部屋は、短いインタビューを録音できるほど静かでした。",
+      "chunks": [
+        "The room was",
+        "quiet enough",
+        "to record",
+        "a short interview."
+      ]
+    },
+    "business": {
+      "en": "The data is detailed enough to support our decision.",
+      "ja": "そのデータは、私たちの判断を裏づけられるほど詳細です。",
+      "chunks": [
+        "The data is",
+        "detailed enough",
+        "to support",
+        "our decision."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S32",
+    "title": "be used to ...ing",
+    "meaning": "〜することに慣れている",
+    "nuance": "繰り返し経験したため、今は自然にできる状態を示す。昔の習慣を表すused to + 動詞の原形と区別し、ここではtoの後に名詞か動名詞を置く。",
+    "coreImage": "何度も歩いた道なので、体が進み方を覚えている。",
+    "ielts": {
+      "en": "I'm used to taking the train during the morning rush.",
+      "ja": "私は朝のラッシュ時に電車に乗ることに慣れています。",
+      "chunks": [
+        "I'm used to taking",
+        "the train",
+        "during the morning rush."
+      ]
+    },
+    "business": {
+      "en": "We're used to discussing different views before making a decision.",
+      "ja": "私たちは、判断を下す前に異なる意見を議論することに慣れています。",
+      "chunks": [
+        "We're used to discussing",
+        "different views",
+        "before making a decision."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S33",
+    "title": "spend + time + ...ing",
+    "meaning": "〜することに時間を使う",
+    "nuance": "時間の長さだけでなく、その時間を何に振り向けたかに焦点を当てる。spendの後に時間、さらに動名詞を続ける。",
+    "coreImage": "手持ちの時間を、活動ごとの箱に配る。",
+    "ielts": {
+      "en": "I spend half an hour reading before I go to bed.",
+      "ja": "私は寝る前に30分、読書をします。",
+      "chunks": [
+        "I spend",
+        "half an hour reading",
+        "before I go to bed."
+      ]
+    },
+    "business": {
+      "en": "We spent two days reviewing the assumptions in the forecast.",
+      "ja": "私たちは2日かけて、予測の前提を見直しました。",
+      "chunks": [
+        "We spent two days",
+        "reviewing the assumptions",
+        "in the forecast."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S34",
+    "title": "feel like ...ing",
+    "meaning": "〜したい気分だ",
+    "nuance": "確定した計画や義務よりも、その時の気持ちを表す。ビジネスでは休憩や雑談などの気軽なやり取りに向く。",
+    "coreImage": "気持ちの針が、今したい活動の方向を指す。",
+    "ielts": {
+      "en": "I feel like exploring a new neighbourhood on my next day off.",
+      "ja": "次の休みには、まだ知らない街の一角を歩いてみたい気分です。",
+      "chunks": [
+        "I feel like exploring",
+        "a new neighbourhood",
+        "on my next day off."
+      ]
+    },
+    "business": {
+      "en": "I feel like taking a short break after this long discussion.",
+      "ja": "この長い議論の後は、少し休憩したい気分です。",
+      "chunks": [
+        "I feel like taking",
+        "a short break",
+        "after this long discussion."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S35",
+    "title": "It's been + time + since ...",
+    "meaning": "〜してから…の時間が経っている",
+    "nuance": "過去の出来事から現在までの間隔を表す。sinceで起点を示し、久しぶりの経験や導入後の経過を説明できる。",
+    "coreImage": "過去の出来事に印を置き、そこから今までの距離を測る。",
+    "ielts": {
+      "en": "It's been three years since I last visited my hometown.",
+      "ja": "最後に故郷を訪れてから3年が経ちました。",
+      "chunks": [
+        "It's been three years",
+        "since I last visited",
+        "my hometown."
+      ]
+    },
+    "business": {
+      "en": "It's been six months since we introduced the new reporting system.",
+      "ja": "新しい報告システムを導入してから6か月が経ちました。",
+      "chunks": [
+        "It's been six months",
+        "since we introduced",
+        "the new reporting system."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S36",
+    "title": "have + someone + verb",
+    "meaning": "人に〜してもらう／人に〜を担当させる",
+    "nuance": "依頼や手配によって相手が動く形。have + 人の後は動詞の原形で、toを挟まない。強制より、役割を割り振る文脈に向く。",
+    "coreImage": "作業のカードを相手に渡し、担当をお願いする。",
+    "ielts": {
+      "en": "I had a friend help me plan a weekend trip.",
+      "ja": "私は友人に、週末旅行の計画を手伝ってもらいました。",
+      "chunks": [
+        "I had a friend",
+        "help me plan",
+        "a weekend trip."
+      ]
+    },
+    "business": {
+      "en": "I'll have our analyst check the figures before the meeting.",
+      "ja": "会議の前に、アナリストに数値を確認してもらいます。",
+      "chunks": [
+        "I'll have our analyst",
+        "check the figures",
+        "before the meeting."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S37",
+    "title": "make + someone + verb",
+    "meaning": "人に〜させる／人が〜するきっかけになる",
+    "nuance": "人や出来事が、相手の行動を引き起こす。強制だけでなく、経験が考えを変えさせる場合にも使う。能動形では人の後に動詞の原形を置く。",
+    "coreImage": "外から押された力が、人の行動を動かす。",
+    "ielts": {
+      "en": "Living abroad made me question some of my old habits.",
+      "ja": "海外で暮らしたことで、以前の習慣のいくつかを疑うようになりました。",
+      "chunks": [
+        "Living abroad",
+        "made me question",
+        "some of my old habits."
+      ]
+    },
+    "business": {
+      "en": "The unexpected delay made us rethink the project schedule.",
+      "ja": "予期しない遅れにより、私たちはプロジェクトの予定を見直すことになりました。",
+      "chunks": [
+        "The unexpected delay",
+        "made us rethink",
+        "the project schedule."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S38",
+    "title": "let + someone + verb",
+    "meaning": "人が〜するのを許す／人に〜させてあげる",
+    "nuance": "相手の行動を妨げず、許可や機会を与える。Let me ...は、自分に説明や手助けをさせてほしいという申し出にも使う。人の後は動詞の原形。",
+    "coreImage": "閉じていた門を開き、その人が進めるようにする。",
+    "ielts": {
+      "en": "My parents let me choose the subjects I wanted to study.",
+      "ja": "両親は、私が学びたい科目を自分で選ぶことを認めてくれました。",
+      "chunks": [
+        "My parents",
+        "let me choose",
+        "the subjects",
+        "I wanted to study."
+      ]
+    },
+    "business": {
+      "en": "Please let me explain how we reached this estimate.",
+      "ja": "この見積もりに至った経緯を説明させてください。",
+      "chunks": [
+        "Please let me explain",
+        "how we reached",
+        "this estimate."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S39",
+    "title": "see + someone + ...ing",
+    "meaning": "人が〜しているところを見る",
+    "nuance": "実際に目にした進行中の場面を描く。seeの後に人や物を置き、その時の動きを動名詞と同じ形の現在分詞で続ける。",
+    "coreImage": "目の前の映像を止め、その中の人の動きを描写する。",
+    "ielts": {
+      "en": "I saw children playing football in a park near my house.",
+      "ja": "家の近くの公園で、子どもたちがサッカーをしているのを見ました。",
+      "chunks": [
+        "I saw children",
+        "playing football",
+        "in a park",
+        "near my house."
+      ]
+    },
+    "business": {
+      "en": "During the visit, we saw staff using the new equipment.",
+      "ja": "訪問中、従業員が新しい設備を使っているところを見ました。",
+      "chunks": [
+        "During the visit,",
+        "we saw staff",
+        "using the new equipment."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S40",
+    "title": "be supposed to ...",
+    "meaning": "〜することになっている／本来〜するはずだ",
+    "nuance": "予定、取り決め、周囲の期待を表す。実際にそうなると保証する表現ではなく、期待と現実のずれも説明できる。",
+    "coreImage": "予定表に書かれた姿と、今起きている現実を見比べる。",
+    "ielts": {
+      "en": "The festival was supposed to start at noon, but rain delayed it.",
+      "ja": "祭りは正午に始まる予定でしたが、雨で開始が遅れました。",
+      "chunks": [
+        "The festival",
+        "was supposed to start",
+        "at noon,",
+        "but rain delayed it."
+      ]
+    },
+    "business": {
+      "en": "The supplier is supposed to deliver the materials by Friday.",
+      "ja": "仕入先は、金曜日までに資材を納めることになっています。",
+      "chunks": [
+        "The supplier",
+        "is supposed to deliver",
+        "the materials",
+        "by Friday."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S41",
+    "title": "The more ..., the ...",
+    "meaning": "〜すればするほど、…になる",
+    "nuance": "二つの変化が連動する関係を説明する。後半はthe moreだけでなく、the betterやthe fewerなど、伝えたい変化に合う比較級を置ける。",
+    "coreImage": "一方のスライダーを動かすと、もう一方も連動して動く。",
+    "ielts": {
+      "en": "The more I travel, the more comfortable I become with unfamiliar situations.",
+      "ja": "旅行をすればするほど、慣れない状況にも落ち着いて対応できるようになります。",
+      "chunks": [
+        "The more I travel,",
+        "the more comfortable",
+        "I become",
+        "with unfamiliar situations."
+      ]
+    },
+    "business": {
+      "en": "The more clearly we define responsibilities, the fewer mistakes we make.",
+      "ja": "責任分担を明確にすればするほど、ミスは少なくなります。",
+      "chunks": [
+        "The more clearly",
+        "we define responsibilities,",
+        "the fewer mistakes",
+        "we make."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S42",
+    "title": "It's not that ...; it's just that ...",
+    "meaning": "〜というわけではなく、ただ…なのだ",
+    "nuance": "相手が想定しそうな理由をまず否定し、実際の事情をやわらかく示す。単なる言い換えより、誤解を解くことに焦点がある。",
+    "coreImage": "誤った理由の札を外し、本当の事情の札に差し替える。",
+    "ielts": {
+      "en": "It's not that I dislike cities; it's just that I need some quiet time.",
+      "ja": "都会が嫌いなわけではなく、ただ少し静かな時間が必要なのです。",
+      "chunks": [
+        "It's not that",
+        "I dislike cities;",
+        "it's just that",
+        "I need",
+        "some quiet time."
+      ]
+    },
+    "business": {
+      "en": "It's not that we reject the idea; it's just that we need more evidence.",
+      "ja": "その案を否定しているわけではなく、もう少し根拠が必要なのです。",
+      "chunks": [
+        "It's not that",
+        "we reject the idea;",
+        "it's just that",
+        "we need more evidence."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S43",
+    "title": "without ...ing",
+    "meaning": "〜することなく",
+    "nuance": "ある行動を伴わずに別のことが起きると伝える。不要な手順を省く場合にも、必要な行動が欠ける場合にも使える。",
+    "coreImage": "行動のセットから一つを外しても、残りの動きは続く。",
+    "ielts": {
+      "en": "I enjoy walking through the city without looking at my phone.",
+      "ja": "私は、スマホを見ずに街を歩くのが好きです。",
+      "chunks": [
+        "I enjoy walking",
+        "through the city",
+        "without looking",
+        "at my phone."
+      ]
+    },
+    "business": {
+      "en": "We can reduce costs without lowering the quality of our service.",
+      "ja": "サービスの品質を下げることなく、費用を削減できます。",
+      "chunks": [
+        "We can reduce costs",
+        "without lowering",
+        "the quality",
+        "of our service."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S44",
+    "title": "be worth ...ing",
+    "meaning": "〜する価値がある",
+    "nuance": "時間や労力をかけるだけの見返りがあると勧める。worthの後は動名詞を置き、worth to doにはしない。",
+    "coreImage": "かける時間や手間と、得られるものを天秤にかける。",
+    "ielts": {
+      "en": "The local museum is worth visiting if you enjoy history.",
+      "ja": "歴史が好きなら、地元の博物館は訪れる価値があります。",
+      "chunks": [
+        "The local museum",
+        "is worth visiting",
+        "if you enjoy history."
+      ]
+    },
+    "business": {
+      "en": "This proposal is worth considering because it solves a practical problem.",
+      "ja": "この提案は実務上の問題を解決するので、検討する価値があります。",
+      "chunks": [
+        "This proposal",
+        "is worth considering",
+        "because it solves",
+        "a practical problem."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S45",
+    "title": "with + noun + state",
+    "meaning": "〜が…の状態で",
+    "nuance": "主な行動に添えて、その時の人や物の状態を描く。状態には形容詞、分詞、場所を示す句などを置ける。",
+    "coreImage": "主役の行動の背景に、同時にある状態を描き足す。",
+    "ielts": {
+      "en": "I like reading in the evening with soft music playing in the background.",
+      "ja": "私は夕方、静かな音楽が流れる中で読書をするのが好きです。",
+      "chunks": [
+        "I like reading",
+        "in the evening",
+        "with soft music playing",
+        "in the background."
+      ]
+    },
+    "business": {
+      "en": "We began the discussion with all the relevant figures on the screen.",
+      "ja": "関連する数値をすべて画面に表示した状態で、議論を始めました。",
+      "chunks": [
+        "We began the discussion",
+        "with all the relevant figures",
+        "on the screen."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S46",
+    "title": "get to ...",
+    "meaning": "〜する機会を得る／〜できる機会がある",
+    "nuance": "能力そのものより、環境や巡り合わせによって機会があることを表す。過去の経験を話す時はgot toを使える。",
+    "coreImage": "開いた扉から、やりたかった体験に入れる。",
+    "ielts": {
+      "en": "At university, I got to work with people from several different countries.",
+      "ja": "大学では、さまざまな国の人と一緒に活動する機会がありました。",
+      "chunks": [
+        "At university,",
+        "I got to work",
+        "with people",
+        "from several different countries."
+      ]
+    },
+    "business": {
+      "en": "Through this project, we get to learn directly from our customers.",
+      "ja": "このプロジェクトを通じて、お客様から直接学ぶ機会があります。",
+      "chunks": [
+        "Through this project,",
+        "we get to learn",
+        "directly from our customers."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S47",
+    "title": "number + or so",
+    "meaning": "数値が〜くらい／〜前後",
+    "nuance": "時間や数量などの数値に、概数であることを添える。正確な測定値や確定金額が必要な場面では使い分ける。",
+    "coreImage": "数値の一点ではなく、その周りの小さな幅を指す。",
+    "ielts": {
+      "en": "I walk for twenty minutes or so after dinner.",
+      "ja": "夕食後に20分ほど歩きます。",
+      "chunks": [
+        "I walk",
+        "for twenty minutes or so",
+        "after dinner."
+      ]
+    },
+    "business": {
+      "en": "The initial review will take an hour or so.",
+      "ja": "最初の確認には1時間ほどかかる見込みです。",
+      "chunks": [
+        "The initial review",
+        "will take",
+        "an hour or so."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S48",
+    "title": "That's a fair point; ...",
+    "meaning": "その指摘はもっともだ／確かに一理ある",
+    "nuance": "相手の指摘に筋が通っていると認める。全面的な同意を必ず意味するわけではなく、受け止めた上で自分の考えを続けられる。",
+    "coreImage": "相手が置いた論点を、議論のテーブルに受け入れる。",
+    "ielts": {
+      "en": "That's a fair point; public transport needs to be reliable as well as affordable.",
+      "ja": "その指摘はもっともです。公共交通には、手頃な料金に加えて信頼できる運行も必要です。",
+      "chunks": [
+        "That's a fair point;",
+        "public transport needs",
+        "to be reliable",
+        "as well as affordable."
+      ]
+    },
+    "business": {
+      "en": "That's a fair point; we should include training costs in the budget.",
+      "ja": "その指摘はもっともです。予算には研修費も含めるべきですね。",
+      "chunks": [
+        "That's a fair point;",
+        "we should include",
+        "training costs",
+        "in the budget."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S49",
+    "title": "come across ...",
+    "meaning": "〜を偶然見つける／〜に偶然出会う",
+    "nuance": "探すことを主目的にしていたというより、別の活動の途中で発見した感じを表す。人、場所、情報などに使える。",
+    "coreImage": "進んでいた道を、予想外の人や情報が横切る。",
+    "ielts": {
+      "en": "I came across a small bakery while exploring an unfamiliar part of town.",
+      "ja": "知らない街の一角を歩いている時に、小さなパン屋を偶然見つけました。",
+      "chunks": [
+        "I came across",
+        "a small bakery",
+        "while exploring",
+        "an unfamiliar part of town."
+      ]
+    },
+    "business": {
+      "en": "We came across an inconsistency while reviewing the sales data.",
+      "ja": "売上データを確認している途中で、不整合を見つけました。",
+      "chunks": [
+        "We came across",
+        "an inconsistency",
+        "while reviewing",
+        "the sales data."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S50",
+    "title": "Going back to ..., ...",
+    "meaning": "〜の話に戻ると、…",
+    "nuance": "途中で広がった話を、前の質問や論点へ戻す目印。新しい話題の導入ではなく、すでに出た話を拾い直す。",
+    "coreImage": "話の道から伸びた枝をたどり、元の分岐点へ戻る。",
+    "ielts": {
+      "en": "Going back to your question, the park is my favourite place to relax.",
+      "ja": "先ほどの質問に戻ると、その公園が私のいちばん好きなくつろぐ場所です。",
+      "chunks": [
+        "Going back",
+        "to your question,",
+        "the park is",
+        "my favourite place",
+        "to relax."
+      ]
+    },
+    "business": {
+      "en": "Going back to the schedule, we still need a date for the final review.",
+      "ja": "日程の話に戻ると、最終確認の日をまだ決める必要があります。",
+      "chunks": [
+        "Going back",
+        "to the schedule,",
+        "we still need",
+        "a date",
+        "for the final review."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S51",
+    "title": "end up ...ing",
+    "meaning": "結局〜することになる",
+    "nuance": "経緯をたどった末の結果を述べる。特に、当初の予想や予定と違う結末を話す時に自然。",
+    "coreImage": "予定とは違う曲がり道を進み、最後にその場所へ着く。",
+    "ielts": {
+      "en": "We took the wrong bus and ended up discovering a beautiful coastal village.",
+      "ja": "バスを間違えたのですが、結果的に美しい海沿いの村を見つけました。",
+      "chunks": [
+        "We took",
+        "the wrong bus",
+        "and ended up discovering",
+        "a beautiful coastal village."
+      ]
+    },
+    "business": {
+      "en": "We expected a brief meeting but ended up discussing the issue for two hours.",
+      "ja": "短い会議のつもりでしたが、結局その問題を2時間議論しました。",
+      "chunks": [
+        "We expected",
+        "a brief meeting",
+        "but ended up discussing",
+        "the issue",
+        "for two hours."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S52",
+    "title": "In general, ...",
+    "meaning": "一般的には／全体的に見ると、…",
+    "nuance": "個別の例外をすべて扱わず、広い傾向や全体像を示す。全員に例外なく当てはまるという断言を避けられる。",
+    "coreImage": "細部から少し離れ、全体の模様を見る。",
+    "ielts": {
+      "en": "In general, people in my neighbourhood are friendly and willing to help.",
+      "ja": "全体として、近所の人たちは親しみやすく、進んで助けてくれます。",
+      "chunks": [
+        "In general,",
+        "people in my neighbourhood",
+        "are friendly",
+        "and willing to help."
+      ]
+    },
+    "business": {
+      "en": "In general, customers prefer a clear explanation before they make a purchase.",
+      "ja": "一般的に、お客様は購入前に分かりやすい説明を求めます。",
+      "chunks": [
+        "In general,",
+        "customers prefer",
+        "a clear explanation",
+        "before they make a purchase."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S53",
+    "title": "From the perspective of ..., ...",
+    "meaning": "〜の立場・観点から見ると、…",
+    "nuance": "誰の目線、どの目的から考えているかを明らかにする。評価する項目を絞るin terms ofと違い、見ている側の立場に焦点がある。",
+    "coreImage": "別の人の席へ移り、その人の目線で同じ景色を見る。",
+    "ielts": {
+      "en": "From the perspective of a parent, safe streets are essential.",
+      "ja": "親の立場から見ると、安全な道路は欠かせません。",
+      "chunks": [
+        "From the perspective",
+        "of a parent,",
+        "safe streets are essential."
+      ]
+    },
+    "business": {
+      "en": "From the perspective of a customer, a simple process saves time.",
+      "ja": "お客様の立場から見ると、手続きが簡単であれば時間の節約になります。",
+      "chunks": [
+        "From the perspective",
+        "of a customer,",
+        "a simple process",
+        "saves time."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S54",
+    "title": "Out of the blue, ...",
+    "meaning": "予期せず突然、…",
+    "nuance": "単に素早いだけでなく、予兆がなく驚いた出来事を表す。経験談や予想外の連絡を描く時に向く。",
+    "coreImage": "何もない空から、予想外の出来事が飛び込んでくる。",
+    "ielts": {
+      "en": "Out of the blue, an old school friend invited me to her wedding.",
+      "ja": "思いがけず、昔の学校の友人から結婚式に招待されました。",
+      "chunks": [
+        "Out of the blue,",
+        "an old school friend",
+        "invited me",
+        "to her wedding."
+      ]
+    },
+    "business": {
+      "en": "Out of the blue, a supplier offered us a much earlier delivery date.",
+      "ja": "思いがけず、仕入先からかなり早い納期を提案されました。",
+      "chunks": [
+        "Out of the blue,",
+        "a supplier offered us",
+        "a much earlier delivery date."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S55",
+    "title": "Off the top of my head, ...",
+    "meaning": "今すぐ思いつく範囲では、…",
+    "nuance": "調べたり整理したりする前に、記憶からすぐ浮かぶことを述べる。回答が暫定的である目印になり、考え始める時間も作れる。",
+    "coreImage": "記憶の棚を探し込まず、手前にあるものを取り出す。",
+    "ielts": {
+      "en": "Off the top of my head, I can think of two places worth visiting.",
+      "ja": "今すぐ思いつく範囲では、訪れる価値のある場所が二つあります。",
+      "chunks": [
+        "Off the top",
+        "of my head,",
+        "I can think of",
+        "two places worth visiting."
+      ]
+    },
+    "business": {
+      "en": "Off the top of my head, the review should take about two weeks.",
+      "ja": "今すぐ思いつく見積もりでは、確認には2週間ほどかかると思います。",
+      "chunks": [
+        "Off the top",
+        "of my head,",
+        "the review should take",
+        "about two weeks."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S56",
+    "title": "X and Y are two sides of the same coin",
+    "meaning": "XとYは表裏一体だ",
+    "nuance": "異なる二つの面が密接に結びつき、切り離せない関係にあると説明する。単に反対の性質というだけでは使わない。",
+    "coreImage": "一枚の硬貨を裏返すと、別の面が現れる。",
+    "ielts": {
+      "en": "Freedom and responsibility are two sides of the same coin when you live alone.",
+      "ja": "一人暮らしでは、自由と責任は表裏一体です。",
+      "chunks": [
+        "Freedom and responsibility",
+        "are two sides",
+        "of the same coin",
+        "when you live alone."
+      ]
+    },
+    "business": {
+      "en": "Growth and complexity are two sides of the same coin for a young business.",
+      "ja": "若い企業にとって、成長と複雑化は表裏一体です。",
+      "chunks": [
+        "Growth and complexity",
+        "are two sides",
+        "of the same coin",
+        "for a young business."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S57",
+    "title": "I'm more of a ...",
+    "meaning": "私はどちらかというと〜なタイプだ",
+    "nuance": "自分の性格や好みを、近いタイプに寄せて説明する。行動の頻度を示すI tend toより、自分がどんな人かという分類に焦点がある。",
+    "coreImage": "いくつかのタイプの中で、自分の位置を一つに少し寄せる。",
+    "ielts": {
+      "en": "I'm more of a morning person, so I study best before breakfast.",
+      "ja": "私はどちらかというと朝型なので、朝食前がいちばん勉強に集中できます。",
+      "chunks": [
+        "I'm more of",
+        "a morning person,",
+        "so I study best",
+        "before breakfast."
+      ]
+    },
+    "business": {
+      "en": "I'm more of a listener in meetings, especially when a topic is unfamiliar.",
+      "ja": "会議では、特に詳しくない話題の時、私はどちらかというと聞き役です。",
+      "chunks": [
+        "I'm more of",
+        "a listener in meetings,",
+        "especially when",
+        "a topic is unfamiliar."
+      ]
+    },
+    "priority": false
+  },
+  {
+    "id": "S58",
+    "title": "Given that ..., ...",
+    "meaning": "〜という事実・状況を考えると、…",
+    "nuance": "すでに成立している事実を、判断の前提として置く。まだ真偽が確定していない想定を置くAssumingとは使い分ける。",
+    "coreImage": "確かめた事実を土台に置き、その上に判断を積む。",
+    "ielts": {
+      "en": "Given that the city is growing, better public transport is becoming increasingly important.",
+      "ja": "都市が拡大していることを考えると、公共交通の充実はますます重要になっています。",
+      "chunks": [
+        "Given that",
+        "the city is growing,",
+        "better public transport",
+        "is becoming increasingly important."
+      ]
+    },
+    "business": {
+      "en": "Given that the deadline is close, we should focus on the essential tasks.",
+      "ja": "期限が近いことを考えると、必要不可欠な作業に集中するべきです。",
+      "chunks": [
+        "Given that",
+        "the deadline is close,",
+        "we should focus",
+        "on the essential tasks."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S59",
+    "title": "In terms of ..., ...",
+    "meaning": "〜という点・評価軸では、…",
+    "nuance": "費用、時間、品質など、どの側面について述べるかを絞る。誰の立場で見るかではなく、評価する物差しを指定する。",
+    "coreImage": "いくつもの物差しから一本を選び、その尺度で測る。",
+    "ielts": {
+      "en": "The town has improved in terms of public transport over the last few years.",
+      "ja": "その町は、ここ数年で公共交通の面が改善しました。",
+      "chunks": [
+        "The town has improved",
+        "in terms of public transport",
+        "over the last few years."
+      ]
+    },
+    "business": {
+      "en": "In terms of cost, this option fits our budget.",
+      "ja": "費用の面では、この選択肢は予算に収まります。",
+      "chunks": [
+        "In terms of cost,",
+        "this option fits",
+        "our budget."
+      ]
+    },
+    "priority": true
+  },
+  {
+    "id": "S60",
+    "title": "This is something that ...",
+    "meaning": "これは〜する／〜したこと・ものだ",
+    "nuance": "具体的な対象や行動を指し、関係詞節でその特徴を補足する。好き嫌いや重要度を先に述べず、今話している対象に焦点を合わせられる。",
+    "coreImage": "対象を指さし、横に説明の札を貼る。",
+    "ielts": {
+      "en": "This is something that I learnt through volunteering in my local community.",
+      "ja": "これは、地元の地域活動に参加する中で学んだことです。",
+      "chunks": [
+        "This is something that",
+        "I learnt",
+        "through volunteering",
+        "in my local community."
+      ]
+    },
+    "business": {
+      "en": "This is something that we should test before making a final decision.",
+      "ja": "これは、最終判断の前に検証しておくべきことです。",
+      "chunks": [
+        "This is something that",
+        "we should test",
+        "before making",
+        "a final decision."
+      ]
+    },
+    "priority": false
+  }
+]

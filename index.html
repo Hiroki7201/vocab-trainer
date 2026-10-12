@@ -12,6 +12,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icon.svg" />
 <title>Recall — 単語学習（音声＋間隔反復）</title>
+<link rel="stylesheet" href="practice.css" />
 <style>
   :root{
     --bg:#f3efe6; --surface:#fbf9f4; --surface2:#f6f2ea;
@@ -809,6 +810,7 @@
 
 <div id="toast"></div>
 
+<script src="practice.js"></script>
 <script>
 "use strict";
 /* =========================================================================
@@ -858,6 +860,7 @@ function loadAPP(){
 function saveAPP(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(APP)); }catch(e){ storageOK=false; } }
 
 function showView(name){
+  RecallPractice.onViewChange(name);
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   $(name+"View").classList.add("active");
   document.body.dataset.view=name;
@@ -1222,6 +1225,7 @@ function renderHome(){
   if(ids.length){ const top=APP.decks[ids[0]];
     cta.innerHTML=`<button class="btn solid grow" style="width:100%" data-act="study" data-id="${ids[0]}">「${escapeHTML(top.name)}」を学習</button>`; }
   else cta.innerHTML="";
+  RecallPractice.renderHome();
 }
 
 /* =========================================================================
@@ -1658,7 +1662,7 @@ function scToggleHide(){ const g=$("scGrid"), on=!g.classList.contains("sc-hide"
 function scClose(){ scStopStory(); stopSpeak(); const from=sc&&sc.from; sc=null;
   if(from==="index") openSceneIndex(); else if(from==="list" && curListId && APP.decks[curListId]) openList(curListId); else goHome(); }
 /* 瞬間モードの裏面に、その語の場面の該当部分を拡大して出す */
-function flSceneCrop(c){ const box=$("flScene"), hit=SCN.byWord[(c.en||"").toLowerCase()];
+function flSceneCrop(c){ const box=$("flScene"), hit=RecallPractice.sceneHit(fl&&fl.deckId,c.en);
   if(!hit){ box.style.display="none"; return; }
   const Z=2.2, k=9/25, ar=hit.scene.h/hit.scene.w, x=hit.word.x, y=hit.word.y, cl=v=>Math.max(0,Math.min(1,v));
   const px=cl((Z*x-0.5)/(Z-1)), py=cl((Z*ar*y-k/2)/(Z*ar-k));
@@ -2114,13 +2118,13 @@ function bind(){
 }
 
 /* ---------- 起動 ---------- */
-function init(){ loadAPP(); applyTheme(); bind(); loadVoices(); renderHome(); showView("home"); hqLoad(); scLoad();
+function init(){ loadAPP(); applyTheme(); bind(); RecallPractice.init(); loadVoices(); renderHome(); showView("home"); hqLoad(); scLoad();
   ["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev, hqUnlock, {once:true, capture:true}));
   if(!storageOK){ const w=document.createElement("div"); w.className="badge-warn"; w.style.margin="0 0 14px";
     w.textContent="このブラウザでは進捗の自動保存が無効のようです。設定の「バックアップ」をご利用ください。"; $("homeView").prepend(w); } }
 init();
-// オフライン対応: HTTPS配信時のみサービスワーカーを登録（ローカル検証時は不要）
-if("serviceWorker" in navigator && location.protocol==="https:"){ navigator.serviceWorker.register("./sw.js").catch(()=>{}); }
+// オフライン対応: HTTPS配信とlocalhostでサービスワーカーを登録
+if("serviceWorker" in navigator && (location.protocol==="https:" || ["localhost","127.0.0.1"].includes(location.hostname))){ navigator.serviceWorker.register("./sw.js").catch(()=>{}); }
 </script>
 </body>
 </html>
