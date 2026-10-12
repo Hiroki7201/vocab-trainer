@@ -1,5 +1,5 @@
 // Recall — offline cache (network-first, cache fallback)
-const CACHE = "recall-v3-practice";
+const CACHE = "recall-v4-front-audio";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon.svg", "./practice.js", "./practice.css", "./speaking.json", "./scenes/scenes.json"];
 
 // Some networks return an HTML error page with HTTP 200 on a connection failure.

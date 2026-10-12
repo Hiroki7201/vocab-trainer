@@ -112,6 +112,7 @@ window.RecallPractice = (() => {
     const fields={Think:"think",Chunk:"chunk",Reveal:"reveal",Example:"example",Group:"group",Front:"front",Back:"back",Gap:"gap"};
     for(const [name,key] of Object.entries(fields)) el("practice"+name).value=settings[key];
     el("practiceLoop").checked=settings.loop; el("practiceSound").checked=settings.sound;
+    el("practiceSoundLabel").textContent=mode==="speaking"?"英文の全文表示で音声を読む":"表面で単語・フレーズを発音する";
     el("practicePattern").innerHTML='<option value="">すべての構文</option>'+data.map(p=>`<option value="${esc(p.id)}">${p.id} ${esc(p.title)}</option>`).join("");
     el("practicePattern").value=settings.pattern;
     el("practiceSpeakingSettings").hidden=mode!=="speaking"; el("practiceAutoSettings").hidden=mode!=="auto";
@@ -155,12 +156,18 @@ window.RecallPractice = (() => {
     el("practiceOptions").open=false; checkpoint(); render(); el("practiceCard").focus({preventScroll:true});
   }
   function current() { return run?.queue[run.idx]; }
+  function speakFront() {
+    if(mode!=="auto" || !run || run.phase!=="front" || !settings.sound || !APP.settings.audio || document.hidden || document.body.dataset.view!=="practice") return false;
+    const ref=current(), card=APP.decks[ref.deckId]?.cards[ref.key];
+    if(!card?.en) return false;
+    speakSeq([enItem(card.en)]); return true;
+  }
   function example() { const r=current(), p=data.find(x=>x.id===r?.id); return p?{pattern:p,...p[r.kind]}:null; }
   function chunks() { const x=example(); return x?(settings.reveal==="word"?x.en.split(/\s+/):x.chunks):[]; }
   function resetCard(play) {
     cancel(); remaining=null; visual++;
     run.phase=mode==="speaking"?"think":"front"; run.revealed=0; run.playing=play;
-    renderCard(); if(play) schedule((mode==="speaking"?settings.think:settings.front)*1000);
+    renderCard(); if(play) { speakFront(); schedule((mode==="speaking"?settings.think:settings.front)*1000); }
     checkpoint(); render();
   }
   function renderCard() {
@@ -207,8 +214,8 @@ window.RecallPractice = (() => {
       } else schedule(settings.chunk*1000);
       renderChunks();
     } else if(run.phase==="front") {
+      cancel();
       run.phase="back"; el("practiceDetails").hidden=false; el("practiceImage").hidden=el("practiceImageLabel").hidden=true;
-      if(settings.sound) speakSeq([enItem(APP.decks[current().deckId].cards[current().key].en)]);
       schedule(settings.back*1000);
     } else if(run.phase==="back") { run.phase="gap"; cancel(); schedule(settings.gap*1000); }
     else if(run.phase==="gap") {
@@ -226,6 +233,7 @@ window.RecallPractice = (() => {
     cancel(); run.playing=true;
     if(run.phase==="end") { run.idx=0; run.round=1; resetCard(true); return; }
     if(run.phase==="complete") { resetCard(true); return; }
+    if(speakFront()) remaining=null; // Replay the word with a full front interval after a pause.
     const ms=remaining??(mode==="speaking"?(run.phase==="think"?settings.think:settings.chunk):run.phase==="front"?settings.front:run.phase==="back"?settings.back:settings.gap)*1000;
     remaining=null; schedule(ms); checkpoint(); render();
   }
@@ -233,11 +241,12 @@ window.RecallPractice = (() => {
     if(!run) return; const idx=Math.max(0,Math.min(run.queue.length-1,run.idx+delta));
     if(idx===run.idx) return;
     const play=mode==="speaking"?!document.hidden:run.playing&&!document.hidden;
-    run.idx=idx; resetCard(play);
+    run.idx=idx; resetCard(play); if(mode==="auto" && !play) speakFront();
   }
   function flip() {
     if(!run || mode!=="auto") return; pause();
     run.phase=run.phase==="front"?"back":"front"; remaining=null; renderCard(); checkpoint(); render();
+    speakFront();
   }
   function onViewChange(name) { if(name!=="practice" && run) { pause(); visual++; } }
   function init() {
@@ -245,7 +254,7 @@ window.RecallPractice = (() => {
     for(const [k,min,max] of [["think",0,20],["chunk",0.1,10],["front",0.2,60],["back",0.2,60],["gap",0,20]]) settings[k]=number(settings[k],min,max,defaults[k]);
     for(const [k,choices] of [["reveal",["chunk","word"]],["example",["ielts","business","both"]],["group",["all","priority","original","additional"]]]) if(!choices.includes(settings[k])) settings[k]=defaults[k];
     el("homeView").querySelector(".hero").insertAdjacentHTML("afterend", `<div id="practiceHome"><div class="section-label">話す・自動で復習</div><button class="practice-menu" id="speakingMenu"><b>英会話編 →</b><span id="speakingCount">IELTS・ビジネス</span><small>日本語から考えて、短い意味チャンクで英語を組み立てる</small></button><button class="practice-menu" id="autoFlashMenu"><b>自動フラッシュ →</b><span>Lv60・Lv80・分野別</span><small>範囲と時間を選んで、単語カードをくり返す</small></button></div>`);
-    document.body.insertAdjacentHTML("beforeend", `<section class="view" id="practiceView"><div class="practice-wrap"><header class="practice-top"><button class="btn ghost sm" id="practiceClose">← ホーム</button><h1 id="practiceHeading">英会話編</h1><span id="practicePosition"></span></header><div class="practice-tabs"><button class="btn ghost" id="practiceModeSpeaking">英会話編</button><button class="btn ghost" id="practiceModeAuto">自動フラッシュ</button></div><p id="practiceHelp"></p><details id="practiceOptions" open><summary>範囲・表示時間を設定</summary><div id="practiceSpeakingSettings" class="practice-grid"><label>例文<select id="practiceExample"><option value="ielts">IELTS Speaking</option><option value="business">ビジネス</option><option value="both">両方</option></select></label><label>構文グループ<select id="practiceGroup"><option value="all">すべて</option><option value="priority">優先構文</option><option value="original">基本30構文</option><option value="additional">教材からの追加構文</option></select></label><label class="practice-wide">構文<select id="practicePattern"></select></label><label>考える時間（秒）<input id="practiceThink" type="number" min="0" max="20" step="0.1"></label><label>追加表示の間隔（秒）<input id="practiceChunk" type="number" min="0.1" max="10" step="0.1"></label><label>表示モード<select id="practiceReveal"><option value="chunk">意味チャンク</option><option value="word">語ごと（補助）</option></select></label></div><div id="practiceAutoSettings" class="practice-grid" hidden><label>種類<select id="practiceCategory"><option value="all">すべて</option><option value="lv60">Lv60</option><option value="lv80">Lv80</option><option value="field">分野別</option><option value="other">その他</option></select></label><label>デッキ<select id="practiceDeck"></select></label><label>表の時間（秒）<input id="practiceFront" type="number" min="0.2" max="60" step="0.1"></label><label>裏の時間（秒）<input id="practiceBack" type="number" min="0.2" max="60" step="0.1"></label><label>次カードまで（秒）<input id="practiceGap" type="number" min="0" max="20" step="0.1"></label><label class="practice-check"><input id="practiceLoop" type="checkbox">ループする</label></div><div class="practice-grid"><label>開始番号<input id="practiceFrom" type="number" min="1" step="1"></label><label>終了番号<input id="practiceTo" type="number" min="1" step="1"></label><label class="practice-check practice-wide"><input id="practiceSound" type="checkbox">英文の全文表示・裏面で音声を読む</label></div><p id="practiceScope"></p><div class="practice-actions"><button class="btn solid" id="practiceStart">この範囲で開始</button><button class="btn ghost" id="practiceResume" hidden>前回の途中位置を開く</button></div></details><p id="practiceNotice" role="status"></p><div class="practice-card" id="practiceCard" tabindex="0" role="button" aria-label="練習カード。英会話は次へ、自動フラッシュは表裏を切り替え"><div id="practiceLabel"></div><div id="practicePrompt"></div><div id="practiceSentence" lang="en"></div><div id="practiceImage"><i></i></div><div id="practiceImageLabel"></div><div id="practiceDetails"></div></div><p id="practiceStatus" role="status">開始前</p><div class="practice-actions" id="practiceControls" hidden><button class="btn ghost" id="practicePrev">← 戻る</button><button class="btn solid" id="practiceToggle">▶ 再開</button><button class="btn ghost" id="practiceNext">次へ →</button><button class="btn ghost" id="practiceFlip">表 / 裏</button></div><p class="practice-hint">Enter / → 次へ　← 戻る　Space 停止・再開　Esc ホーム</p></div></section>`);
+    document.body.insertAdjacentHTML("beforeend", `<section class="view" id="practiceView"><div class="practice-wrap"><header class="practice-top"><button class="btn ghost sm" id="practiceClose">← ホーム</button><h1 id="practiceHeading">英会話編</h1><span id="practicePosition"></span></header><div class="practice-tabs"><button class="btn ghost" id="practiceModeSpeaking">英会話編</button><button class="btn ghost" id="practiceModeAuto">自動フラッシュ</button></div><p id="practiceHelp"></p><details id="practiceOptions" open><summary>範囲・表示時間を設定</summary><div id="practiceSpeakingSettings" class="practice-grid"><label>例文<select id="practiceExample"><option value="ielts">IELTS Speaking</option><option value="business">ビジネス</option><option value="both">両方</option></select></label><label>構文グループ<select id="practiceGroup"><option value="all">すべて</option><option value="priority">優先構文</option><option value="original">基本30構文</option><option value="additional">教材からの追加構文</option></select></label><label class="practice-wide">構文<select id="practicePattern"></select></label><label>考える時間（秒）<input id="practiceThink" type="number" min="0" max="20" step="0.1"></label><label>追加表示の間隔（秒）<input id="practiceChunk" type="number" min="0.1" max="10" step="0.1"></label><label>表示モード<select id="practiceReveal"><option value="chunk">意味チャンク</option><option value="word">語ごと（補助）</option></select></label></div><div id="practiceAutoSettings" class="practice-grid" hidden><label>種類<select id="practiceCategory"><option value="all">すべて</option><option value="lv60">Lv60</option><option value="lv80">Lv80</option><option value="field">分野別</option><option value="other">その他</option></select></label><label>デッキ<select id="practiceDeck"></select></label><label>表の時間（秒）<input id="practiceFront" type="number" min="0.2" max="60" step="0.1"></label><label>裏の時間（秒）<input id="practiceBack" type="number" min="0.2" max="60" step="0.1"></label><label>次カードまで（秒）<input id="practiceGap" type="number" min="0" max="20" step="0.1"></label><label class="practice-check"><input id="practiceLoop" type="checkbox">ループする</label></div><div class="practice-grid"><label>開始番号<input id="practiceFrom" type="number" min="1" step="1"></label><label>終了番号<input id="practiceTo" type="number" min="1" step="1"></label><label class="practice-check practice-wide"><input id="practiceSound" type="checkbox"><span id="practiceSoundLabel"></span></label></div><p id="practiceScope"></p><div class="practice-actions"><button class="btn solid" id="practiceStart">この範囲で開始</button><button class="btn ghost" id="practiceResume" hidden>前回の途中位置を開く</button></div></details><p id="practiceNotice" role="status"></p><div class="practice-card" id="practiceCard" tabindex="0" role="button" aria-label="練習カード。英会話は次へ、自動フラッシュは表裏を切り替え"><div id="practiceLabel"></div><div id="practicePrompt"></div><div id="practiceSentence" lang="en"></div><div id="practiceImage"><i></i></div><div id="practiceImageLabel"></div><div id="practiceDetails"></div></div><p id="practiceStatus" role="status">開始前</p><div class="practice-actions" id="practiceControls" hidden><button class="btn ghost" id="practicePrev">← 戻る</button><button class="btn solid" id="practiceToggle">▶ 再開</button><button class="btn ghost" id="practiceNext">次へ →</button><button class="btn ghost" id="practiceFlip">表 / 裏</button></div><p class="practice-hint">Enter / → 次へ　← 戻る　Space 停止・再開　Esc ホーム</p></div></section>`);
     el("speakingMenu").onclick=()=>open("speaking"); el("autoFlashMenu").onclick=()=>open("auto");
     el("homeView").addEventListener("click",e=>{ const b=e.target.closest("[data-practice-deck]"); if(b) { e.stopImmediatePropagation(); open("auto",b.dataset.practiceDeck); } }, true);
     el("filterFlashBtn").insertAdjacentHTML("afterend", '<button class="btn ghost sm" id="filterAutoFlashBtn">▷ 自動フラッシュ</button>');
