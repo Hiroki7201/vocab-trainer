@@ -279,6 +279,8 @@
   .fl-last .ok{color:var(--ok); font-weight:700;} .fl-last .slow{color:var(--muted); font-weight:700;} .fl-last .ng{color:var(--accent); font-weight:700;}
   .fl-actions{display:flex; gap:12px; margin-top:10px;}
   .fl-actions .btn{flex:1; padding:16px 10px; font-size:15px;}
+  .fl-actions .fl-undo{flex:0 0 auto; padding:16px 14px; font-size:13px;}
+  .fl-actions .fl-undo:disabled{opacity:.35;}
   .btn.fl-ng{background:transparent; border-color:var(--accent); color:var(--accent);}
   .btn.fl-ok{background:var(--ok); color:var(--on-ok);}
   .fl-inter{text-align:center;}
@@ -741,9 +743,10 @@
       </div>
       <div class="fl-actions">
         <button class="btn fl-ng" id="flNg">← 知らない</button>
+        <button class="btn ghost fl-undo" id="flUndo" title="直前の1語の判定を取り消して、その語に戻る (Z)">↶ 1語戻る</button>
         <button class="btn fl-ok" id="flOk">知ってる →</button>
       </div>
-      <div class="khint"><kbd>→</kbd> 知ってる（答えを一瞬表示） ／ <kbd>←</kbd> 知らない（裏を表示） ／ <kbd>Space</kbd> めくる ／ <kbd>Z</kbd> 取り消し ／ <kbd>Esc</kbd> 中断</div>
+      <div class="khint"><kbd>→</kbd> 知ってる（答えを一瞬表示） ／ <kbd>←</kbd> 知らない（裏を表示） ／ <kbd>Space</kbd> めくる ／ <kbd>Z</kbd> 1語戻る ／ <kbd>Esc</kbd> 中断</div>
     </div>
 
     <div id="flInter" class="fl-stage fl-inter" style="display:none;">
@@ -1490,6 +1493,7 @@ function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard
   $("flRound").textContent=`${fl.round}周目`;
   $("flBar").style.width=Math.round(fl.idx/fl.queue.length*100)+"%";
   card.classList.remove("enter"); void card.offsetWidth; card.classList.add("enter");
+  $("flUndo").disabled=!fl.hist.length;
   flTimerStart(); fl.t0=performance.now(); fl.guardUntil=Math.max(fl.guardUntil||0, fl.t0+250); }
 function flOutcome(ms){ const L=flLimit(); return (L>0 && ms>L) ? "slow" : "ok"; }
 function flApply(c, outcome, ms){ const now=Date.now();
@@ -1553,7 +1557,8 @@ function flDone(){ fl.phase="done"; flDrop(fl.deckId, fl.sig); saveAPP();
   $("flBar").style.width="100%"; flShowPanel("sum"); }
 function flUndo(){ if(!fl||!fl.hist.length||fl.phase==="done") return; flConfirmClear(); const s=JSON.parse(fl.hist.pop());
   const c=APP.decks[fl.deckId].cards[s.key]; if(c){ c.srs=s.srs; if(s.flash) c.flash=s.flash; else delete c.flash; }
-  Object.assign(fl, s.st); flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender(); toast("1枚取り消しました"); }
+  Object.assign(fl, s.st); fl.guardUntil=0; flShowPanel("play"); $("flLast").innerHTML=""; flPersist(); flRender();
+  toast(`「${c?c.en:"直前の語"}」の判定を取り消しました。もう一度答えてください`); }
 function flExit(){ if(!fl) return; flTimerStop(); flConfirmClear();
   if(fl.phase!=="done"){ flPersist(); toast("途中経過を保存しました。次回は続きから再開できます"); }
   fl=null; renderHome(); showView("home"); }
@@ -2013,7 +2018,9 @@ function bind(){
     const id=sc.deckId; scStopStory(); sc=null; startFlash(id, ks); };
 
   // 瞬間モード
-  $("flOk").onclick=()=>flAnswer(true); $("flNg").onclick=()=>flAnswer(false);
+  ["flOk","flNg","flUndo"].forEach(id=>$(id).addEventListener("mousedown",e=>e.preventDefault()));
+  $("flOk").onclick=e=>{ e.currentTarget.blur(); flAnswer(true); }; $("flNg").onclick=e=>{ e.currentTarget.blur(); flAnswer(false); };
+  $("flUndo").onclick=e=>{ e.currentTarget.blur(); flUndo(); };
   $("flClose").onclick=flExit; $("flLimit").onclick=flCycleLimit; $("flPeek").onclick=flCyclePeek; $("flInterGo").onclick=flNextRound;
   $("flSAgain").onclick=()=>{ if(!fl) return; const id=fl.deckId, ks=fl.stumbled.slice(); fl=null; startFlash(id, ks, true); };
   $("flSHome").onclick=()=>{ fl=null; goHome(); };
@@ -2104,7 +2111,8 @@ function bind(){
       else if(e.key===" "){ e.preventDefault(); scStoryToggle(); }
       else if(e.key==="Escape"){ e.preventDefault(); scClose(); }
       return; }
-    if(document.body.dataset.view==="flash"){ if(!fl||e.repeat||e.metaKey||e.ctrlKey||e.altKey) return; const k=e.key, code=e.code;
+    if(document.body.dataset.view==="flash"){ if(document.activeElement&&document.activeElement.tagName==="BUTTON") document.activeElement.blur();
+      if(!fl||e.repeat||e.metaKey||e.ctrlKey||e.altKey) return; const k=e.key, code=e.code;
       if(k==="ArrowRight"||code==="Period"||code==="KeyL"){ e.preventDefault(); flAnswer(true); }
       else if(k==="ArrowLeft"||code==="Comma"||code==="KeyH"){ e.preventDefault(); flAnswer(false); }
       else if(k===" "||k==="ArrowDown"||k==="ArrowUp"||k==="Enter"){ e.preventDefault(); if(fl.phase==="inter") flNextRound(); else flTap(); }
