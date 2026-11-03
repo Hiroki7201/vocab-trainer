@@ -246,6 +246,7 @@
   .fc-word{font-family:var(--serif); font-size:clamp(38px,9vw,60px); font-weight:600; letter-spacing:-.01em; line-height:1.1; word-break:break-word;}
   .fc-bword{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--ink);}
   .fc-ipa{color:var(--muted); font-size:14px; margin-top:2px;}
+  .fc-ipa-f{font-size:clamp(15px,3.6vw,18px); margin-top:10px;}
   .fc-ja{font-family:var(--serif); color:var(--accent); font-size:clamp(22px,5.4vw,30px); font-weight:600; line-height:1.35; margin-top:12px; word-break:break-word;}
   .fc-core{margin-top:12px; background:var(--accent-soft); color:var(--ink); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.55; max-width:30em;}
   .fc-core::before{content:"コア"; display:block; font-size:10px; letter-spacing:.16em; color:var(--accent); font-weight:700; margin-bottom:2px;}
@@ -720,6 +721,7 @@
             <div class="fc-face fc-front">
               <div class="fc-corner"><span id="flDeck"></span><span id="flLeft"></span></div>
               <div class="fc-word" id="flWord"></div>
+              <div class="fc-ipa fc-ipa-f" id="flIpaF"></div>
               <div class="fc-timer" id="flTimer"><i></i></div>
             </div>
             <div class="fc-face fc-back">
@@ -1408,9 +1410,9 @@ function flSig(keys){ const s=keys.slice().sort().join("\u0001"); let h=0; for(l
 function flLimit(){ const v=APP.settings.flashLimit; return (typeof v==="number")?v:2000; }
 function flLimitLabel(){ const L=flLimit(); return L>0 ? "⏱ "+(L/1000).toFixed(1)+"秒" : "⏱ 制限なし"; }
 /* →のあと答えを見せる時間（0=見せずに即次へ） */
-const FL_PEEKS=[1200,2000,700,0];
+const FL_PEEKS=[1200,2000,-1,700,0];  /* -1 = 手動（→・Space・タップで次へ） */
 function flPeek(){ const v=APP.settings.flashPeek; return (typeof v==="number")?v:1200; }
-function flPeekLabel(){ const v=flPeek(); return v>0 ? "👁 答え "+(v/1000).toFixed(1)+"秒" : "👁 答え なし"; }
+function flPeekLabel(){ const v=flPeek(); return v<0 ? "👁 答え 手動" : v>0 ? "👁 答え "+(v/1000).toFixed(1)+"秒" : "👁 答え なし"; }
 function flCyclePeek(){ const i=FL_PEEKS.indexOf(flPeek()); APP.settings.flashPeek=FL_PEEKS[(i+1)%FL_PEEKS.length]; saveAPP(); $("flPeek").textContent=flPeekLabel(); }
 /* →で知ってると答えたあと、裏面（答え）を一瞬見せてから次へ。その間 →/Space で即次へ、← で「間違えてた」に訂正 */
 function flConfirmStart(outcome, ms){ const card=$("flCard"), v=$("flVerdict"), bar=$("flCBar").firstElementChild, T=flPeek();
@@ -1418,10 +1420,13 @@ function flConfirmStart(outcome, ms){ const card=$("flCard"), v=$("flVerdict"), 
   v.className="fc-verdict "+outcome; v.textContent= outcome==="ok" ? "即答 ✓" : "遅い → 次の周";
   card.classList.add("flipped","confirming");
   $("flLast").insertAdjacentHTML("beforeend", ` <span class="slow">／ 違ったら ←</span>`);
-  bar.style.animation="none"; void bar.offsetWidth; bar.style.animation=`fcConfirm ${T}ms linear forwards`;
-  clearTimeout(fl.confirmT); fl.confirmT=setTimeout(()=>flConfirmEnd(), T); }
+  bar.style.animation="none"; void bar.offsetWidth; clearTimeout(fl.confirmT); fl.confirmT=0;
+  if(T>0){ bar.style.animation=`fcConfirm ${T}ms linear forwards`; fl.confirmT=setTimeout(()=>flConfirmEnd(true), T); } }
 function flConfirmClear(){ if(!fl) return; clearTimeout(fl.confirmT); fl.confirmT=0; $("flCard").classList.remove("confirming"); }
-function flConfirmEnd(){ if(!fl||fl.phase!=="confirm") return; const o=fl.confirm.outcome; flConfirmClear(); flAdvance("right", o==="ok"?"tint-ok":""); }
+function flConfirmEnd(auto){ if(!fl||fl.phase!=="confirm") return; const o=fl.confirm.outcome; flConfirmClear(); flAdvance("right", o==="ok"?"tint-ok":"");
+  if(auto && fl) fl.guardUntil=performance.now()+700; }
+/* 新しいカードが出た直後の入力（押しすぎ・自動で進んだ直後の「次へ」）は無視する */
+function flGuarded(){ return fl && fl.phase==="front" && performance.now()<(fl.guardUntil||0); }
 function flConfirmWrong(){ if(!fl||fl.phase!=="confirm") return; const ms=fl.confirm.ms; flConfirmClear();
   const snap=JSON.parse(fl.hist.pop()), c=APP.decks[fl.deckId].cards[snap.key];
   if(c){ if(snap.flash) c.flash=snap.flash; else delete c.flash; }
@@ -1474,7 +1479,7 @@ function flTimerStop(){ clearTimeout(flTimerStart._t); const i=$("flTimer").firs
 function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard"), inner=card.firstElementChild;
   flConfirmClear(); fl.phase="front"; fl.marked=null; fl.flipMs=0;
   inner.style.transition="none"; card.classList.remove("flipped"); void inner.offsetWidth; inner.style.transition="";
-  $("flWord").textContent=c.en; $("flDeck").textContent=deck.name; $("flLeft").textContent=`${fl.idx+1} / ${fl.queue.length}`;
+  $("flWord").textContent=c.en; $("flIpaF").textContent=c.ipa||""; $("flIpaF").style.display=c.ipa?"":"none"; $("flDeck").textContent=deck.name; $("flLeft").textContent=`${fl.idx+1} / ${fl.queue.length}`;
   $("flBWord").textContent=c.en; $("flIpa").textContent=c.ipa||""; $("flIpa").style.display=c.ipa?"":"none";
   $("flJa").textContent=c.ja||"";
   $("flCore").textContent=c.core||""; $("flCore").style.display=c.core?"":"none";
@@ -1485,7 +1490,7 @@ function flRender(){ const c=flCard(), deck=APP.decks[fl.deckId], card=$("flCard
   $("flRound").textContent=`${fl.round}周目`;
   $("flBar").style.width=Math.round(fl.idx/fl.queue.length*100)+"%";
   card.classList.remove("enter"); void card.offsetWidth; card.classList.add("enter");
-  flTimerStart(); fl.t0=performance.now(); }
+  flTimerStart(); fl.t0=performance.now(); fl.guardUntil=Math.max(fl.guardUntil||0, fl.t0+250); }
 function flOutcome(ms){ const L=flLimit(); return (L>0 && ms>L) ? "slow" : "ok"; }
 function flApply(c, outcome, ms){ const now=Date.now();
   fl.hist.push(JSON.stringify({ key:c.key, srs:c.srs, flash:c.flash||null, st:flState() })); if(fl.hist.length>30) fl.hist.shift();
@@ -1505,14 +1510,14 @@ function flApply(c, outcome, ms){ const now=Date.now();
 function flFlip(){ if(!fl) return; const card=$("flCard");
   if(fl.phase==="front"){ fl.flipMs=performance.now()-fl.t0; fl.phase="back"; flTimerStop(); card.classList.add("flipped"); }
   else if(fl.phase==="back" && !fl.marked) card.classList.toggle("flipped"); }
-function flTap(){ if(!fl) return; if(fl.phase==="confirm"){ flConfirmEnd(); return; } if(fl.phase==="back" && fl.marked) flAdvance("left","tint-ng"); else flFlip(); }
-function flAnswer(know){ if(!fl) return;
+function flTap(){ if(!fl||flGuarded()) return; if(fl.phase==="confirm"){ flConfirmEnd(); return; } if(fl.phase==="back" && fl.marked) flAdvance("left","tint-ng"); else flFlip(); }
+function flAnswer(know){ if(!fl||flGuarded()) return;
   if(fl.phase==="inter"){ flNextRound(); return; }
   if(fl.phase==="confirm"){ if(know) flConfirmEnd(); else flConfirmWrong(); return; }
   if(fl.phase!=="front" && fl.phase!=="back") return;
   const c=flCard();
   if(fl.phase==="front"){ const ms=performance.now()-fl.t0;
-    if(know){ const o=flOutcome(ms); flApply(c,o,ms); if(flPeek()>0) flConfirmStart(o,ms); else flAdvance("right", o==="ok"?"tint-ok":""); }
+    if(know){ const o=flOutcome(ms); flApply(c,o,ms); if(flPeek()!==0) flConfirmStart(o,ms); else flAdvance("right", o==="ok"?"tint-ok":""); }
     else { flApply(c,"ng",ms); fl.marked="ng"; fl.phase="back"; flTimerStop(); $("flCard").classList.add("flipped"); }
     return; }
   if(fl.marked){ flAdvance(know?"right":"left","tint-ng"); return; }  /* ←で裏を見た後は、どのキーでも次へ */
@@ -1617,14 +1622,14 @@ function openScene(id, from){ const s=SCN.list.find(x=>x.id===id); if(!s) return
   if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sc&&sc.s===s) img.src=s.image; }; full.src=s.image; }
   else img.src=s.image;
   scPreload(idx);
-  const sa=scAudio(); sa.pause(); if(s.storyAudio){ sa.src=new URL(s.storyAudio, location.href).href; } sc.storyPos=0;
+  const sa=scAudio(); sa.pause(); if(s.storyAudio){ sa.src=new URL(s.storyAudio, location.href).href; } else sa.removeAttribute("src"); sc.storyPos=0;
   $("scPins").innerHTML=s.words.map((w,i)=>`<button class="sc-pin" data-i="${i}" style="left:${w.x*100}%; top:${w.y*100}%;" title="${escapeHTML(w.en)}">${i+1}</button>`).join("")
     +`<div class="sc-bubble" id="scBubble" style="display:none;"></div>`;
   $("scGrid").classList.remove("sc-hide"); $("scHide").textContent="訳を隠す";
   $("scGrid").innerHTML=s.words.map((w,i)=>{ const c=scCardFor(deckId,w.en), ja=(c&&c.ja)||w.ja||"";
     return `<div class="sc-row" data-i="${i}"><div class="sc-num">${i+1}</div><div class="sc-main"><div class="sc-en">${escapeHTML(w.en)}</div>`
       +`<div class="sc-ja">${escapeHTML(ja)}</div>${w.role?`<div class="sc-role">${escapeHTML(w.role)}</div>`:""}${w.hook?`<div class="sc-hook">${escapeHTML(w.hook)}</div>`:""}</div></div>`; }).join("");
-  $("scStoryText").innerHTML=scStoryHTML(s); $("scStory").textContent="▶ 物語を聞く";
+  $("scStoryText").innerHTML=scStoryHTML(s); $("scStory").textContent="▶ 物語を聞く"; $("scStory").style.display=s.storyAudio?"":"none";
   $("scFlash").style.display=deckId?"":"none";
   showView("scene"); window.scrollTo(0,0); }
 function scSelect(i, speak){ if(!sc) return; const s=sc.s, w=s.words[i]; if(!w) return; sc.cur=i;
