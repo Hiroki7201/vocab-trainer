@@ -2,6 +2,4102 @@
  "version": 2,
  "scenes": [
   {
+   "id": "L60-01",
+   "title": "湖畔のカヌー体験",
+   "titleEn": "A Canoe Day by the Lake",
+   "deck": "Lv60_0822",
+   "deckLabel": "Lv60 苦手語",
+   "image": "scenes/L60-01.webp",
+   "thumb": "scenes/L60-01-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At dawn, Maya arrives at the lake for the village canoe day. Wearing a life jacket is the norm here, and the waiting families all follow this sensible custom. A bold visitor launches his canoe through a narrow opening between floating gates. Nearby, a volunteer pumps air into a red marker balloon and watches it swell. Above a string of colourful pennants, a gull begins to soar towards the hills. At the landing stage, twin paddles propel a training canoe forwards, while a separate instructor demonstrates how to steer the safety boat. A grandmother shows her faith in another instructor by calmly handing over her little grandson. At a shore display, a submerged rescue dummy explains how someone can drown without a life jacket. Maya practises until she can overcome her difficulty with the balance beam. A shining trophy promises glory to the eventual winner.",
+   "words": [
+    {
+     "en": "dawn",
+     "x": 0.16,
+     "y": 0.26,
+     "ja": "【n】夜明け /【v】(理解が)わかり始める (dawn on)",
+     "role": "湖の向こうの夜明け",
+     "hook": "at dawn＝夜明けに。対になるduskは日没後の薄暗がり。湖の向こうが白み始める朝。"
+    },
+    {
+     "en": "norm",
+     "x": 0.1,
+     "y": 0.45,
+     "ja": "規範、標準",
+     "role": "全員が着る救命胴衣",
+     "hook": "norma（大工の直角定規）由来＝基準。normal と同根。the norm＝みんなが普通に守る標準。"
+    },
+    {
+     "en": "bold",
+     "x": 0.085,
+     "y": 0.725,
+     "ja": "大胆な、勇敢な、(文字が)太字の",
+     "role": "狭い門へ進む大胆な参加者",
+     "hook": "a bold decision＝大胆な決断。狭い入口にも自信を持って進む。"
+    },
+    {
+     "en": "swell",
+     "x": 0.353,
+     "y": 0.5379999999999999,
+     "ja": "膨らむ、増大する、~を膨らませる",
+     "role": "空気で膨らむ赤い風船",
+     "hook": "swell＝内側から膨らむ。風船の丸い張りと足元のポンプを結ぶ。"
+    },
+    {
+     "en": "string",
+     "x": 0.5,
+     "y": 0.142,
+     "ja": "【n】ひも、一連 /【v】~をひもで通す",
+     "role": "旗をつなぐ一本のひも",
+     "hook": "a string of flags＝旗を連ねたひも。一続きの物にも使う。"
+    },
+    {
+     "en": "soar",
+     "x": 0.804,
+     "y": 0.057999999999999996,
+     "ja": "急上昇する、舞い上がる(株価・気温など)",
+     "role": "高く舞い上がるカモメ",
+     "hook": "soar＝高く舞い上がる。soaring pricesなら価格の急上昇。"
+    },
+    {
+     "en": "propel",
+     "x": 0.47600000000000003,
+     "y": 0.397,
+     "ja": "~を推進する、~を駆り立てる",
+     "role": "パドルで前進する緑のカヌー",
+     "hook": "pro-（前へ）＋pel（押す）＝前へ押し出す。compel/expel と同根。propel a boat forwards＝舟を前へ推し進める。"
+    },
+    {
+     "en": "steer",
+     "x": 0.838,
+     "y": 0.35700000000000004,
+     "ja": "~の舵をとる、~を導く、~を避ける(clear of)",
+     "role": "ハンドルで曲がる安全艇",
+     "hook": "steer＝進む方向を操る。propelは前進の力、こちらは曲がる舵。"
+    },
+    {
+     "en": "faith",
+     "x": 0.64,
+     "y": 0.475,
+     "ja": "信仰、信頼、忠誠",
+     "role": "安心して孫を預ける祖母",
+     "hook": "fides（信頼）由来。confide（打ち明ける）と同根。have faith in someone＝人を信頼する。"
+    },
+    {
+     "en": "drown",
+     "x": 0.469,
+     "y": 0.8059999999999999,
+     "ja": "溺れる、~を溺れさせる",
+     "role": "水槽で顔が沈んだ訓練人形",
+     "hook": "drown＝溺れる。人ではなく訓練人形で水中の顔を確認。"
+    },
+    {
+     "en": "overcome",
+     "x": 0.8590000000000001,
+     "y": 0.647,
+     "ja": "~を克服する、~を打ち負かす",
+     "role": "平均台を渡り切った女性",
+     "hook": "overcome a difficulty＝困難を克服する。最後まで渡った姿で覚える。"
+    },
+    {
+     "en": "glory",
+     "x": 0.956,
+     "y": 0.6559999999999999,
+     "ja": "栄光、名誉",
+     "role": "台に輝く優勝トロフィー",
+     "hook": "win glory＝栄光を得る。優勝者を待つトロフィーの輝き。"
+    }
+   ]
+  },
+  {
+   "id": "L60-02",
+   "title": "庭のチャリティーカフェ",
+   "titleEn": "The Garden Charity Café",
+   "deck": "Lv60_0822",
+   "deckLabel": "Lv60 苦手語",
+   "image": "scenes/L60-02.webp",
+   "thumb": "scenes/L60-02-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The charity café opens on the lawn behind the community centre. A damp cushion, still covered in tiny droplets, reminds the volunteers of last night's rain. Tom returns from an errand carrying a shopping basket, and he places a jar of jam beside the bread. At the washing station, a helper starts to rub a muddy plate with a cloth. Everyone avoids a foul rubbish bin until its lid is closed. The organiser checks the animal feeding corner: no rabbit should starve while the café is busy. On the cake table, a glossy chocolate tart seems to tempt a visitor who is trying to eat less sugar. Beside her, a tailor begins to sew a loose apron strap. A storyteller reads aloud to children under the apple tree. Their parents enjoy a pleasant break in comfortable garden chairs. Finally, three large wooden petals constitute the flower decoration above the entrance.",
+   "words": [
+    {
+     "en": "lawn",
+     "x": 0.23,
+     "y": 0.92,
+     "ja": "芝生",
+     "role": "会場の刈り込まれた芝生",
+     "hook": "lawn＝手入れされた芝生。草原全体を指すgrasslandとは違う。"
+    },
+    {
+     "en": "damp",
+     "x": 0.08,
+     "y": 0.75,
+     "ja": "湿った、じめじめした",
+     "role": "水滴の残る湿ったクッション",
+     "hook": "damp＝少し湿っている。水がしたたるほどのwetとの程度差。"
+    },
+    {
+     "en": "errand",
+     "x": 0.1,
+     "y": 0.33,
+     "ja": "使い、用事",
+     "role": "買い出し帰りの男性",
+     "hook": "run an errand＝ちょっとした用事を済ませる。買い物かごで覚える。"
+    },
+    {
+     "en": "jar",
+     "x": 0.27,
+     "y": 0.65,
+     "ja": "【n】瓶、つぼ /【v】(神経を)逆なでする",
+     "role": "ふた付きのジャム瓶",
+     "hook": "a jar of jam＝ジャムの瓶。口が広く、ねじぶたの容器。"
+    },
+    {
+     "en": "rub",
+     "x": 0.2,
+     "y": 0.5,
+     "ja": "~をこする、~をすり合わせる",
+     "role": "皿を布でこする係",
+     "hook": "rub a surface＝表面をこする。布が同じ場所を往復する動き。"
+    },
+    {
+     "en": "foul",
+     "x": 0.22,
+     "y": 0.32,
+     "ja": "【adj】不潔な、(天気が)悪い、不正な /【n】反則",
+     "role": "不潔なごみ箱",
+     "hook": "a foul smell＝ひどい悪臭。不潔な縁とハエで嫌な感じを結ぶ。"
+    },
+    {
+     "en": "starve",
+     "x": 0.65,
+     "y": 0.33,
+     "ja": "飢える、~を飢えさせる",
+     "role": "空の餌皿へ身を伸ばすウサギ",
+     "hook": "starve＝食物がなく飢える。空の餌皿が原因の目印。"
+    },
+    {
+     "en": "tempt",
+     "x": 0.46,
+     "y": 0.65,
+     "ja": "~を誘惑する、~をその気にさせる",
+     "role": "思わず手が伸びるチョコタルト",
+     "hook": "temptare（試す）由来。attempt（試みる）と同根。tempt someone to eat＝食べる気にさせる。"
+    },
+    {
+     "en": "sew",
+     "x": 0.85,
+     "y": 0.49,
+     "ja": "~を縫う、縫物をする",
+     "role": "エプロンを針で縫う仕立屋",
+     "hook": "sew＝針と糸で布を縫う。布そのものを作るweaveとは別の作業。"
+    },
+    {
+     "en": "aloud",
+     "x": 0.43,
+     "y": 0.27,
+     "ja": "声に出して",
+     "role": "子どもへ声に出して読む人",
+     "hook": "read aloud＝声に出して読む。大声のloudとは違い音声にすること。"
+    },
+    {
+     "en": "pleasant",
+     "x": 0.83,
+     "y": 0.79,
+     "ja": "心地よい、感じの良い",
+     "role": "木陰の椅子でくつろぐ親",
+     "hook": "please（喜ばせる）の形容詞形＝人を喜ばせる。a pleasant afternoon＝心地よい午後。"
+    },
+    {
+     "en": "constitute",
+     "x": 0.88,
+     "y": 0.09,
+     "ja": "~を構成する、~に相当する",
+     "role": "花飾りを構成する三枚の花弁",
+     "hook": "con-（共に）＋stitute（立てる）＝集まって立ち上げる。institute と同根。要素が集まって全体を構成する。"
+    }
+   ]
+  },
+  {
+   "id": "L60-03",
+   "title": "美術品トラブルの法廷",
+   "titleEn": "The Art Sale Hearing",
+   "deck": "Lv60_0822",
+   "deckLabel": "Lv60 苦手語",
+   "image": "scenes/L60-03.webp",
+   "thumb": "scenes/L60-03-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A bald judge opens a hearing about a disputed art sale. In the visitors' seats, an anxious buyer squeezes a handkerchief while waiting for her turn. She has decided to sue the dealer who sold her a damaged statue. The buyer says he tried to deceive her by covering a crack with gold foil. A striking striped vase from the same sale stands on a separate display trolley. An inspector explains how someone could overlook damage while concentrating on a statue's shiny face. Unfortunately, the dealer's photograph is vague, with most details blurred. The buyer's adviser uses a pointer to specify the exact split in the statue's base. A new witness raises her hand to swear that she will tell the truth; another is ready to testify from the witness stand. Eventually, the dealer agrees to admit his mistake. The outcome is a full refund, handed over in a small pouch.",
+   "words": [
+    {
+     "en": "bald",
+     "x": 0.575,
+     "y": 0.085,
+     "ja": "禿げた、露骨な",
+     "role": "髪のない裁判官",
+     "hook": "bald＝髪がない。bold＝大胆な、とは母音も意味も違う。"
+    },
+    {
+     "en": "anxious",
+     "x": 0.06,
+     "y": 0.27,
+     "ja": "心配な、切望している",
+     "role": "ハンカチを握る不安な買い手",
+     "hook": "angere（締めつける）由来＝胸が締めつけられる。anxiety と同根。anxious about the result＝結果が心配。"
+    },
+    {
+     "en": "sue",
+     "x": 0.18,
+     "y": 0.79,
+     "ja": "~を訴える、~に告訴を起こす",
+     "role": "訴状を窓口に出す手",
+     "hook": "sequi（後を追う）由来。pursue と同根＝責任を追及する。sue someone for damages＝損害賠償を求めて訴える。"
+    },
+    {
+     "en": "deceive",
+     "x": 0.38,
+     "y": 0.51,
+     "ja": "~をだます、欺く",
+     "role": "割れ目を金箔で隠す売り手",
+     "hook": "de-（離して）＋ceive（取る）＝相手から取る→だます。receive と同根。deceive a buyer＝買い手をだます。"
+    },
+    {
+     "en": "striking",
+     "x": 0.94,
+     "y": 0.375,
+     "ja": "目立つ、印象的な",
+     "role": "目を引くしま模様の大花瓶",
+     "hook": "striking＝思わず目を引く。大きな白黒模様が強い印象を作る。"
+    },
+    {
+     "en": "overlook",
+     "x": 0.19,
+     "y": 0.375,
+     "ja": "~を見落とす、~を見渡す、~を大目に見る",
+     "role": "足元の欠けを見落とす検査員",
+     "hook": "overlook a flaw＝欠陥を見落とす。顔に集中して足の欠けに気づかない。"
+    },
+    {
+     "en": "vague",
+     "x": 0.53,
+     "y": 0.635,
+     "ja": "曖昧な、漠然とした",
+     "role": "輪郭がぼやけた写真",
+     "hook": "vagus（さまよう）由来。vagabond と同根＝焦点がさまよう。隣のspecifyは一点を具体的に示す。"
+    },
+    {
+     "en": "specify",
+     "x": 0.77,
+     "y": 0.46,
+     "ja": "~を明示する、~を具体的に述べる",
+     "role": "割れ目を一点で示す助言者",
+     "hook": "species（種類）＋-fy（する）＝種類まで特定する。specific と同根。specify the exact defect＝欠陥を明示する。"
+    },
+    {
+     "en": "swear",
+     "x": 0.855,
+     "y": 0.295,
+     "ja": "誓う、悪態をつく",
+     "role": "片手を上げて宣誓する証人",
+     "hook": "swear to tell the truth＝真実を話すと誓う。証言前の宣誓。"
+    },
+    {
+     "en": "testify",
+     "x": 0.53,
+     "y": 0.265,
+     "ja": "証言する、~を証明する",
+     "role": "証言台で事実を述べる別の証人",
+     "hook": "testis（証人）＋-fy（する）＝証人になる。testimony と同根。testify in court＝法廷で証言する。"
+    },
+    {
+     "en": "admit",
+     "x": 0.89,
+     "y": 0.72,
+     "ja": "~を認める、~を入場させる",
+     "role": "胸に手を当て非を認める売り手",
+     "hook": "ad-（中へ）＋mit（送る）＝受け入れる→認める。mission と同根。admit a mistake＝誤りを認める。"
+    },
+    {
+     "en": "outcome",
+     "x": 0.77,
+     "y": 0.86,
+     "ja": "結果、成果",
+     "role": "返金として渡される硬貨の袋",
+     "hook": "the outcome of a case＝事件の結果。最後に得られた返金の袋。"
+    }
+   ]
+  },
+  {
+   "id": "L60-04",
+   "title": "川辺の村祭り",
+   "titleEn": "The Riverside Village Fair",
+   "deck": "Lv60_0822",
+   "deckLabel": "Lv60 苦手語",
+   "image": "scenes/L60-04.webp",
+   "thumb": "scenes/L60-04-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "Visitors pay a small toll to cross the wooden bridge into the riverside fair. Inside, a girl waits to discover her fate in a lucky draw, where a blindfolded volunteer selects coloured marbles. Her brother learns to blow enormous soap bubbles beside the path. At the toy stall, a spring-loaded frog seems to scare a curious cat, which arches its back. The organiser takes command of the entrance queue, directing newcomers with a clear sweep of her arm. Nearby, a helper must drag an empty cart across a patch of rough ground. A customer continues to insist on paying for her friend's tea, holding out a coin despite his refusal. Across the path, a craft worker starts to weave a basket. A pushchair gives a low post a gentle bump. Beside an ugly papier-mâché monster, an upset child stares at a dropped ice cream. A volunteer quickly offers a fresh cone.",
+   "words": [
+    {
+     "en": "toll",
+     "x": 0.096,
+     "y": 0.43700000000000006,
+     "ja": "【n】通行料、犠牲、死者数 /【v】(鐘を)鳴らす",
+     "role": "橋の入口で払う通行料",
+     "hook": "pay a toll＝通行料を払う。橋を渡る前の硬貨に注目。"
+    },
+    {
+     "en": "fate",
+     "x": 0.195,
+     "y": 0.305,
+     "ja": "運命、宿命",
+     "role": "目隠しで引く運任せの抽選",
+     "hook": "fatum（神が告げたこと）由来。fatal と同根。fate＝自分では選べない運命。"
+    },
+    {
+     "en": "blow",
+     "x": 0.128,
+     "y": 0.81,
+     "ja": "【v】吹く、~を吹き飛ばす /【n】打撃、強打",
+     "role": "息を吹き込んで泡を作る少年",
+     "hook": "blow bubbles＝シャボン玉を吹く。口から外へ送る息。"
+    },
+    {
+     "en": "scare",
+     "x": 0.34299999999999997,
+     "y": 0.34,
+     "ja": "【v】~を怖がらせる /【n】恐怖、脅威",
+     "role": "おもちゃに驚き背を丸める猫",
+     "hook": "scare＝怖がらせる。突然跳ねたカエルと猫の丸い背中を結ぶ。"
+    },
+    {
+     "en": "command",
+     "x": 0.506,
+     "y": 0.36,
+     "ja": "【v】~を命令する、(尊敬・支持を)集める /【n】命令、指揮",
+     "role": "腕で列を指揮する運営責任者",
+     "hook": "com-（強意）＋mand（命じる）。mandate と同根。take command＝指揮を執る。列全体を動かす腕の合図。"
+    },
+    {
+     "en": "drag",
+     "x": 0.382,
+     "y": 0.59,
+     "ja": "【v】~を引きずる、長引く /【n】引きずること、足手まとい",
+     "role": "荒れた地面で荷車を引く係",
+     "hook": "drag＝抵抗のある物を引きずる。重さに逆らう前傾姿勢。"
+    },
+    {
+     "en": "insist",
+     "x": 0.752,
+     "y": 0.5479999999999999,
+     "ja": "~を強く主張する、~を要求する(insist on)",
+     "role": "支払いを譲らず硬貨を差す女性",
+     "hook": "in-（上に）＋sist（立つ）＝その場に立ち続ける。persist と同根。insist on paying＝払うと言い張る。"
+    },
+    {
+     "en": "weave",
+     "x": 0.745,
+     "y": 0.29,
+     "ja": "~を織る、~を編む",
+     "role": "細い枝を交差させかごを編む職人",
+     "hook": "weave a basket＝かごを編む。sewの針で縫う作業とは区別。"
+    },
+    {
+     "en": "bump",
+     "x": 0.583,
+     "y": 0.907,
+     "ja": "【v】~にぶつかる /【n】衝突、こぶ",
+     "role": "低い杭に軽く当たるベビーカー",
+     "hook": "a gentle bump＝軽い衝突。押し車の車輪と杭の接点で覚える。"
+    },
+    {
+     "en": "ugly",
+     "x": 0.93,
+     "y": 0.207,
+     "ja": "醜い、不快な",
+     "role": "不格好な張り子の怪物",
+     "hook": "ugly＝見た目が醜い・不格好な。左右ばらばらの目と鼻が目印。"
+    },
+    {
+     "en": "upset",
+     "x": 0.91,
+     "y": 0.743,
+     "ja": "【v】~を動揺させる、~をひっくり返す /【adj】動揺した",
+     "role": "落としたアイスを見て悲しむ子",
+     "hook": "be upset about something＝そのことで動揺する。落ちたアイスと震える唇。"
+    }
+   ]
+  },
+  {
+   "id": "L80-01",
+   "title": "嵐の岬の救助",
+   "titleEn": "Rescue on a Stormy Headland",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-01.webp",
+   "thumb": "scenes/L80-01-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "By dusk the little fishing boat was in grave peril off the rocky headland. 'Brace yourselves!' the skipper shouted as a giant wave rose behind them. Minutes later, the old trawler on the rocks was already a wreck, its mast snapped and its hull torn open. A thick bank of sea fog rolled in and obscured the far cliffs. One sailor was clinging to a floating barrel with both arms, while another, desperate and exhausted, thrashed in the water with one hand reaching out. From the shore, a coastguard hurled a lifebuoy on a long rope towards him. Above them, a rescue helicopter hovered as the winchman hoisted a survivor up on a cable. Those who reached the beach began to ascend the steep steps to the lighthouse. At the bottom, a stone hut served as a refuge from the wind, and inside, a volunteer wrapped a blanket round a frightened woman and consoled her: 'Everyone is safe now.'",
+   "words": [
+    {
+     "en": "peril",
+     "x": 0.22,
+     "y": 0.43,
+     "ja": "(重大な)危険、危難",
+     "role": "岩と大波に挟まれた小舟",
+     "hook": "per-（試す・危険をくぐる）＝ex-PER-iment と同根。すぐ目の前に迫る命の危険。danger より重く文語的"
+    },
+    {
+     "en": "brace",
+     "x": 0.17,
+     "y": 0.3,
+     "ja": "【v】(for)~に備える、身構える /【n】留め金、補強材",
+     "role": "マストにつかまり身構える船員",
+     "hook": "brace＝腕（ラテン語 bracchium）。腕で突っ張って衝撃に備える。brace for impact（衝撃に備えよ）"
+    },
+    {
+     "en": "wreck",
+     "x": 0.11,
+     "y": 0.77,
+     "ja": "【v】~を破壊する、~を台無しにする /【n】残骸、難破船",
+     "role": "岩に乗り上げた難破船",
+     "hook": "wreck＝原形を失った残骸。shipwreck＝難破。wreck the plan＝計画を台無しにする（動詞）"
+    },
+    {
+     "en": "obscure",
+     "x": 0.63,
+     "y": 0.33,
+     "ja": "【adj】曖昧な、無名の /【v】~を覆い隠す",
+     "role": "遠くの岬を覆い隠す霧",
+     "hook": "ob-（上から）＋覆う＝霧がかかって見えない。形容詞では「無名の・分かりにくい」。obvious（目の前にある）と逆の像"
+    },
+    {
+     "en": "cling",
+     "x": 0.26,
+     "y": 0.68,
+     "ja": "(to)~にくっつく、~にしがみつく",
+     "role": "樽にしがみつく船員",
+     "hook": "体ごとぴったり貼りついて離れない。cling to hope（望みにすがる）・cling film（食品用ラップ）"
+    },
+    {
+     "en": "desperate",
+     "x": 0.44,
+     "y": 0.62,
+     "ja": "自暴自棄の、必死の、絶望的な",
+     "role": "片手を伸ばして必死にもがく船員",
+     "hook": "de-（ない）＋sperare（望む）＝望みがない→なりふり構わず必死。despair（絶望）と同根"
+    },
+    {
+     "en": "hurl",
+     "x": 0.69,
+     "y": 0.74,
+     "ja": "~を強く投げつける、~を浴びせる",
+     "role": "浮き輪を投げる沿岸警備隊員",
+     "hook": "hurl＝全身の力で投げつける。throw より激しく速い。hurl insults（侮辱を浴びせる）にも使う"
+    },
+    {
+     "en": "hover",
+     "x": 0.45,
+     "y": 0.12,
+     "ja": "浮かぶ、(付近を)うろつく、ためらう",
+     "role": "空中に止まるヘリコプター",
+     "hook": "hover＝その場で浮いたまま動かない。hoverboard。人なら「そばをうろうろする・ためらう」"
+    },
+    {
+     "en": "hoist",
+     "x": 0.46,
+     "y": 0.37,
+     "ja": "~を持ち上げる、~を引き上げる",
+     "role": "ケーブルで引き上げられる生存者",
+     "hook": "hoist＝綱や機械で重い物を引き上げる。hoist a flag（旗を掲げる）。同じ ho- の hover と区別：浮いて止まる vs 引き上げる"
+    },
+    {
+     "en": "ascend",
+     "x": 0.84,
+     "y": 0.4,
+     "ja": "登る、上昇する",
+     "role": "崖の階段を登る生存者",
+     "hook": "a-（〜へ）＋scend（登る）。descend（降りる）・transcend（越える）と三兄弟。sc- を登りの音として覚える"
+    },
+    {
+     "en": "refuge",
+     "x": 0.86,
+     "y": 0.53,
+     "ja": "避難、避難所",
+     "role": "嵐を避ける石の小屋",
+     "hook": "re-（後ろへ）＋fugere（逃げる）＝逃げ込む場所。refugee（難民）＝refuge に逃げる人"
+    },
+    {
+     "en": "console",
+     "x": 0.84,
+     "y": 0.84,
+     "ja": "~を慰める、~を励ます",
+     "role": "毛布の女性をなぐさめるボランティア",
+     "hook": "con-（共に）＋sol（慰め）＝そばに寄り添って慰める。動詞は第2音節に強勢 con-SOLE。名詞 CON-sole（操作盤）と別語"
+    }
+   ]
+  },
+  {
+   "id": "L80-02",
+   "title": "骨董商の裁判",
+   "titleEn": "The Antique Dealer's Trial",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-02.webp",
+   "thumb": "scenes/L80-02-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A corrupt official hides a purse beneath his desk while a merchant presents two antique cups in the little courtroom. The prosecutor is preparing to indict the dealer over the missing museum collection. Beside her, an elderly customer clasps her hands to plead for the return of her wedding cup. Nobody should presume guilt simply because the accused looks nervous. A clerk must withhold a sealed envelope until the judge permits its release. Meanwhile, a bright purple handprint on the broken cabinet makes the official's involvement manifest. The judge announces the verdict by returning the customer's property and directing the official towards the court officer. Throughout the hearing, a separate museum caretaker maintains her dignity, sitting upright despite the awkward questions. The display cups are identical in shape, but an expert identifies a separate antique with a tiny maker's dent as genuine.",
+   "words": [
+    {
+     "en": "corrupt",
+     "x": 0.1,
+     "y": 0.9,
+     "ja": "【adj】腐敗した、不正の /【v】~を堕落させる",
+     "role": "金を隠す不正な役人",
+     "hook": "cor-（すっかり）＋rupt（壊す）＝中から崩れる。interrupt と同根。corrupt official＝腐敗した役人。"
+    },
+    {
+     "en": "merchant",
+     "x": 0.1,
+     "y": 0.3,
+     "ja": "商人、貿易商",
+     "role": "品物を広げる骨董商",
+     "hook": "merx（商品）由来。commerce/market と同根。merchant＝品物を売買する商人。"
+    },
+    {
+     "en": "indict",
+     "x": 0.27,
+     "y": 0.27,
+     "ja": "~を起訴する、~を告発する",
+     "role": "起訴書類を渡す検察官",
+     "hook": "in-（〜に対して）＋dict（言う）＝罪を言い渡す。dictate と同根、cは発音しない。verdictより前の段階。"
+    },
+    {
+     "en": "plead",
+     "x": 0.28,
+     "y": 0.45,
+     "ja": "懇願する、(法廷で)申し立てる",
+     "role": "両手を合わせ懇願する客",
+     "hook": "plead for help＝助けを懇願する。合わせた両手で切実なお願いを記憶。"
+    },
+    {
+     "en": "presume",
+     "x": 0.54,
+     "y": 0.38,
+     "ja": "~と推定する、~と仮定する",
+     "role": "決めつけを止める陪審員",
+     "hook": "pre-（前もって）＋sume（取る）＝証拠の前に事実と受け取る。assume と同根。presume innocence＝無罪と推定する。"
+    },
+    {
+     "en": "withhold",
+     "x": 0.4,
+     "y": 0.59,
+     "ja": "~を差し控える、~を保留する",
+     "role": "封筒を出さずに保留する書記",
+     "hook": "with-（後ろへ・離して）＋hold（保つ）。withdraw の with- と同じ。withhold information＝情報を出し控える。"
+    },
+    {
+     "en": "manifest",
+     "x": 0.6,
+     "y": 0.19,
+     "ja": "【adj】明白な /【v】~を明らかにする、(itselfで)現れる",
+     "role": "関与を明白にする手形",
+     "hook": "manifest＝明白な。紫の手形が目に飛び込み、関与が一目瞭然。"
+    },
+    {
+     "en": "verdict",
+     "x": 0.79,
+     "y": 0.17,
+     "ja": "評決、判断",
+     "role": "評決を告げる裁判官",
+     "hook": "ver（真実）＋dict（言う）＝真実の言明。verify と同根。reach a verdict＝評決に達する。indictの後の結論。"
+    },
+    {
+     "en": "dignity",
+     "x": 0.94,
+     "y": 0.36,
+     "ja": "尊厳、威厳、品位",
+     "role": "品位を保って座る博物館の管理人",
+     "hook": "dignus（ふさわしい）由来。dignified と同根。maintain dignity＝尊厳を保つ。"
+    },
+    {
+     "en": "identical",
+     "x": 0.5,
+     "y": 0.84,
+     "ja": "全く同一の、そっくりな",
+     "role": "形が全く同じ二つの杯",
+     "hook": "idem（同じ）由来。identity と同根。identical＝互いに同一。genuineの真贋とは別の比較。"
+    },
+    {
+     "en": "genuine",
+     "x": 0.82,
+     "y": 0.84,
+     "ja": "本物の、心からの",
+     "role": "本物と確認された古い杯",
+     "hook": "genuine antique＝本物の骨董。identicalは同じ形、genuineは真贋。"
+    }
+   ]
+  },
+  {
+   "id": "L80-03",
+   "title": "人形劇の初舞台",
+   "titleEn": "Opening Night at the Puppet Theatre",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-03.webp",
+   "thumb": "scenes/L80-03-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "Tonight's satire turns a pompous mayor into a ridiculous dancing puppet. At the front of the stage, an actress prepares to utter the opening greeting with one hand cupped beside her mouth. Behind a low screen, the puppeteer can manipulate a wooden bird using delicate strings. Purple is the predominant colour of the enormous curtain, although a narrow green border remains visible. In the first row, supporters acclaim the young company with enthusiastic applause. A small drummer sits amid a circle of flower pots that decorate the stage. Nearby, a serious usher tries to suppress a smile by pressing her lips together. A sudden paper dragon may frighten a child, so its operator keeps it well away from the seats. One rebel in the chorus wears bright trainers instead of matching shoes. The theatre's silver trophy represents its prestige, while a juvenile performer waits patiently beside a smaller costume rack.",
+   "words": [
+    {
+     "en": "satire",
+     "x": 0.158,
+     "y": 0.252,
+     "ja": "風刺、風刺作品",
+     "role": "市長を笑いにする風刺人形",
+     "hook": "satire＝笑いを使う社会批判。偉そうな市長を滑稽な人形にする。"
+    },
+    {
+     "en": "utter",
+     "x": 0.08199999999999999,
+     "y": 0.556,
+     "ja": "【v】口に出す、発する /【adj】全くの、完全な",
+     "role": "開演の言葉を発する女優",
+     "hook": "古英語 ūtera（より外の）＝out の比較級由来。声を外へ出す。utter a word＝言葉を発する。"
+    },
+    {
+     "en": "manipulate",
+     "x": 0.297,
+     "y": 0.182,
+     "ja": "~を操作する、~を巧みに扱う",
+     "role": "糸で鳥を巧みに操る人",
+     "hook": "manus（手）由来＝手で巧みに扱う。manual と同根。manipulate a puppet＝人形を操る。"
+    },
+    {
+     "en": "predominant",
+     "x": 0.523,
+     "y": 0.15,
+     "ja": "支配的な、優勢な、主要な",
+     "role": "大半を占める紫の幕",
+     "hook": "pre-（他に先んじて）＋dominant（支配的な）＝他より優勢。dominate と同根。predominant colour＝主な色。"
+    },
+    {
+     "en": "acclaim",
+     "x": 0.131,
+     "y": 0.74,
+     "ja": "【v】~を称賛する /【n】称賛、喝采",
+     "role": "盛大に拍手する観客",
+     "hook": "ac-（〜へ）＋claim（叫ぶ）＝叫んで称える。exclaim と同根。win acclaim＝称賛を得る。"
+    },
+    {
+     "en": "amid",
+     "x": 0.524,
+     "y": 0.344,
+     "ja": "~に囲まれて、~の最中に",
+     "role": "花の輪の真ん中の太鼓奏者",
+     "hook": "a-（〜に）＋mid（真ん中）＝真ん中に。middle と同根。amid flowers＝花々に囲まれて。"
+    },
+    {
+     "en": "suppress",
+     "x": 0.4,
+     "y": 0.7659999999999999,
+     "ja": "~を抑える、~を鎮圧する",
+     "role": "笑いを抑える案内係",
+     "hook": "sup-（下へ）＋press（押す）＝押さえ込む。oppress と同根。suppress a smile＝笑いを抑える。"
+    },
+    {
+     "en": "frighten",
+     "x": 0.708,
+     "y": 0.7390000000000001,
+     "ja": "~を怖がらせる",
+     "role": "龍の張りぼてに驚く子",
+     "hook": "frighten a child＝子を怖がらせる。怖がる人が目的語になる。"
+    },
+    {
+     "en": "rebel",
+     "x": 0.71,
+     "y": 0.39,
+     "ja": "【v】反抗する /【n】反逆者、反乱者",
+     "role": "衣装規則に反抗する団員",
+     "hook": "re-（再び）＋bel（戦う）＝再び戦いを挑む。名詞は前、動詞rebel againstは後ろに強勢。"
+    },
+    {
+     "en": "prestige",
+     "x": 0.888,
+     "y": 0.138,
+     "ja": "名声、威信",
+     "role": "劇場の名声を示すトロフィー",
+     "hook": "prestige＝社会的な名声・威信。積み上げた評価を銀の杯に集約。"
+    },
+    {
+     "en": "juvenile",
+     "x": 0.836,
+     "y": 0.44299999999999995,
+     "ja": "【adj】青少年の、未成年の /【n】少年、少女",
+     "role": "子ども用衣装の若い役者",
+     "hook": "juvenis（若い）由来。junior と同根。juvenile performer＝少年少女の演者。"
+    }
+   ]
+  },
+  {
+   "id": "L80-04",
+   "title": "市場の昼ごはん",
+   "titleEn": "Lunch at the Covered Market",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-04.webp",
+   "thumb": "scenes/L80-04-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the covered market, a stingy stallholder offers a customer just one tiny crumb of cheese. Across the aisle, a cheerful cook is ready to sprinkle herbs over a bowl of soup. An abandoned loaf looks stale, with a hard crust and curled slices. A customer's greed is obvious as he gathers nearly every peach into his oversized basket. At a separate table, a visitor closes her eyes to savor a spoonful of fragrant stew. The fish stall's strong odor makes another shopper pinch his nose. Behind the bakery counter, a cook begins to fume because somebody has hidden his clean apron. A stack of disposable paper bowls stands beside the serving hatch. Fortunately, a decent grocer gives a hungry visitor a generous sandwich. For a child with an allergy, the assistant must omit the nuts. At the corner table, two intimate friends lean close together over their tea.",
+   "words": [
+    {
+     "en": "stingy",
+     "x": 0.08,
+     "y": 0.31,
+     "ja": "けちな、出し惜しみする",
+     "role": "一かけらしか渡さない商人",
+     "hook": "stingy＝出し惜しみする。greedは多く欲しがる、こちらは渡したがらない。"
+    },
+    {
+     "en": "sprinkle",
+     "x": 0.27,
+     "y": 0.26,
+     "ja": "~をまき散らす、~をふりかける",
+     "role": "スープに香草を振る料理人",
+     "hook": "sprinkle herbs over soup＝香草を少量ずつぱらぱらかける。"
+    },
+    {
+     "en": "stale",
+     "x": 0.12,
+     "y": 0.86,
+     "ja": "新鮮でない、古くさい",
+     "role": "乾いて古くなったパン",
+     "hook": "stale bread＝古くなったパン。腐敗ではなく新鮮さを失った乾いた切り口。"
+    },
+    {
+     "en": "greed",
+     "x": 0.3,
+     "y": 0.6,
+     "ja": "欲張り、強欲",
+     "role": "桃を独り占めする客の強欲",
+     "hook": "greed＝もっと欲しい強欲。stingyの出し惜しみとは逆向きの手。"
+    },
+    {
+     "en": "savor",
+     "x": 0.52,
+     "y": 0.47,
+     "ja": "【v】~を味わう、~を噛みしめる /【n】風味、味わい",
+     "role": "目を閉じ料理を味わう客",
+     "hook": "sapere（味わう・分かる）由来。sapiens と同根。savor every mouthful＝一口一口を堪能する。"
+    },
+    {
+     "en": "odor",
+     "x": 0.51,
+     "y": 0.31,
+     "ja": "におい、(特に不快な)臭い",
+     "role": "魚売場から漂うにおい",
+     "hook": "odor（におい）由来。deodorant と同根。a strong odor＝強いにおい。"
+    },
+    {
+     "en": "fume",
+     "x": 0.88,
+     "y": 0.25,
+     "ja": "【n】(有毒な)煙、ガス /【v】激怒する",
+     "role": "腕を組んで激怒する料理人",
+     "hook": "fumus（煙）由来＝頭から煙が出るほど怒る。perfume と同根。fume with anger＝怒りでかっかする。"
+    },
+    {
+     "en": "disposable",
+     "x": 0.665,
+     "y": 0.5,
+     "ja": "使い捨ての、自由に使える",
+     "role": "使い捨ての紙の器",
+     "hook": "dis-（離して）＋pose（置く）＝手放せる。dispose of（処分する）と同根。disposable bowls＝使い捨て容器。"
+    },
+    {
+     "en": "decent",
+     "x": 0.77,
+     "y": 0.42,
+     "ja": "まともな、きちんとした、親切な",
+     "role": "空腹の客に親切な食料品店主",
+     "hook": "decere（ふさわしい）由来＝場にふさわしい→まともな。a decent person＝良識ある親切な人。"
+    },
+    {
+     "en": "omit",
+     "x": 0.4,
+     "y": 0.74,
+     "ja": "~を省く、~を省略する",
+     "role": "ナッツを入れずに作る店員",
+     "hook": "o(b)-（離して）＋mit（送る）＝送らずに外す。admit と同根。omit the nuts＝ナッツを意図して省く。"
+    },
+    {
+     "en": "intimate",
+     "x": 0.83,
+     "y": 0.77,
+     "ja": "親密な、密接な、詳細な",
+     "role": "顔を寄せ合う親密な友人",
+     "hook": "intimus（最も内側の）由来＝心の奥まで近い。intimate friends＝親密な友人。"
+    }
+   ]
+  },
+  {
+   "id": "L80-05",
+   "title": "干潟の調査隊",
+   "titleEn": "The Tidal Survey Expedition",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-05.webp",
+   "thumb": "scenes/L80-05-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "Our expedition reaches the shore before the morning tide turns. A grassy incline leads down from the car park, where a wary volunteer tests a slippery stone with her boot. Low barriers confine visitors to the safe wooden path. Farther out, the waters recede, exposing a shining strip of sand beside the boats. One unused mooring rope hangs slack between two posts. Beyond it stands a wooden hut with a bright blue roof, facing an enormous expanse of open sea. Inside a shallow tray, delicate seedlings may perish without fresh water, so the team carries a watering can. Near the rocks, our guide tells everyone to beware of the wet surface and points out a safer route. Before checking the instruments, I entrust my precious camera to a careful assistant. She places its strap around her neck and promises to keep it dry throughout the survey.",
+   "words": [
+    {
+     "en": "expedition",
+     "x": 0.15,
+     "y": 0.19,
+     "ja": "探検、遠征、探検隊",
+     "role": "調査装備を持つ探検隊",
+     "hook": "ex-（外す）＋ped（足）＝足かせを外し出発。pedestrian と同根。a scientific expedition＝科学調査の遠征。"
+    },
+    {
+     "en": "incline",
+     "x": 0.33,
+     "y": 0.24,
+     "ja": "【v】傾く、~する傾向がある /【n】傾斜",
+     "role": "浜へ下る草地の斜面",
+     "hook": "in-（〜へ）＋cline（傾く）。decline と同根。a steep incline＝急な斜面。ここは名詞の傾斜。"
+    },
+    {
+     "en": "wary",
+     "x": 0.16,
+     "y": 0.51,
+     "ja": "用心深い、警戒している",
+     "role": "足場を用心深く確かめる人",
+     "hook": "aware と同根（ware＝用心深い）。wary of slippery rocks＝滑る岩を警戒して。"
+    },
+    {
+     "en": "confine",
+     "x": 0.35,
+     "y": 0.46,
+     "ja": "~を閉じ込める、~を限定する",
+     "role": "通行範囲を限る低い柵",
+     "hook": "con-（共に）＋fine（境界）＝境界の内に閉じ込める。final と同根。confine visitors to the path＝通行を道に限定。"
+    },
+    {
+     "en": "recede",
+     "x": 0.48,
+     "y": 0.29,
+     "ja": "後退する、遠ざかる、減少する",
+     "role": "後退して砂地を出す潮",
+     "hook": "re-（後ろへ）＋cede（行く）＝引いていく。precede と同根。the tide recedes＝潮が引く。"
+    },
+    {
+     "en": "slack",
+     "x": 0.45,
+     "y": 0.79,
+     "ja": "【adj】ゆるい、たるんだ /【v】~をゆるめる",
+     "role": "たるんだ係留ロープ",
+     "hook": "a slack rope＝たるんだ綱。張っていない深いU字形で覚える。"
+    },
+    {
+     "en": "hut",
+     "x": 0.92,
+     "y": 0.13,
+     "ja": "小屋、山小屋",
+     "role": "青い屋根の木の小屋",
+     "hook": "a wooden hut＝木の小屋。人が数人入れる簡素な建物。"
+    },
+    {
+     "en": "expanse",
+     "x": 0.61,
+     "y": 0.13,
+     "ja": "広がり、広大な空間",
+     "role": "水平線までの広大な海",
+     "hook": "ex-（外へ）＋pand（広げる）＝広がり。expand と同根。an expanse of sea＝広大な海。"
+    },
+    {
+     "en": "perish",
+     "x": 0.8,
+     "y": 0.85,
+     "ja": "死ぬ、滅びる、消滅する",
+     "role": "水不足で枯れる苗",
+     "hook": "per-（すっかり）＋ire（行く）＝行き果てて滅びる。plants perish without water＝水がなければ植物は死ぬ。"
+    },
+    {
+     "en": "beware",
+     "x": 0.54,
+     "y": 0.47,
+     "ja": "(of)~に注意する、~を用心する",
+     "role": "濡れた岩を指して注意する人",
+     "hook": "be ware（用心せよ）が一語に。aware/wary と同根。beware of wet rocks＝濡れた岩に注意。"
+    },
+    {
+     "en": "entrust",
+     "x": 0.87,
+     "y": 0.43,
+     "ja": "~を委ねる、~を委託する (entrust A to B)",
+     "role": "大事なカメラを預かる助手",
+     "hook": "en-（〜に）＋trust（信頼）＝信頼して預ける。entrust a camera to someone＝カメラを託す。"
+    }
+   ]
+  },
+  {
+   "id": "L80-06",
+   "title": "町の発明展示会",
+   "titleEn": "The Community Invention Fair",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-06.webp",
+   "thumb": "scenes/L80-06-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the invention fair, a curious apparatus transfers water between glass chambers without a pump. Nearby, a rolling marble strikes a domino, making their causal connection easy to see. A kitchen scientist shows how to derive a yellow liquid from fresh lemons. Across the room, a projector can enlarge the image of a beetle onto a blank wall. A carpenter demonstrates perpendicular beams by joining them at a perfect right angle. A young visitor displays remarkable intellect by completing a complicated mechanical puzzle. Her father pauses to ponder two possible bridge models before choosing either. A layperson wearing an ordinary shopping coat looks puzzled beside a specialist's workbench. Another table holds a mediocre clay pot, functional but uneven and unremarkable. The tallest tower of balanced wooden spoons is an astonishing feat. Finally, two separate fountains produce simultaneous spurts when the demonstrator presses a single pedal, delighting everyone gathered around.",
+   "words": [
+    {
+     "en": "apparatus",
+     "x": 0.12,
+     "y": 0.3,
+     "ja": "器具、装置、機構",
+     "role": "水を移すガラスの実験装置",
+     "hook": "ap-（〜へ）＋parare（準備する）＝備えた器具一式。prepare と同根。laboratory apparatus＝実験装置。"
+    },
+    {
+     "en": "causal",
+     "x": 0.05,
+     "y": 0.9,
+     "ja": "因果関係の、原因の",
+     "role": "玉が倒すドミノの因果関係",
+     "hook": "cause（原因）＋-al＝原因の。causal link＝因果関係。casualと区別。"
+    },
+    {
+     "en": "derive",
+     "x": 0.31,
+     "y": 0.63,
+     "ja": "~に由来する、~を引き出す (derive from)",
+     "role": "レモンから汁を取り出す実験",
+     "hook": "de-（から）＋rivus（小川）＝川から水を引く→由来を得る。derive juice from lemons＝レモンから汁を得る。"
+    },
+    {
+     "en": "enlarge",
+     "x": 0.53,
+     "y": 0.17,
+     "ja": "~を拡大する、大きくなる",
+     "role": "虫の像を大きくする投影機",
+     "hook": "en-（〜にする）＋large（大きい）＝拡大する。enlarge an image＝画像を拡大する。"
+    },
+    {
+     "en": "perpendicular",
+     "x": 0.28,
+     "y": 0.22,
+     "ja": "垂直な、直角の",
+     "role": "直角に交わる二本の木材",
+     "hook": "per-（すっかり）＋pend（吊るす）＝下げ振りの糸の向き＝垂直。pendant と同根。perpendicular to＝〜に垂直。"
+    },
+    {
+     "en": "intellect",
+     "x": 0.44,
+     "y": 0.7,
+     "ja": "知性、知力",
+     "role": "難問を解く子の知力",
+     "hook": "intel-（間で）＋lect（選ぶ）＝見分ける力。select と同根。a sharp intellect＝鋭い知性。"
+    },
+    {
+     "en": "ponder",
+     "x": 0.56,
+     "y": 0.34,
+     "ja": "(over/on)~を熟考する、じっくり考える",
+     "role": "橋の模型を前に熟考する父",
+     "hook": "pondus（重さ）由来＝心の中で重さを量る。ponder a problem＝問題をじっくり考える。"
+    },
+    {
+     "en": "layperson",
+     "x": 0.66,
+     "y": 0.29,
+     "ja": "素人、門外漢",
+     "role": "専門装置に戸惑う素人の客",
+     "hook": "explain to a layperson＝素人にも説明する。買物袋の客と専門家の装置。"
+    },
+    {
+     "en": "mediocre",
+     "x": 0.76,
+     "y": 0.46,
+     "ja": "平凡な、凡庸な",
+     "role": "使えるが平凡な陶器",
+     "hook": "medius（中間）由来＝真ん中どまり。medium と同根。mediocre work＝凡庸な作品。"
+    },
+    {
+     "en": "feat",
+     "x": 0.91,
+     "y": 0.28,
+     "ja": "偉業、快挙",
+     "role": "木のスプーンを積む快挙",
+     "hook": "factum（なされた事）由来。fact と同根。an impressive feat＝見事な快挙。"
+    },
+    {
+     "en": "simultaneous",
+     "x": 0.85,
+     "y": 0.66,
+     "ja": "同時の、同時に起こる",
+     "role": "同時に噴き出す二つの噴水",
+     "hook": "simul（同時に）由来。simultaneous events＝同時の出来事。一つのペダルで二本とも噴く。"
+    }
+   ]
+  },
+  {
+   "id": "L80-07",
+   "title": "町内運動会の練習",
+   "titleEn": "Practice for the Neighbourhood Sports Day",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-07.webp",
+   "thumb": "scenes/L80-07-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A cyclist undertakes intense training at the sports ground before the neighbourhood competition. At one station, a runner maintains a consistent pace past evenly spaced cones. A gymnast takes a gentle tumble onto a thick blue mat, while a separate volunteer starts to stagger under an oversized mascot costume. On a downhill track, a rolling cart gathers momentum as its helper releases the handle. Beside the jumping pit, a poised athlete balances calmly with one knee raised. A weightlifter shows the strain of a heavy practice lift through tense shoulders and a clenched face. At the entrance, a firm official can compel cyclists to wear helmets by keeping the gate closed. Helpers allot a separate basket of equipment to each team. Under a parasol, a coach tries to soothe a tearful beginner with a reassuring hand. Nearby, another runner clenches her fist in resolution and returns to the starting point.",
+   "words": [
+    {
+     "en": "intense",
+     "x": 0.1,
+     "y": 0.21,
+     "ja": "激しい、強烈な",
+     "role": "汗だくで激しく練習する選手",
+     "hook": "in-（中へ）＋tend（張る）＝ぴんと張り詰める。tension と同根。intense training＝激しい練習。"
+    },
+    {
+     "en": "consistent",
+     "x": 0.18,
+     "y": 0.41,
+     "ja": "首尾一貫した、一致した、安定した",
+     "role": "同じペースを保つ走者",
+     "hook": "con-（共に）＋sist（立つ）＝立ち位置を保つ→ぶれない。insist と同根。consistent pace＝安定したペース。"
+    },
+    {
+     "en": "tumble",
+     "x": 0.125,
+     "y": 0.77,
+     "ja": "【v】転ぶ、急落する /【n】転倒、暴落",
+     "role": "マットにころりと転がる人",
+     "hook": "take a tumble＝転ぶ。staggerは立ったままよろめく、こちらは転がる。"
+    },
+    {
+     "en": "stagger",
+     "x": 0.31,
+     "y": 0.57,
+     "ja": "よろめく、~を驚愕させる",
+     "role": "着ぐるみでよろめく係員",
+     "hook": "stagger under a load＝重みでよろめく。tumbleの転倒とは違いまだ立つ。"
+    },
+    {
+     "en": "momentum",
+     "x": 0.41,
+     "y": 0.3,
+     "ja": "勢い、弾み、運動量",
+     "role": "坂で勢いを増す台車",
+     "hook": "movere（動かす）由来。move/moment と同根。gain momentum＝勢いがつく。"
+    },
+    {
+     "en": "poised",
+     "x": 0.56,
+     "y": 0.44,
+     "ja": "落ち着いた、体勢の整った、(to)~する構えの",
+     "role": "落ち着いて構える跳躍選手",
+     "hook": "poised to jump＝跳ぶ構えが整った。静かに均衡を保つ瞬間。"
+    },
+    {
+     "en": "strain",
+     "x": 0.665,
+     "y": 0.35,
+     "ja": "【n】緊張、負担 /【v】~に負担をかける、~を痛める",
+     "role": "重さに力む重量挙げ選手",
+     "hook": "stringere（きつく締める）由来。strict と同根。under strain＝負担がかかって。"
+    },
+    {
+     "en": "compel",
+     "x": 0.76,
+     "y": 0.18,
+     "ja": "~を強制する、~せざるを得なくする",
+     "role": "ヘルメット着用を強制する係",
+     "hook": "com-（強く）＋pel（押す）＝無理に押しやる。propel/expel と同根。compel someone to do＝人に強制する。"
+    },
+    {
+     "en": "allot",
+     "x": 0.895,
+     "y": 0.33,
+     "ja": "~を割り当てる",
+     "role": "チームごとに用具を割り当てる人",
+     "hook": "a-（〜へ）＋lot（くじ・分け前）＝取り分を割り当てる。allot equipment to teams＝用具を割り当てる。"
+    },
+    {
+     "en": "soothe",
+     "x": 0.77,
+     "y": 0.83,
+     "ja": "~を落ち着かせる、~をなだめる、(痛みを)和らげる",
+     "role": "泣いた初心者をなだめるコーチ",
+     "hook": "soothe a child＝子をなだめる。興奮を静める穏やかな手と声。"
+    },
+    {
+     "en": "resolution",
+     "x": 0.46,
+     "y": 0.77,
+     "ja": "決意、決議、解決",
+     "role": "拳を握り再挑戦を決意する走者",
+     "hook": "resolve（決心する）の名詞。re-＋solve（解く）。with resolution＝決意をもって。"
+    }
+   ]
+  },
+  {
+   "id": "L80-08",
+   "title": "共同菜園の話し合い",
+   "titleEn": "The Community Garden Meeting",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-08.webp",
+   "thumb": "scenes/L80-08-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A stubborn resident refuses to move his chair from the entrance to the meeting tent. Inside, a stern chairwoman points firmly towards the empty seat beside her. Two neighbours quarrel over where the vegetable beds should go. At another table, a speaker's irritation begins to subside when tea arrives. An affluent supporter parks her polished limousine outside and joins the discussion. At the central table, two other representatives shake hands on an accord. A proponent of the garden proudly presents a model with accessible paths and raised beds. The council representative can sanction the project by placing the official seal beside that model. Unfortunately, one gatekeeper's prejudice appears when he welcomes smart shoes but blocks muddy work boots. Most residents reject this unfair treatment, and their view will prevail through an overwhelming show of hands. A solicitor closes the folder for a threatened lawsuit, relieved that agreement now seems possible.",
+   "words": [
+    {
+     "en": "stubborn",
+     "x": 0.09,
+     "y": 0.71,
+     "ja": "頑固な、なかなか取れない",
+     "role": "椅子を動かさない頑固な住民",
+     "hook": "stubborn＝自分の立場を変えない。sternの厳しい態度とは別で、動かぬ椅子。"
+    },
+    {
+     "en": "stern",
+     "x": 0.16,
+     "y": 0.59,
+     "ja": "厳しい、厳格な",
+     "role": "厳しい顔の議長",
+     "hook": "a stern look＝厳しい表情。stubbornは頑固、sternは相手に厳格。"
+    },
+    {
+     "en": "quarrel",
+     "x": 0.29,
+     "y": 0.38,
+     "ja": "【n】口論 /【v】口論する",
+     "role": "配置を巡って口論する隣人",
+     "hook": "quarrel over a plan＝計画を巡り口論する。言い争う二人の開いた手。"
+    },
+    {
+     "en": "subside",
+     "x": 0.31,
+     "y": 0.65,
+     "ja": "静まる、和らぐ、沈下する",
+     "role": "お茶で興奮が静まる発言者",
+     "hook": "sub-（下へ）＋side（座る・沈む）＝沈んで静まる。anger subsides＝怒りが静まる。"
+    },
+    {
+     "en": "affluent",
+     "x": 0.11,
+     "y": 0.28,
+     "ja": "裕福な、豊富な",
+     "role": "高級車で来た裕福な支援者",
+     "hook": "af-（〜へ）＋flu（流れる）＝富が流れ込む。fluid と同根。an affluent household＝裕福な家庭。"
+    },
+    {
+     "en": "accord",
+     "x": 0.53,
+     "y": 0.85,
+     "ja": "【n】一致、協定 /【v】一致する、~を与える",
+     "role": "握手で結ぶ住民の合意",
+     "hook": "ac-（〜へ）＋cord（心）＝心を合わせる。cordial と同根。reach an accord＝合意する。"
+    },
+    {
+     "en": "proponent",
+     "x": 0.49,
+     "y": 0.28,
+     "ja": "提案者、支持者",
+     "role": "菜園模型を示す推進派",
+     "hook": "pro-（前へ）＋pon（置く）＝案を前に出す人。propose と同根。a proponent of the plan＝計画の支持者。"
+    },
+    {
+     "en": "sanction",
+     "x": 0.64,
+     "y": 0.49,
+     "ja": "【n】許可、(通例 -s で)制裁 /【v】~を認可する",
+     "role": "計画に許可を与える市の担当者",
+     "hook": "sancire（神聖に定める）由来＝公に認める。saint と同根。sanction a project＝計画を認可する。"
+    },
+    {
+     "en": "prejudice",
+     "x": 0.86,
+     "y": 0.41,
+     "ja": "偏見、先入観",
+     "role": "靴で人を決めつける門番",
+     "hook": "pre-（前もって）＋judice（判断）＝先に下す判断。prejudice＝根拠のない先入観。"
+    },
+    {
+     "en": "prevail",
+     "x": 0.8,
+     "y": 0.11,
+     "ja": "広く行き渡る、普及する、勝つ",
+     "role": "多数の賛同で勝る公平な意見",
+     "hook": "pre-（他に先んじて）＋vail（強い）＝他より強く勝る。valid と同根。fairness prevails＝公平が勝る。"
+    },
+    {
+     "en": "lawsuit",
+     "x": 0.84,
+     "y": 0.9,
+     "ja": "訴訟",
+     "role": "弁護士が閉じる訴訟の書類",
+     "hook": "law（法）＋suit（訴え：sue の名詞）。file a lawsuit＝訴訟を起こす。口論で終わらず法廷へ。"
+    }
+   ]
+  },
+  {
+   "id": "L80-09",
+   "title": "陶芸教室の発表会",
+   "titleEn": "The Pottery Class Exhibition",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-09.webp",
+   "thumb": "scenes/L80-09-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At her first pottery lesson, a little girl reveals an innate talent by shaping a beautifully balanced bowl without help. Across the room, a rude visitor tries to humiliate a beginner by laughing and pointing at his crooked vase. In a tall clay sculpture, a round void creates a surprising view of the garden beyond. A potter lets a blue plate whirl on the wheel while she smooths its edge. The low display stand beside her comprises three wooden sections. On its finest cup, a subtle pink stripe almost disappears into the cream glaze. A student begins to scribble loose decorative loops on scrap paper. Nearby, an assistant uses a square mould to contradict the tutor's mistaken claim about a pot's round base. A squeaky stool starts to annoy another learner. At the entrance, a throng gathers for the exhibition, while a disappointed sculptor lowers his head in despair beside a collapsed clay tower.",
+   "words": [
+    {
+     "en": "innate",
+     "x": 0.09,
+     "y": 0.62,
+     "ja": "生まれつきの、生来の",
+     "role": "初回から上手な子の天賦の才",
+     "hook": "in-（中に）＋nate（生まれた）＝生まれ持った。native と同根。innate talent＝生まれつきの才能。"
+    },
+    {
+     "en": "humiliate",
+     "x": 0.29,
+     "y": 0.37,
+     "ja": "~に恥をかかせる、~に屈辱を与える",
+     "role": "初心者の作品を笑い恥をかかす客",
+     "hook": "humilis（低い）由来＝低く落とす。humble と同根。humiliate someone＝人に恥をかかせる。"
+    },
+    {
+     "en": "void",
+     "x": 0.55,
+     "y": 0.2,
+     "ja": "【n】空虚、空白 /【adj】無効な",
+     "role": "彫刻の中の丸い空洞",
+     "hook": "vacant/vacuum と同系の語（空の）。a void＝何もない空間。彫刻の穴そのものを指す。"
+    },
+    {
+     "en": "whirl",
+     "x": 0.285,
+     "y": 0.735,
+     "ja": "【v】ぐるぐる回る /【n】回転、渦",
+     "role": "ろくろで回転する青い皿",
+     "hook": "whirl round＝ぐるぐる回る。同じ中心の周りを速く回る皿。"
+    },
+    {
+     "en": "comprise",
+     "x": 0.48,
+     "y": 0.6,
+     "ja": "~から成る、~を含む",
+     "role": "三部材で成り立つ展示台",
+     "hook": "com-（すべて）＋prise（つかむ）＝全体が中身を含む。comprehend と同根。全体を主語にして中身を示す。"
+    },
+    {
+     "en": "subtle",
+     "x": 0.495,
+     "y": 0.855,
+     "ja": "微妙な、繊細な、かすかな",
+     "role": "淡い桃色のかすかな縞",
+     "hook": "a subtle difference＝微妙な違い。よく見て初めて分かる薄い桃色。"
+    },
+    {
+     "en": "scribble",
+     "x": 0.65,
+     "y": 0.385,
+     "ja": "【v】走り書きする、落書きする /【n】走り書き",
+     "role": "紙に線を走り書きする生徒",
+     "hook": "scribere（書く）由来。describe/script と同根。scribble on paper＝紙に走り書きする。"
+    },
+    {
+     "en": "contradict",
+     "x": 0.845,
+     "y": 0.585,
+     "ja": "~と矛盾する、~に反論する",
+     "role": "型を示して先生に反論する助手",
+     "hook": "contra（反して）＋dict（言う）＝反対を言う。contradict a claim＝主張に反論する。"
+    },
+    {
+     "en": "annoy",
+     "x": 0.885,
+     "y": 0.255,
+     "ja": "~を悩ます、~をいらいらさせる",
+     "role": "椅子の音にいら立つ学習者",
+     "hook": "The noise annoys her＝音が彼女をいら立たせる。眉間と音の出る椅子を結ぶ。"
+    },
+    {
+     "en": "throng",
+     "x": 0.125,
+     "y": 0.23,
+     "ja": "【n】群衆 /【v】(~に)押し寄せる、群がる",
+     "role": "入口に押し寄せる見学者",
+     "hook": "a throng of visitors＝大勢の見学客。入口いっぱいに集まる人の塊。"
+    },
+    {
+     "en": "despair",
+     "x": 0.75,
+     "y": 0.795,
+     "ja": "【n】絶望、落胆 /【v】(of)~に絶望する",
+     "role": "作品が崩れ絶望する陶芸家",
+     "hook": "de-（ない）＋sperare（望む）＝望みを失う。desperate と同根。in despair＝絶望して。"
+    }
+   ]
+  },
+  {
+   "id": "L80-10",
+   "title": "共同庭園の手入れ",
+   "titleEn": "A Working Morning in the Shared Garden",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-10.webp",
+   "thumb": "scenes/L80-10-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "In the shared garden, fallen leaves decay in an open compost basket. A forgotten board may deprive a young plant of sunlight, so a volunteer lifts it away. Another gardener decides to abandon a broken trolley beside the tool shed and fetch a working one. A hostile goose hisses from behind its safe fence, while a cat begins to stalk a harmless clockwork mouse near the flower beds. Children flee from the unexpected spray of a sprinkler, laughing as they reach the dry path. For lunch, a pot of vegetable soup will simmer on the outdoor hob. A locked gate can preclude entry to the section where repairs are under way. Beside it, an overfilled watering can tilts so far that a spill is inevitable. One tall helper must stoop beneath a low branch. Meanwhile, the organiser manages to cope with the busy morning by carrying seedlings and watering them in turn.",
+   "words": [
+    {
+     "en": "decay",
+     "x": 0.11,
+     "y": 0.84,
+     "ja": "【v】腐る、朽ちる、衰退する /【n】腐敗、衰退",
+     "role": "堆肥かごで腐っていく落ち葉",
+     "hook": "de-（下へ）＋cadere（落ちる）＝崩れ落ちる。accident と同根。leaves decay＝葉が腐る。"
+    },
+    {
+     "en": "deprive",
+     "x": 0.17,
+     "y": 0.57,
+     "ja": "~から奪う、~を剥奪する (deprive A of B)",
+     "role": "苗から日光を奪う板",
+     "hook": "de-（すっかり）＋privare（奪う）＝奪い去る。private と同根。deprive A of B＝AからBを奪う。"
+    },
+    {
+     "en": "abandon",
+     "x": 0.25,
+     "y": 0.16,
+     "ja": "~を捨てる、~を放棄する、~を断念する",
+     "role": "壊れた台車を放置する庭師",
+     "hook": "abandon a broken trolley＝壊れた台車を見捨てる。置いたまま背を向ける。"
+    },
+    {
+     "en": "hostile",
+     "x": 0.59,
+     "y": 0.18,
+     "ja": "敵意のある、敵対的な",
+     "role": "柵の向こうで敵意を示すガチョウ",
+     "hook": "hostis（敵）由来＝敵意ある。a hostile reception＝敵意ある出迎え。威嚇する姿。"
+    },
+    {
+     "en": "stalk",
+     "x": 0.26,
+     "y": 0.37,
+     "ja": "~につきまとう、~に忍び寄る",
+     "role": "玩具のネズミに忍び寄る猫",
+     "hook": "stalk prey＝獲物に忍び寄る。低い姿勢で気付かれぬよう一歩ずつ。"
+    },
+    {
+     "en": "flee",
+     "x": 0.6,
+     "y": 0.41,
+     "ja": "逃げる、~から逃れる",
+     "role": "散水の水から逃げる子ども",
+     "hook": "flee from＝〜から逃げる。向かう先でなく避けたい水から離れる動き。"
+    },
+    {
+     "en": "simmer",
+     "x": 0.89,
+     "y": 0.15,
+     "ja": "(料理が)ぐつぐつ煮える、~をとろ火で煮る",
+     "role": "とろ火で煮える野菜スープ",
+     "hook": "simmer soup＝スープをとろ火で煮る。激しい沸騰でなく小さな泡。"
+    },
+    {
+     "en": "preclude",
+     "x": 0.79,
+     "y": 0.34,
+     "ja": "~を妨げる、~を除外する",
+     "role": "修理区域への立入を防ぐ門",
+     "hook": "pre-（前もって）＋clude（閉じる）＝先に閉ざす。exclude と同根。preclude entry＝入ることを不可能にする。"
+    },
+    {
+     "en": "inevitable",
+     "x": 0.64,
+     "y": 0.84,
+     "ja": "避けられない、必然的な",
+     "role": "避けられない水のこぼれ",
+     "hook": "in-（不）＋e-（外へ）＋vitare（避ける）＝避けられない。an inevitable spill＝避けられないこぼれ。"
+    },
+    {
+     "en": "stoop",
+     "x": 0.42,
+     "y": 0.77,
+     "ja": "かがむ、前かがみになる",
+     "role": "低い枝の下でかがむ長身の人",
+     "hook": "stoop under a branch＝枝の下でかがむ。膝より上体を前へ折る。"
+    },
+    {
+     "en": "cope",
+     "x": 0.86,
+     "y": 0.7,
+     "ja": "(with)~に対処する、~をうまく処理する",
+     "role": "作業を順番にこなす世話役",
+     "hook": "cope with many tasks＝多くの作業に対処する。一度に慌てず順に扱う。"
+    }
+   ]
+  },
+  {
+   "id": "L80-11",
+   "title": "小さな博物館の再出発",
+   "titleEn": "A New Beginning for the Small Museum",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-11.webp",
+   "thumb": "scenes/L80-11-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A discerning visitor seems to despise the cheap imitation crown, turning away with a dismissive curled lip. Nearby, a curator feels sorrow as she looks at a portrait of her much-loved former teacher. An old stone hearth warms the gallery, where a friendly imaginary cat is said to haunt the doorway. At the minerals table, an expert can discriminate between glass beads and precious stones using a small lens. A volunteer learns to exploit a simple pulley to lift a heavy exhibit safely. The uncovered shape of a giant fossil begins to arouse a child's curiosity. At the desk, a new manager will assume responsibility by accepting the museum keys and putting on the curator's coat. A tiny scratch on a plain saucer seems trivial beside the ancient treasures. Through an open arch, a ripple spreads across the courtyard pool. An architect pauses to envision a future garden around the museum.",
+   "words": [
+    {
+     "en": "despise",
+     "x": 0.08,
+     "y": 0.69,
+     "ja": "~を軽蔑する、~をひどく嫌う",
+     "role": "偽物の冠を見下す見学者",
+     "hook": "de-（下へ）＋spise（見る）＝見下す。despite と同根。despise a fake＝偽物を軽蔑する。"
+    },
+    {
+     "en": "sorrow",
+     "x": 0.16,
+     "y": 0.4,
+     "ja": "悲しみ、悲哀",
+     "role": "恩師の肖像を見て悲しむ学芸員",
+     "hook": "deep sorrow＝深い悲しみ。懐かしい人の肖像と静かな涙。"
+    },
+    {
+     "en": "hearth",
+     "x": 0.09,
+     "y": 0.18,
+     "ja": "暖炉、炉端",
+     "role": "展示室を暖める石の炉端",
+     "hook": "by the hearth＝炉端で。火だけでなく暖炉の周囲の場所を含む。"
+    },
+    {
+     "en": "haunt",
+     "x": 0.3,
+     "y": 0.29,
+     "ja": "~に出没する、~につきまとう",
+     "role": "戸口に現れる猫の幽霊",
+     "hook": "haunt a house＝家に出没する。何度も同じ戸口に現れる架空の猫。"
+    },
+    {
+     "en": "discriminate",
+     "x": 0.27,
+     "y": 0.53,
+     "ja": "(against)~を差別する、(between)~を区別する",
+     "role": "ガラスと宝石を識別する専門家",
+     "hook": "discernere（分けて見る）由来。discern と同根。discriminate between A and B＝両者を識別する。"
+    },
+    {
+     "en": "exploit",
+     "x": 0.4,
+     "y": 0.4,
+     "ja": "【v】~を活用する、(資源を)開発する、~を搾取する /【n】功績、偉業",
+     "role": "滑車の仕組みを活用する係員",
+     "hook": "exploit a mechanism＝仕組みを活用する。ここは搾取でなく有効利用。"
+    },
+    {
+     "en": "arouse",
+     "x": 0.71,
+     "y": 0.2,
+     "ja": "(感情・反応を)引き起こす、~を刺激する",
+     "role": "子の好奇心を呼び起こす化石",
+     "hook": "arouse curiosity＝好奇心を呼び起こす。化石を見て子の目が輝き始める。"
+    },
+    {
+     "en": "assume",
+     "x": 0.75,
+     "y": 0.71,
+     "ja": "~と仮定する、~を想定する、(責任を)引き受ける",
+     "role": "鍵を受け取り責任を引き受ける人",
+     "hook": "as-（〜へ）＋sume（取る）＝身に引き受ける。presume と同根。assume responsibility＝責任を引き受ける。"
+    },
+    {
+     "en": "trivial",
+     "x": 0.53,
+     "y": 0.87,
+     "ja": "ささいな、取るに足らない",
+     "role": "皿の取るに足らない小傷",
+     "hook": "tri（三）＋via（道）＝三叉路にある→ありふれた。a trivial flaw＝ささいな欠点。"
+    },
+    {
+     "en": "ripple",
+     "x": 0.93,
+     "y": 0.35,
+     "ja": "【n】さざなみ、波紋 /【v】さざなみが立つ、波打つ",
+     "role": "中庭の池に広がる波紋",
+     "hook": "a ripple on the water＝水面の小さな波紋。大波でなく薄い輪。"
+    },
+    {
+     "en": "envision",
+     "x": 0.91,
+     "y": 0.55,
+     "ja": "~を想像する、~を思い描く",
+     "role": "未来の庭を思い描く建築家",
+     "hook": "en-（中に）＋vision（像）＝頭の中に像を描く。envision a future garden＝将来の庭を思い描く。"
+    }
+   ]
+  },
+  {
+   "id": "L80-12",
+   "title": "村のパレードの出発前",
+   "titleEn": "Before the Village Parade Sets Off",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-12.webp",
+   "thumb": "scenes/L80-12-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A driver must maneuver the flower float between two closely spaced gateposts. Behind him, the assembly yard is in turmoil, with dancers searching for costumes and helpers untangling ribbons. One steward finds the endless knot-tying tiresome and yawns over another bundle. A drummer answers the confusion with a broad grin. Near the fence, a balloon begins to diminish as air escapes through its loose neck. A spectator gives a delighted shriek when a surprise paper butterfly springs from a box. Unfortunately, a missing axle is a fatal flaw in the second float's design, so that vehicle cannot join the parade. An impatient adult directs an insult at a slow helper by sticking out his tongue. The mascot tries to evade a photographer by stepping behind a pillar. A collector's obsession is visible in his trolley overflowing with toy ducks. At the exit, a young bully blocks a smaller child's path until a supervisor approaches.",
+   "words": [
+    {
+     "en": "maneuver",
+     "x": 0.17,
+     "y": 0.17,
+     "ja": "【n】策略、巧みな動き /【v】~を巧みに操作する",
+     "role": "狭い門を巧みに通る運転手",
+     "hook": "manu（手で）＋operari（働く）＝手で操作する。operate と同根。maneuver a vehicle＝巧みに動かす。"
+    },
+    {
+     "en": "turmoil",
+     "x": 0.14,
+     "y": 0.51,
+     "ja": "混乱、動乱、騒動",
+     "role": "リボンと人が入り乱れる混乱",
+     "hook": "in turmoil＝混乱状態で。人も物もまとまらず動き回る広場。"
+    },
+    {
+     "en": "tiresome",
+     "x": 0.1,
+     "y": 0.79,
+     "ja": "うんざりさせる、退屈な",
+     "role": "結び直しにうんざりする係員",
+     "hook": "a tiresome task＝うんざりする作業。単に疲れたのでなく繰り返しが退屈。"
+    },
+    {
+     "en": "grin",
+     "x": 0.3,
+     "y": 0.38,
+     "ja": "【v】にっこり笑う /【n】にこやかな笑顔",
+     "role": "歯を見せにっこりする太鼓奏者",
+     "hook": "a broad grin＝満面の笑み。口を横に大きく広げたにっこり顔。"
+    },
+    {
+     "en": "diminish",
+     "x": 0.38,
+     "y": 0.16,
+     "ja": "~を減少させる、減少する",
+     "role": "空気が抜け小さくなる風船",
+     "hook": "minuere（小さくする）系。minor と同根。diminish in size＝大きさが減る。"
+    },
+    {
+     "en": "shriek",
+     "x": 0.43,
+     "y": 0.59,
+     "ja": "【v】甲高い声を上げる、悲鳴を上げる /【n】悲鳴",
+     "role": "仕掛けに甲高い声を上げる客",
+     "hook": "a shriek of delight＝喜びの甲高い声。恐怖だけでなく驚きと歓喜にも使う。"
+    },
+    {
+     "en": "fatal",
+     "x": 0.54,
+     "y": 0.27,
+     "ja": "致命的な、決定的な",
+     "role": "山車を動かせぬ致命的な欠陥",
+     "hook": "fatum（運命）由来。fate と同根＝命運を決する。a fatal flaw＝致命的欠陥。ここは死亡でなく計画不成立。"
+    },
+    {
+     "en": "insult",
+     "x": 0.63,
+     "y": 0.41,
+     "ja": "【v】~を侮辱する /【n】侮辱",
+     "role": "係員に舌を出す侮辱の動作",
+     "hook": "in-（〜へ）＋sult（跳ぶ）＝跳びかかる→侮辱。an insult＝相手を傷つける侮辱の一言や動作。"
+    },
+    {
+     "en": "evade",
+     "x": 0.75,
+     "y": 0.24,
+     "ja": "~を避ける、~を逃れる",
+     "role": "柱の陰へ撮影をかわす着ぐるみ",
+     "hook": "e-（外へ）＋vade（行く）＝外へすり抜ける。invade と同根。evade a camera＝カメラをかわす。"
+    },
+    {
+     "en": "obsession",
+     "x": 0.64,
+     "y": 0.77,
+     "ja": "執着、強迫観念",
+     "role": "玩具のアヒル収集への執着",
+     "hook": "ob-（前に）＋sess（座る）＝心に居座る。session と同根。an obsession with collecting＝収集への執着。"
+    },
+    {
+     "en": "bully",
+     "x": 0.9,
+     "y": 0.52,
+     "ja": "【v】~をいじめる、~を脅す /【n】いじめっ子",
+     "role": "小さい子の道を塞ぐいじめっ子",
+     "hook": "a bully＝弱い相手を威圧する人。insultは侮辱の行為、こちらは行う人物。"
+    }
+   ]
+  },
+  {
+   "id": "L80-13",
+   "title": "厨房の抜き打ち点検",
+   "titleEn": "A Surprise Kitchen Inspection",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-13.webp",
+   "thumb": "scenes/L80-13-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The chief inspector has a grave expression as she studies the restaurant kitchen. A guest's antipathy towards olives is apparent from the way he pushes the bowl far away. Two inspectors arrive together for a surprise raid on an unlicensed food store beside the pantry; everyone cooperates calmly. At the baking bench, a chef uses sarcasm, praising a burnt tart while rolling her eyes. From floury fingerprints leading towards the biscuit tin, an assistant can infer what happened earlier. A child attempts to sneak past the doorway on tiptoe. Another helper will alter the oversized tablecloth by pinning its hem higher. A waiter gives a gasp when an unexpectedly tall cake emerges from the cupboard. At the sink, water starts to surge from a newly opened tap. An uncovered bin begins to stink in the warm air. Finally, the head cook will precede the trainees through the dining-room door to demonstrate the proper serving route.",
+   "words": [
+    {
+     "en": "grave",
+     "x": 0.075,
+     "y": 0.67,
+     "ja": "【adj】重大な、厳粛な /【n】墓",
+     "role": "深刻な顔の点検責任者",
+     "hook": "gravis（重い）由来。gravity と同根。墓のgraveとは別語。a grave expression＝深刻な表情。"
+    },
+    {
+     "en": "antipathy",
+     "x": 0.19,
+     "y": 0.55,
+     "ja": "反感、嫌悪",
+     "role": "オリーブを遠ざける客の嫌悪",
+     "hook": "anti-（反対）＋pathy（感情）。sympathy の逆。antipathy towards＝〜への強い反感。"
+    },
+    {
+     "en": "raid",
+     "x": 0.1,
+     "y": 0.285,
+     "ja": "【n】襲撃、手入れ /【v】~を襲撃する、~に手入れをする",
+     "role": "食料庫に抜き打ちで入る検査員",
+     "hook": "a surprise raid＝抜き打ちの手入れ。事前予告なく現場へ一斉に入る。"
+    },
+    {
+     "en": "sarcasm",
+     "x": 0.3,
+     "y": 0.345,
+     "ja": "皮肉、嫌味",
+     "role": "焦げた菓子を大げさに褒める皮肉",
+     "hook": "sarx（肉）由来＝肉を裂くような皮肉。sarcasm＝反対の意味で言う皮肉。"
+    },
+    {
+     "en": "infer",
+     "x": 0.445,
+     "y": 0.565,
+     "ja": "~を推測する、~を推論する",
+     "role": "粉の手形から推論する助手",
+     "hook": "in-（中へ）＋fer（運ぶ）＝証拠から結論へ運ぶ。transfer と同根。infer from evidence＝証拠から推論する。"
+    },
+    {
+     "en": "sneak",
+     "x": 0.375,
+     "y": 0.27,
+     "ja": "こっそり動く、こっそり~する",
+     "role": "つま先でこっそり通る子",
+     "hook": "sneak past＝気付かれず通り過ぎる。低い姿勢と忍び足。"
+    },
+    {
+     "en": "alter",
+     "x": 0.585,
+     "y": 0.495,
+     "ja": "~を変える、変わる",
+     "role": "布の裾を留めて寸法を直す係",
+     "hook": "alter（もう一方の）由来＝別の形にする。alternative と同根。alter a garment＝衣服を寸法直しする。"
+    },
+    {
+     "en": "gasp",
+     "x": 0.635,
+     "y": 0.225,
+     "ja": "【v】あえぐ、息をのむ /【n】あえぎ、息をのむこと",
+     "role": "高いケーキに息をのむ給仕",
+     "hook": "gasp in surprise＝驚いて息をのむ。叫びより一瞬息が入る丸い口。"
+    },
+    {
+     "en": "surge",
+     "x": 0.76,
+     "y": 0.25,
+     "ja": "【n】高まり、急増、殺到 /【v】急上昇する、押し寄せる",
+     "role": "蛇口から急に勢いよく出る水",
+     "hook": "surgere（湧き上がる）由来。source（源）と同根。water surges out＝水がどっと出る。"
+    },
+    {
+     "en": "stink",
+     "x": 0.805,
+     "y": 0.85,
+     "ja": "【v】悪臭を放つ /【n】悪臭",
+     "role": "悪臭を放つ生ごみ箱",
+     "hook": "The bin stinks＝ごみ箱が臭う。主語そのものが悪臭を放つ動詞。"
+    },
+    {
+     "en": "precede",
+     "x": 0.95,
+     "y": 0.305,
+     "ja": "~に先行する、~に先立つ",
+     "role": "実習生より先に進む料理長",
+     "hook": "pre-（前に）＋cede（行く）＝先に行く。recede と同根。precede someone＝人より先に行く。"
+    }
+   ]
+  },
+  {
+   "id": "L80-14",
+   "title": "屋根裏の修復教室",
+   "titleEn": "Restoration in the Attic",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-14.webp",
+   "thumb": "scenes/L80-14-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "In retrospect, the museum should have opened its attic to visitors years ago. Today, a conservator measures the breadth of an old picture frame while a student uses a lens to magnify its damaged corner. A brittle fragment of plaster rests alone on a padded tray, safely beyond curious fingers. At another table, an artist will depict the original house using only charcoal and careful observation. A crimson curtain provides a cheerful patch of colour behind her. Nearby, a metalworker examines a dent in a copper jug and compares it with a crude wooden copy made by a beginner. Nobody expects perfect work immediately, so the tutor encourages questions. Under a bright lamp, a researcher studies a minute crack in a porcelain cup. Finally, a volunteer brushes rust from an iron hinge, revealing how patience can rescue objects that once seemed useless.",
+   "words": [
+    {
+     "en": "retrospect",
+     "x": 0.14,
+     "y": 0.68,
+     "ja": "回想、回顧 (in retrospect = 振り返ってみると)",
+     "role": "昔の写真を振り返る学芸員",
+     "hook": "retro（後ろを）＋spect（見る）＝振り返る。prospect の逆。in retrospect＝振り返ってみると。"
+    },
+    {
+     "en": "attic",
+     "x": 0.51,
+     "y": 0.1,
+     "ja": "屋根裏、屋根裏部屋",
+     "role": "屋根裏の梁と小窓",
+     "hook": "屋根のすぐ下の部屋。basement（地下室）とは上下が逆。"
+    },
+    {
+     "en": "breadth",
+     "x": 0.37,
+     "y": 0.24,
+     "ja": "幅、幅広さ",
+     "role": "額の横幅を測る修復師",
+     "hook": "broad（広い）の名詞＝幅。width と wide の関係と同じ。長さlengthではなく横幅。"
+    },
+    {
+     "en": "magnify",
+     "x": 0.32,
+     "y": 0.49,
+     "ja": "~を拡大する、~を誇張する",
+     "role": "傷を拡大する虫眼鏡",
+     "hook": "magnus（大きい）＋-fy（する）＝拡大する。magnitude と同根。magnify a detail＝細部を拡大する。"
+    },
+    {
+     "en": "brittle",
+     "x": 0.08,
+     "y": 0.94,
+     "ja": "もろい、壊れやすい",
+     "role": "崩れやすい石膏片",
+     "hook": "硬くてもぽろっと割れる。柔らかいsoftとは違う弱さ。"
+    },
+    {
+     "en": "depict",
+     "x": 0.61,
+     "y": 0.32,
+     "ja": "~を描写する、~を描く",
+     "role": "家を描く画家",
+     "hook": "de-（すっかり）＋pict（描く）＝描き出す。picture と同根。depict a scene＝場面を描写する。"
+    },
+    {
+     "en": "crimson",
+     "x": 0.09,
+     "y": 0.26,
+     "ja": "【adj】深紅の /【n】深紅",
+     "role": "深紅のカーテン",
+     "hook": "crimson＝深い赤。鮮やかな赤い布を一点だけ置く。"
+    },
+    {
+     "en": "dent",
+     "x": 0.75,
+     "y": 0.46,
+     "ja": "【n】へこみ、くぼみ /【v】~をへこませる",
+     "role": "銅の水差しのへこみ",
+     "hook": "dent＝押されてへこんだ跡。穴holeは開いていない。"
+    },
+    {
+     "en": "crude",
+     "x": 0.91,
+     "y": 0.44,
+     "ja": "加工されていない、粗野な、大まかな",
+     "role": "粗削りの木の水差し",
+     "hook": "crudus（生の）由来＝未加工→粗い。crude oil は原油。crude model＝大まかな模型。"
+    },
+    {
+     "en": "minute",
+     "x": 0.87,
+     "y": 0.77,
+     "ja": "【adj】極めて小さい、詳細な /【n】分",
+     "role": "極小のひびを見る研究員",
+     "hook": "minutus（小さくされた）由来＝極めて小さい。時間のminuteとは発音が違う。"
+    },
+    {
+     "en": "rust",
+     "x": 0.46,
+     "y": 0.89,
+     "ja": "【n】さび /【v】さびる",
+     "role": "蝶番の赤茶色のさび",
+     "hook": "鉄の表面の赤茶色がrust。磨くと地金が現れる。"
+    }
+   ]
+  },
+  {
+   "id": "L80-15",
+   "title": "町の模擬法廷",
+   "titleEn": "A Community Mock Trial",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-15.webp",
+   "thumb": "scenes/L80-15-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The attorney arrives early for the community's mock trial and arranges her papers without rushing. Opposite her, a jury of local volunteers settles on a wooden bench. A mock judge explains what it means to convict a fictional shopkeeper of taking a customer's bicycle. A spectator's indifference is obvious as he studies his nails instead of the evidence. The organiser confirms that the customer is the legitimate owner, pointing to a matching key and lock. A volunteer speaks on behalf of the absent customer, holding her photograph beside him. When legal jargon confuses a young observer, the tutor explains it quietly. Two visiting students then deliberate around a separate table. Two photographs correspond exactly, but another issue remains pending in an untouched folder. Throughout the discussion, the chair maintains her composure, breathing slowly and keeping her hands relaxed. Everyone leaves with a better understanding of careful judgement.",
+   "words": [
+    {
+     "en": "attorney",
+     "x": 0.07,
+     "y": 0.33,
+     "ja": "弁護士、代理人",
+     "role": "弁護士席の女性",
+     "hook": "attorney＝主に米国の弁護士。英国ではsolicitor（事務弁護士）やbarrister（法廷弁護士）が相当。"
+    },
+    {
+     "en": "jury",
+     "x": 0.56,
+     "y": 0.11,
+     "ja": "陪審、陪審員団",
+     "role": "並んで座る陪審員団",
+     "hook": "jurare（誓う）由来＝宣誓した判定団。juryは判断する人の集団。裁判官一人とは違う。"
+    },
+    {
+     "en": "convict",
+     "x": 0.29,
+     "y": 0.43,
+     "ja": "【v】~に有罪判決を下す /【n】受刑者、囚人",
+     "role": "有罪判断を示す模擬裁判官",
+     "hook": "con-（すっかり）＋vict（打ち負かす）＝有罪と証明する。victory と同根。非難condemnと区別。"
+    },
+    {
+     "en": "indifference",
+     "x": 0.95,
+     "y": 0.27,
+     "ja": "(to)~への無関心",
+     "role": "爪を見て無関心な傍聴人",
+     "hook": "in-（ない）＋difference（違い）＝どうでも同じ→無関心。indifference to evidence＝証拠への無関心。"
+    },
+    {
+     "en": "legitimate",
+     "x": 0.2,
+     "y": 0.73,
+     "ja": "合法な、正当な、まっとうな",
+     "role": "所有権を裏付ける鍵と錠",
+     "hook": "lex（法）由来＝法にかなう。legal と同根。legitimate owner＝正当な所有者。"
+    },
+    {
+     "en": "behalf",
+     "x": 0.64,
+     "y": 0.48,
+     "ja": "(on behalf of = ~のために、~を代表して)",
+     "role": "本人の代わりに話す代理人",
+     "hook": "be＋half（側）＝その人の側に立って。on behalf of＝人を代表して。"
+    },
+    {
+     "en": "jargon",
+     "x": 0.15,
+     "y": 0.23,
+     "ja": "専門用語、業界用語",
+     "role": "専門語に戸惑う見学者",
+     "hook": "legal jargon＝法律の専門用語。専門家同士に通じる言葉。"
+    },
+    {
+     "en": "deliberate",
+     "x": 0.8,
+     "y": 0.33,
+     "ja": "【adj】意図的な、慎重な /【v】熟考する、審議する",
+     "role": "証拠を前に審議する学生二人",
+     "hook": "de-（十分に）＋libra（天秤）＝天秤でよく量る。動詞deliberate＝慎重に審議する。"
+    },
+    {
+     "en": "correspond",
+     "x": 0.38,
+     "y": 0.88,
+     "ja": "(to/with)~と一致する、~と文通する",
+     "role": "一致する二枚の証拠写真",
+     "hook": "cor-（互いに）＋respond（応じる）＝互いに応じ合う。correspond to＝対応・一致する。"
+    },
+    {
+     "en": "pending",
+     "x": 0.6,
+     "y": 0.87,
+     "ja": "【adj】未解決の、未決の /【prep】~まで、~を待つ間",
+     "role": "未処理箱の未決案件",
+     "hook": "pend（ぶら下がる）＝宙づりのまま。pendant と同根。pending decision＝決定待ち。"
+    },
+    {
+     "en": "composure",
+     "x": 0.87,
+     "y": 0.75,
+     "ja": "落ち着き、平静",
+     "role": "平静を保つ議長",
+     "hook": "com-（共に）＋pose（置く）＝心を整えて置く。compose の名詞。keep one's composure＝平静を保つ。"
+    }
+   ]
+  },
+  {
+   "id": "L80-16",
+   "title": "村の予算会議",
+   "titleEn": "A Village Budget Meeting",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-16.webp",
+   "thumb": "scenes/L80-16-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A considerable pile of repair requests awaits the village committee when its members convene in the hall. Their interim chair wears a borrowed ceremonial ribbon because the usual chair is away. Together they must devise a way to reopen the playground before summer. Materials are scarce, as the nearly empty timber shelf behind them demonstrates. The treasurer illustrates the deficit with an empty purse beside a pile of unpaid invoices. A local builder makes a pledge to donate several hours of work, placing his hand over his heart. Beside him, a thrifty resident carefully sorts reusable screws into small dishes. One younger member proposes a radical change: replace the broken climbing frame with a shared garden. A salesman tries to flatter the chair by admiring her ribbon extravagantly. Another member responds with scorn, turning up his nose, but the chair asks everyone to compare the proposals fairly.",
+   "words": [
+    {
+     "en": "considerable",
+     "x": 0.08,
+     "y": 0.24,
+     "ja": "かなりの、相当な",
+     "role": "相当量の修理依頼",
+     "hook": "considerable amount＝かなりの量。無視できない大きな山。"
+    },
+    {
+     "en": "convene",
+     "x": 0.23,
+     "y": 0.31,
+     "ja": "~を招集する、集まる",
+     "role": "集まる委員たち",
+     "hook": "con-（共に）＋vene（来る）＝集まらせる。convention と同根。convene a meeting＝会議を招集する。"
+    },
+    {
+     "en": "interim",
+     "x": 0.47,
+     "y": 0.25,
+     "ja": "【adj】仮の、暫定的な /【n】合間",
+     "role": "代役の仮議長",
+     "hook": "inter（間）由来＝その間の。interim chair＝暫定議長。正式担当が戻るまでの代役。"
+    },
+    {
+     "en": "devise",
+     "x": 0.16,
+     "y": 0.53,
+     "ja": "~を考案する、~を工夫する",
+     "role": "新しい案を工夫する住民",
+     "hook": "devise a plan＝計画を考案する。部品を組んで解決法を作る。"
+    },
+    {
+     "en": "scarce",
+     "x": 0.89,
+     "y": 0.2,
+     "ja": "乏しい、不足した",
+     "role": "ほぼ空の木材棚",
+     "hook": "scarce resources＝乏しい資源。必要な棚に一本しかない。"
+    },
+    {
+     "en": "deficit",
+     "x": 0.09,
+     "y": 0.87,
+     "ja": "赤字、不足",
+     "role": "支払不足を示す空の財布",
+     "hook": "de-（離れて）＋facere（なす）＝足りない。deficient と同根。収入より支出が大きい不足。"
+    },
+    {
+     "en": "pledge",
+     "x": 0.43,
+     "y": 0.43,
+     "ja": "【n】誓い、誓約 /【v】~を誓う、~を約束する",
+     "role": "寄付を誓う建設業者",
+     "hook": "make a pledge＝誓約する。胸に手を置く約束。"
+    },
+    {
+     "en": "thrifty",
+     "x": 0.5,
+     "y": 0.72,
+     "ja": "倹約的な、つましい",
+     "role": "再利用部品を仕分ける住民",
+     "hook": "thrive（栄える）と同根＝やりくり上手で栄える。thrifty＝無駄を省く倹約。"
+    },
+    {
+     "en": "radical",
+     "x": 0.72,
+     "y": 0.44,
+     "ja": "【adj】根本的な、抜本的な、過激な /【n】急進派",
+     "role": "抜本変更の庭園模型",
+     "hook": "radix（根）由来＝根本から。radish と同根。radical change＝根本からの変更。"
+    },
+    {
+     "en": "flatter",
+     "x": 0.7,
+     "y": 0.27,
+     "ja": "~にお世辞を言う、~を喜ばせる",
+     "role": "大げさに褒める営業員",
+     "hook": "flatter someone＝お世辞を言う。相手を喜ばせようと大げさに褒める。"
+    },
+    {
+     "en": "scorn",
+     "x": 0.95,
+     "y": 0.68,
+     "ja": "【v】~を軽蔑する、~を見下す /【n】軽蔑",
+     "role": "鼻で笑う委員",
+     "hook": "scorn＝見下す軽蔑。怒鳴るのでなく鼻であしらう表情。"
+    }
+   ]
+  },
+  {
+   "id": "L80-17",
+   "title": "人形劇のリハーサル",
+   "titleEn": "A Puppet Theatre Rehearsal",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-17.webp",
+   "thumb": "scenes/L80-17-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "Backstage, the prompter can only mutter because the audience is already entering the hall. A small puppet monkey causes mischief by hiding the director's spectacles beneath a cushion. On the miniature stage, a fairy prepares to slay a dragon with a harmless ribbon of magical light. The story reminds every mortal that courage matters more than size. A large shadow is meant to terrify a trembling puppet rabbit, although the real children are laughing. An actor adjusts his disguise of false whiskers beside a mirror. Above him hangs a curled black paper cloud representing a witch's curse. A horrific cardboard monster waits in a separate corner, all enormous eyes and ridiculous teeth. A model battlefield represents warfare without showing any fighting. Finally, a princess puppet held hostage behind a toy gate reaches towards a friendly giant, whose offered ladder promises salvation. The rehearsal ends in delighted applause.",
+   "words": [
+    {
+     "en": "mutter",
+     "x": 0.07,
+     "y": 0.82,
+     "ja": "ぼそぼそ言う、つぶやく",
+     "role": "小声でつぶやく進行係",
+     "hook": "mutter＝口の中でぼそぼそ言う。大声で読むのとは逆。"
+    },
+    {
+     "en": "mischief",
+     "x": 0.09,
+     "y": 0.51,
+     "ja": "いたずら、悪さ",
+     "role": "眼鏡を隠す猿の人形",
+     "hook": "make mischief＝いたずらをする。困らせるが深刻な害はない。"
+    },
+    {
+     "en": "slay",
+     "x": 0.22,
+     "y": 0.53,
+     "ja": "~を殺す、~を打ち倒す",
+     "role": "魔法で竜を倒す妖精人形",
+     "hook": "slay a dragon＝竜を退治する。物語ではkillより勇壮な語。"
+    },
+    {
+     "en": "mortal",
+     "x": 0.46,
+     "y": 0.77,
+     "ja": "【adj】死ぬ運命の、致命的な /【n】人間",
+     "role": "砂時計の横の人間人形",
+     "hook": "mors（死）由来。immortal と同根。mortal＝いつか死ぬ人間。永遠の妖精と違い時間に限りがある。"
+    },
+    {
+     "en": "terrify",
+     "x": 0.49,
+     "y": 0.43,
+     "ja": "~を怖がらせる、~を恐怖に陥れる",
+     "role": "影を怖がる兎の人形",
+     "hook": "terrere（怖がらせる）＋-fy（する）。terror と同根。terrify＝強い恐怖を与える。"
+    },
+    {
+     "en": "disguise",
+     "x": 0.86,
+     "y": 0.29,
+     "ja": "【v】~を変装させる、~を偽る /【n】変装、偽装",
+     "role": "付けひげで変装する俳優",
+     "hook": "dis-（離して）＋guise（装い）＝いつもの姿を外す。in disguise＝変装して。"
+    },
+    {
+     "en": "curse",
+     "x": 0.66,
+     "y": 0.2,
+     "ja": "【n】呪い、のろいの言葉 /【v】~を呪う、悪態をつく",
+     "role": "城にかかる呪いの黒雲",
+     "hook": "a witch's curse＝魔女の呪い。黒雲が悪い魔法の象徴。"
+    },
+    {
+     "en": "horrific",
+     "x": 0.92,
+     "y": 0.54,
+     "ja": "恐ろしい、ぞっとする",
+     "role": "恐ろしい顔の怪物の小道具",
+     "hook": "horror（恐怖）＋-fic（作る）＝恐怖を生む側。horrific＝ぞっとする。"
+    },
+    {
+     "en": "warfare",
+     "x": 0.16,
+     "y": 0.26,
+     "ja": "戦争、戦闘",
+     "role": "戦争を表す陣地模型",
+     "hook": "warfare＝戦闘・戦争という活動。ここでは無人の陣地で示す。"
+    },
+    {
+     "en": "hostage",
+     "x": 0.63,
+     "y": 0.59,
+     "ja": "人質",
+     "role": "門に閉じ込められた王女人形",
+     "hook": "hold someone hostage＝人質に取る。自由に帰れない状態。"
+    },
+    {
+     "en": "salvation",
+     "x": 0.81,
+     "y": 0.65,
+     "ja": "救済、救出",
+     "role": "救いとなる巨人の梯子",
+     "hook": "salvare（救う）由来。save と同根。salvation＝救済。閉じた場所から出る一本の梯子。"
+    }
+   ]
+  },
+  {
+   "id": "L80-18",
+   "title": "保育園の庭づくり",
+   "titleEn": "A Nursery Garden Day",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-18.webp",
+   "thumb": "scenes/L80-18-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The nursery invites families to nurture seedlings in its little garden. A vulnerable young plant bends beneath a sudden breeze, so its small pot receives a protective screen. At the gate, a father tries to discourage his daughter from climbing the slippery wall. A thoughtless visitor begins to harass a busy helper with repeated taps on her shoulder, and the manager politely asks him to wait. Meanwhile, another child shows compassion by carrying water to a stray kitten sheltering beneath a bench. A plump robin watches from the fence, hoping someone will uncover a worm. In the sunny border, healthy beans flourish above their supports. Water can seep through a crack in the old watering barrel, leaving a thin wet trail on the paving. Beside the herbs, a gardener pauses to inhale their fresh scent. A timid newcomer finally steps out from behind his mother's coat to join the planting.",
+   "words": [
+    {
+     "en": "nurture",
+     "x": 0.08,
+     "y": 0.41,
+     "ja": "【v】~を育てる、~を養育する /【n】養育、育ち",
+     "role": "苗を大切に育てる保育士",
+     "hook": "nutrire（養う）由来。nutrition と同根。nurture a plant＝手をかけて育てる。"
+    },
+    {
+     "en": "vulnerable",
+     "x": 0.18,
+     "y": 0.82,
+     "ja": "(to)~に弱い、脆弱な、傷つきやすい",
+     "role": "風に弱い一本の苗",
+     "hook": "vulnus（傷）由来＝傷つけられうる。vulnerable to wind＝風に弱い。"
+    },
+    {
+     "en": "discourage",
+     "x": 0.16,
+     "y": 0.18,
+     "ja": "~を落胆させる、(from)~を思いとどまらせる",
+     "role": "登るのを思いとどまらせる父",
+     "hook": "dis-（奪う）＋courage（勇気）＝気をくじく。discourage A from doing＝Aを思いとどまらせる。"
+    },
+    {
+     "en": "harass",
+     "x": 0.42,
+     "y": 0.27,
+     "ja": "~を困らせる、~に嫌がらせをする",
+     "role": "何度も肩をたたく来訪者",
+     "hook": "harass＝繰り返し困らせる。忙しい相手にしつこく接触する。"
+    },
+    {
+     "en": "compassion",
+     "x": 0.48,
+     "y": 0.57,
+     "ja": "同情、思いやり",
+     "role": "子猫をいたわる子供",
+     "hook": "com-（共に）＋passion（苦しみ）＝苦しみを共にする。show compassion＝思いやりを示す。"
+    },
+    {
+     "en": "stray",
+     "x": 0.36,
+     "y": 0.65,
+     "ja": "【v】それる、はぐれる /【adj】はぐれた、野良の",
+     "role": "ベンチ下の迷い子猫",
+     "hook": "a stray kitten＝迷い・野良の子猫。飼い主の姿がない。"
+    },
+    {
+     "en": "plump",
+     "x": 0.61,
+     "y": 0.17,
+     "ja": "丸々した、ぽっちゃりした",
+     "role": "丸々した小鳥",
+     "hook": "plump＝ふっくら丸い。痩せたthinとは体の輪郭で対比。"
+    },
+    {
+     "en": "flourish",
+     "x": 0.83,
+     "y": 0.22,
+     "ja": "栄える、繁栄する、活躍する",
+     "role": "勢いよく育つ豆の畝",
+     "hook": "flos（花）由来＝花開く。floral と同根。plants flourish＝植物がよく育つ。"
+    },
+    {
+     "en": "seep",
+     "x": 0.92,
+     "y": 0.86,
+     "ja": "染み出る、浸透する",
+     "role": "樽の割れ目から染み出す水",
+     "hook": "seep through＝隙間からじわじわ染み出る。勢いよく噴かない。"
+    },
+    {
+     "en": "inhale",
+     "x": 0.92,
+     "y": 0.29,
+     "ja": "~を吸い込む、息を吸う",
+     "role": "ハーブの香りを吸う庭師",
+     "hook": "in-（中へ）＋hale（息をする）。exhale の逆。inhale a scent＝香りを吸い込む。"
+    },
+    {
+     "en": "timid",
+     "x": 0.6,
+     "y": 0.7,
+     "ja": "臆病な、おどおどした",
+     "role": "母の陰から出る臆病な子",
+     "hook": "timere（恐れる）由来。intimidate と同根。timid＝おどおどした。"
+    }
+   ]
+  },
+  {
+   "id": "L80-19",
+   "title": "雪の駅で足止め",
+   "titleEn": "Waiting at a Snowy Station",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-19.webp",
+   "thumb": "scenes/L80-19-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A transient visitor with a small suitcase waits beneath the station canopy, hoping to continue his journey soon. A patient commuter can tolerate the cold, standing calmly in a thick coat while others complain. Packed snow may inhibit the movement of a separate set of points, and an engineer kneels to clear it. Nearby, a child starts to tremble, so her mother offers another scarf. An artist chooses to gaze at the snowy hills rather than worry. The stationmaster can foresee further trouble from the dark clouds approaching the valley. A repair crew must prolong the closure by keeping a red barrier across the platform entrance. One passenger scratches an itchy wrist beneath a woollen sleeve; another turns aside to sneeze into a tissue. An unattended parcel rests safely on a trolley. Even after the next train arrives, an elderly couple linger beside the tea stall, enjoying their unexpected conversation.",
+   "words": [
+    {
+     "en": "transient",
+     "x": 0.2,
+     "y": 0.54,
+     "ja": "一時的な、はかない、短期滞在の",
+     "role": "通過途中の短期滞在客",
+     "hook": "trans-（越えて）＋ire（行く）＝通り過ぎていく。transit と同根。a transient visitor＝一時滞在の客。"
+    },
+    {
+     "en": "tolerate",
+     "x": 0.08,
+     "y": 0.74,
+     "ja": "~に耐える、~を大目に見る",
+     "role": "寒さに耐える通勤客",
+     "hook": "tolerate the cold＝寒さに耐える。嫌でも落ち着いて受け入れる。"
+    },
+    {
+     "en": "inhibit",
+     "x": 0.12,
+     "y": 0.36,
+     "ja": "~を抑制する、~を妨げる",
+     "role": "分岐装置を妨げる固い雪",
+     "hook": "in-（中に）＋hibit（保つ）＝押しとどめる。exhibit と同根。inhibit movement＝動きを抑える。"
+    },
+    {
+     "en": "tremble",
+     "x": 0.31,
+     "y": 0.58,
+     "ja": "震える、揺れる",
+     "role": "寒さで震える女の子",
+     "hook": "tremere（震える）由来。tremendous と同根。tremble with cold＝寒さで震える。"
+    },
+    {
+     "en": "gaze",
+     "x": 0.54,
+     "y": 0.45,
+     "ja": "【v】(at)~をじっと見る /【n】凝視",
+     "role": "雪山をじっと見る画家",
+     "hook": "gaze at＝じっと見つめる。一瞬のglanceより長い視線。"
+    },
+    {
+     "en": "foresee",
+     "x": 0.36,
+     "y": 0.33,
+     "ja": "~を予見する、~を予期する",
+     "role": "先の雪雲を見る駅長",
+     "hook": "fore-（前もって）＋see（見る）＝予見する。foresee trouble＝先の問題を予見する。"
+    },
+    {
+     "en": "prolong",
+     "x": 0.65,
+     "y": 0.33,
+     "ja": "~を延長する、~を長引かせる",
+     "role": "閉鎖を長引かせる作業員",
+     "hook": "pro-（前へ）＋long（長い）＝先へ延ばす。prolong the closure＝閉鎖を延ばす。"
+    },
+    {
+     "en": "itchy",
+     "x": 0.71,
+     "y": 0.71,
+     "ja": "かゆい、むずむずする",
+     "role": "かゆい手首をかく乗客",
+     "hook": "itchy skin＝かゆい肌。痛く押さえるのでなく指でかく。"
+    },
+    {
+     "en": "sneeze",
+     "x": 0.88,
+     "y": 0.8,
+     "ja": "【v】くしゃみをする /【n】くしゃみ",
+     "role": "ティッシュにくしゃみする乗客",
+     "hook": "sneeze into a tissue＝紙にくしゃみをする。咳coughとは鼻の動き。"
+    },
+    {
+     "en": "parcel",
+     "x": 0.53,
+     "y": 0.78,
+     "ja": "小包、一区画",
+     "role": "台車の茶色い小包",
+     "hook": "part（部分）と同根＝小分けの包み。parcel＝包んで送る小包。英国英語でよく使う。"
+    },
+    {
+     "en": "linger",
+     "x": 0.91,
+     "y": 0.53,
+     "ja": "ぐずぐず残る、長引く",
+     "role": "茶店に残って話す老夫婦",
+     "hook": "linger over tea＝お茶を楽しみながら長居する。すぐ去らない。"
+    }
+   ]
+  },
+  {
+   "id": "L80-20",
+   "title": "村祭りのケーキ審査",
+   "titleEn": "Cake Judging at the Village Fair",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-20.webp",
+   "thumb": "scenes/L80-20-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The dropped cherry seems a trifle to the baker, although her contrary neighbour insists it ruins the whole display. At the next stall, a confident competitor begins to boast about his enormous sponge cake. Behind them, a musician will pound a large drum to announce the judging. One judge makes a superficial inspection, glancing only at the icing before moving on. When the neighbour complains again, the baker's assistant offers a cheerful retort and points to his own crooked tart. A burst balloon can startle the dog beside their table, but its owner quickly settles it. Meanwhile, two friends stroll between the stalls with their hands behind their backs. A mouldy sandwich inspires disgust in a visitor who wrinkles her nose. Another competitor displays aggression by leaning forward with clenched fists during an argument. For the man covering his ears, the nearby violin practice is sheer torture, so he heads towards the quieter garden.",
+   "words": [
+    {
+     "en": "trifle",
+     "x": 0.08,
+     "y": 0.78,
+     "ja": "取るに足らないこと、ささいなもの",
+     "role": "落ちた一粒を気にしない菓子職人",
+     "hook": "a mere trifle＝ほんのささいな事。一粒のさくらんぼほど小さな問題。"
+    },
+    {
+     "en": "contrary",
+     "x": 0.21,
+     "y": 0.62,
+     "ja": "【adj】反対の、逆の /【n】(the ~)正反対",
+     "role": "反対ばかりする隣人",
+     "hook": "contra（反対に）由来。a contrary person＝あまのじゃく。周囲が賛成しても首を横に振る。"
+    },
+    {
+     "en": "boast",
+     "x": 0.32,
+     "y": 0.45,
+     "ja": "(about/of)自慢する、~を誇る",
+     "role": "巨大ケーキを自慢する出場者",
+     "hook": "boast about＝自慢する。胸を張り自分の作品ばかり指す。"
+    },
+    {
+     "en": "pound",
+     "x": 0.1,
+     "y": 0.29,
+     "ja": "~を強く叩く、(心臓が)激しく打つ",
+     "role": "太鼓を強くたたく楽士",
+     "hook": "pound a drum＝太鼓をどんどん強打する。軽いtapと対比。"
+    },
+    {
+     "en": "superficial",
+     "x": 0.5,
+     "y": 0.48,
+     "ja": "表面的な、浅はかな、(傷が)浅い",
+     "role": "表面だけ見る審査員",
+     "hook": "super-（上）＋ficies（面）＝表面だけの。surface と同根。superficial inspection＝表面的な検査。"
+    },
+    {
+     "en": "retort",
+     "x": 0.77,
+     "y": 0.48,
+     "ja": "【v】言い返す、反論する /【n】反論、口答え",
+     "role": "言い返す菓子職人の助手",
+     "hook": "re-（逆に）＋tort（ねじる）＝言葉をねじり返す。distort と同根。retort＝即座に言い返す。"
+    },
+    {
+     "en": "startle",
+     "x": 0.49,
+     "y": 0.83,
+     "ja": "~を驚かせる、~をびっくりさせる",
+     "role": "風船にびくっとする犬",
+     "hook": "startle＝不意にびっくりさせる。長い恐怖ではなく一瞬の反応。"
+    },
+    {
+     "en": "stroll",
+     "x": 0.69,
+     "y": 0.38,
+     "ja": "【v】ぶらぶら歩く /【n】散歩",
+     "role": "のんびり歩く二人",
+     "hook": "take a stroll＝散歩する。目的を急がずぶらぶら。"
+    },
+    {
+     "en": "disgust",
+     "x": 0.69,
+     "y": 0.79,
+     "ja": "【v】~に嫌悪を抱かせる /【n】嫌悪感",
+     "role": "傷んだパンに嫌悪する女性",
+     "hook": "dis-（反）＋gust（味わう）＝味に合わない→嫌悪。disgust＝気持ち悪いという嫌悪。"
+    },
+    {
+     "en": "aggression",
+     "x": 0.93,
+     "y": 0.75,
+     "ja": "攻撃、侵略、攻撃性",
+     "role": "拳を握って敵意を示す競争相手",
+     "hook": "ag-（〜へ）＋gress（進む）＝相手へ踏み込む。progress と同根。aggression＝攻撃性。"
+    },
+    {
+     "en": "torture",
+     "x": 0.86,
+     "y": 0.31,
+     "ja": "【n】拷問、苦痛 /【v】~を拷問にかける",
+     "role": "下手な音に苦しむ男性",
+     "hook": "tort（ねじる）由来＝体をねじる苦痛。distort と同根。比喩のtorture＝耐え難い苦痛。"
+    }
+   ]
+  },
+  {
+   "id": "L80-21",
+   "title": "港の清掃作戦",
+   "titleEn": "A Harbour Clean-up",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-21.webp",
+   "thumb": "scenes/L80-21-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "The old harbor is busy with volunteers rather than fishing boats this morning. A caretaker organises the disposal of broken baskets beside the collection lorry. Along the curb, a child searches for rubbish with a long pair of tongs. A metal bowl with a bent rim rests separately on a sorting table, waiting to be repaired. To lessen the weight of his bag, one volunteer removes a heavy stone that somebody accidentally included. Two helpers descend the broad quay steps with fresh sacks. Under a canopy, a small machine can shred damaged cardboard into tidy strips. Empty bottles accumulate in a transparent collection cage nearby. From the jetty, a fisherman raises his arm to hail the approaching supply boat. Oil on a wheel may impair a trolley's grip, so its owner wipes the tyre carefully. A fallen crate could set back the whole morning's work, but a clear alternative route keeps everyone moving.",
+   "words": [
+    {
+     "en": "harbor",
+     "x": 0.66,
+     "y": 0.25,
+     "ja": "【v】~をかくまう、(感情を)心に抱く /【n】港",
+     "role": "防波堤に囲まれた港",
+     "hook": "harborは米綴り、英国ではharbour。波を避けて船が泊まる場所。"
+    },
+    {
+     "en": "disposal",
+     "x": 0.13,
+     "y": 0.28,
+     "ja": "処分、廃棄 (at one's disposal = 自由に使える)",
+     "role": "壊れた籠を廃棄する管理人",
+     "hook": "dis-（離して）＋pose（置く）＝片付けて置く。dispose of と同根。waste disposal＝ごみ処分。"
+    },
+    {
+     "en": "curb",
+     "x": 0.18,
+     "y": 0.84,
+     "ja": "【v】~を抑える、~を抑制する /【n】縁石",
+     "role": "車道沿いの縁石",
+     "hook": "curvus（曲がった）由来。curve と同根。名詞curb＝縁石（英kerb）。動詞なら「抑える」。"
+    },
+    {
+     "en": "rim",
+     "x": 0.29,
+     "y": 0.6,
+     "ja": "ふち、へり、(車輪の)リム",
+     "role": "曲がった金属鉢のふち",
+     "hook": "rim＝丸い器の縁。中の底ではなくぐるりと囲む部分。"
+    },
+    {
+     "en": "lessen",
+     "x": 0.31,
+     "y": 0.43,
+     "ja": "~を減少させる、減る",
+     "role": "袋から重い石を除く人",
+     "hook": "less（より少ない）＋-en（〜にする）＝減らす。lessen the weight＝重さを減らす。"
+    },
+    {
+     "en": "descend",
+     "x": 0.42,
+     "y": 0.25,
+     "ja": "降りる、下降する、(from)~の子孫である",
+     "role": "岸壁の階段を降りる二人",
+     "hook": "de-（下へ）＋scend（登る）＝下り降りる。ascend の逆。descend the steps＝階段を降りる。"
+    },
+    {
+     "en": "shred",
+     "x": 0.55,
+     "y": 0.52,
+     "ja": "【v】~を細かく裂く /【n】断片、細片",
+     "role": "段ボールを細断する機械",
+     "hook": "shred paper＝紙を細かく裂く。大きな一枚を細い断片へ。"
+    },
+    {
+     "en": "accumulate",
+     "x": 0.71,
+     "y": 0.4,
+     "ja": "~を蓄積する、たまる",
+     "role": "回収籠にたまる空き瓶",
+     "hook": "ac-（〜へ）＋cumul（積み重ね）＝積み上げる。accumulate＝少しずつ蓄積する。"
+    },
+    {
+     "en": "hail",
+     "x": 0.85,
+     "y": 0.35,
+     "ja": "~を歓迎する、~と称賛する、~に呼びかける",
+     "role": "船を呼び止める漁師",
+     "hook": "hail a boat＝船に呼びかける。腕を高く上げて気づかせる。"
+    },
+    {
+     "en": "impair",
+     "x": 0.53,
+     "y": 0.89,
+     "ja": "~を損なう、~を害する",
+     "role": "滑る車輪を拭く台車の持ち主",
+     "hook": "pejor（より悪い）由来＝悪化させる。impair grip＝摩擦力を損なう。set backは作業の遅れ。"
+    },
+    {
+     "en": "set back",
+     "x": 0.8,
+     "y": 0.77,
+     "ja": "~を後退させる、~を遅らせる",
+     "role": "作業を遅らせる倒れた木箱",
+     "hook": "set back the work＝作業を遅らせる。impairは機能自体を弱める。"
+    }
+   ]
+  },
+  {
+   "id": "L80-22",
+   "title": "平和博物館の追悼室",
+   "titleEn": "A Memorial Room at the Peace Museum",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-22.webp",
+   "thumb": "scenes/L80-22-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "News of the donor's decease has brought old friends to the peace museum, where his empty chair stands beside a portrait. A small electric flame represents their hope for eternal peace. Across the room, visitors place flowers at a memorial to a massacre; the display shows only empty shoes and peaceful candles. A former official's lowered portrait recalls a public disgrace without inviting visitors to mock him. His granddaughter will inherit the modest collection of paintings, and she holds the key to its storage cupboard. At the outset, the guide asks everyone to listen respectfully. A sensible visitor switches her telephone off before approaching the central display. A painting of a seaside resort recalls the peaceful holidays he loved. The dim side alcove encourages reflection. A volunteer will affirm the museum's commitment to peace by placing an open hand above a white dove sculpture. Another guide rejects a proposed sensational display outright, pushing its closed folder away.",
+   "words": [
+    {
+     "en": "decease",
+     "x": 0.08,
+     "y": 0.45,
+     "ja": "【v】死亡する /【n】死亡",
+     "role": "故人の肖像が置かれた空椅子",
+     "hook": "de-（離れて）＋cede（行く）＝この世を去る。decease＝死亡という改まった語。"
+    },
+    {
+     "en": "eternal",
+     "x": 0.16,
+     "y": 0.21,
+     "ja": "永久の、永遠の",
+     "role": "永続する平和の電灯",
+     "hook": "eternal peace＝永遠の平和。終わりのない輪に包まれた灯。"
+    },
+    {
+     "en": "massacre",
+     "x": 0.47,
+     "y": 0.18,
+     "ja": "【n】大虐殺 /【v】~を虐殺する",
+     "role": "多くの犠牲を悼む靴の慰霊碑",
+     "hook": "massacre＝大虐殺。ここでは多数の空の靴で犠牲者をしのぶ。"
+    },
+    {
+     "en": "disgrace",
+     "x": 0.28,
+     "y": 0.31,
+     "ja": "【n】不名誉、恥 /【v】~の名誉を汚す",
+     "role": "壁から下ろされた不名誉な肖像",
+     "hook": "dis-（失う）＋grace（好意・恩寵）＝面目を失う。fall into disgrace＝不名誉な立場になる。"
+    },
+    {
+     "en": "inherit",
+     "x": 0.23,
+     "y": 0.79,
+     "ja": "~を受け継ぐ、~を相続する",
+     "role": "収蔵庫の鍵を受け継ぐ孫",
+     "hook": "heres（相続人）由来。heir と同根。inherit a collection＝収集品を相続する。"
+    },
+    {
+     "en": "outset",
+     "x": 0.35,
+     "y": 0.47,
+     "ja": "最初、着手 (at the outset = 最初に)",
+     "role": "見学の最初に迎えるガイド",
+     "hook": "at the outset＝最初に。入場口でこれから見学する瞬間。"
+    },
+    {
+     "en": "sensible",
+     "x": 0.5,
+     "y": 0.72,
+     "ja": "分別のある、賢明な、実用的な",
+     "role": "電話を切る分別ある来館者",
+     "hook": "sense（感覚・分別）＋-ible＝分別を備えた。a sensible choice＝分別ある選択。"
+    },
+    {
+     "en": "resort",
+     "x": 0.78,
+     "y": 0.16,
+     "ja": "【n】手段、行楽地 /【v】(to)~に訴える、~に頼る",
+     "role": "絵に描かれた海辺の行楽地",
+     "hook": "a seaside resort＝海辺の行楽地。浜辺にホテルが並ぶ保養地。"
+    },
+    {
+     "en": "dim",
+     "x": 0.95,
+     "y": 0.22,
+     "ja": "【adj】薄暗い、ぼんやりした /【v】~を暗くする",
+     "role": "薄暗い横の小部屋",
+     "hook": "dim light＝薄暗い光。真っ暗ではなく輪郭が見える明るさ。"
+    },
+    {
+     "en": "affirm",
+     "x": 0.69,
+     "y": 0.44,
+     "ja": "~を断言する、~を肯定する",
+     "role": "平和への支持を表す職員",
+     "hook": "af-（〜へ）＋firm（固い）＝固く言い切る。confirm と同根。affirm a commitment＝決意を明言する。"
+    },
+    {
+     "en": "outright",
+     "x": 0.68,
+     "y": 0.79,
+     "ja": "【adv】即座に、きっぱりと /【adj】完全な、率直な",
+     "role": "提案をきっぱり退けるガイド",
+     "hook": "reject outright＝きっぱり拒否する。条件付きでなく即座に断る。"
+    }
+   ]
+  },
+  {
+   "id": "L80-23",
+   "title": "公園で防災訓練",
+   "titleEn": "A Safety Drill in the Park",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-23.webp",
+   "thumb": "scenes/L80-23-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the verge of the park, a safety instructor welcomes families to a calm outdoor drill. When two children argue about whose turn comes next, a volunteer will intervene between them with open hands. The group learns to evacuate a practice tent through its broad rear exit. At a separate station, an instructor demonstrates how to extinguish a tiny controlled flame with water. A father must restrain his eager child from rushing across the marked practice area. Nearby, a young athlete can leap over a low foam hurdle without difficulty. Visitors heed a marshal's raised palm and stop before a loose cable that might impede their progress. A rational organiser compares the risks and chooses a safer route using a simple model. The noisy demonstration bell will cease when another volunteer releases its handle. Finally, a cook shows how to smother a small pan flame beneath a fire blanket. Everyone remains at a comfortable distance.",
+   "words": [
+    {
+     "en": "verge",
+     "x": 0.16,
+     "y": 0.83,
+     "ja": "端、へり、瀬戸際 (on the verge of = ~の寸前で)",
+     "role": "公園入口の草地の縁",
+     "hook": "the grass verge＝道沿いの草の縁。on the verge ofなら「直前」。"
+    },
+    {
+     "en": "intervene",
+     "x": 0.125,
+     "y": 0.51,
+     "ja": "仲裁する、干渉する、介入する",
+     "role": "子供の口論を仲裁する人",
+     "hook": "inter-（間に）＋vene（来る）＝間に入る。convene と同根。intervene in a dispute＝争いに介入する。"
+    },
+    {
+     "en": "evacuate",
+     "x": 0.13,
+     "y": 0.19,
+     "ja": "~を避難させる、立ち退く、~を空にする",
+     "role": "訓練テントから避難する家族",
+     "hook": "e-（外へ）＋vacu（空にする）＝建物を空にする。vacuum と同根。evacuate a building＝建物から避難する。"
+    },
+    {
+     "en": "extinguish",
+     "x": 0.26,
+     "y": 0.41,
+     "ja": "(火を)消す、~を消滅させる",
+     "role": "水で小火を消す指導員",
+     "hook": "ex-（すっかり）＋stinguere（消す）。extinct と同根。火を消す結果。smotherは空気を遮断する方法。"
+    },
+    {
+     "en": "restrain",
+     "x": 0.42,
+     "y": 0.41,
+     "ja": "~を制止する、~を抑制する",
+     "role": "子供を穏やかに制止する父",
+     "hook": "re-（後ろへ）＋strain（引き締める）＝引き止める。strict と同根。restrain someone＝人を制止する。"
+    },
+    {
+     "en": "leap",
+     "x": 0.495,
+     "y": 0.605,
+     "ja": "【v】跳躍する、跳び越える /【n】跳躍、飛躍",
+     "role": "低い障害物を跳ぶ若者",
+     "hook": "leap over＝跳び越える。両足が地面を離れる大きな跳躍。"
+    },
+    {
+     "en": "heed",
+     "x": 0.605,
+     "y": 0.32,
+     "ja": "~に注意を払う、~に耳を傾ける",
+     "role": "合図に注意を払って止まる見学者",
+     "hook": "heed a warning＝警告を心に留めて従う。見て行動を変える。"
+    },
+    {
+     "en": "impede",
+     "x": 0.67,
+     "y": 0.94,
+     "ja": "~を妨げる、~の進行を遅らせる",
+     "role": "通路を妨げるケーブル",
+     "hook": "im-（中に）＋ped（足）＝足をからめる。pedal と同根。impede progress＝進行を妨げる。"
+    },
+    {
+     "en": "rational",
+     "x": 0.79,
+     "y": 0.36,
+     "ja": "理性的な、合理的な、道理にかなった",
+     "role": "安全な経路を選ぶ理性的な主催者",
+     "hook": "ratio（計算・理性）由来。reason と同根。rational decision＝理屈に合った判断。"
+    },
+    {
+     "en": "cease",
+     "x": 0.545,
+     "y": 0.15,
+     "ja": "~をやめる、止まる",
+     "role": "鳴るのをやめた訓練の鐘",
+     "hook": "cease ringing＝鳴りやむ。動いていた物が止まる。"
+    },
+    {
+     "en": "smother",
+     "x": 0.91,
+     "y": 0.3,
+     "ja": "~を窒息させる、~を覆い隠す",
+     "role": "毛布で鍋の火を覆う料理人",
+     "hook": "smother＝覆って空気を断つ。水で消すextinguishの場面と区別。"
+    }
+   ]
+  },
+  {
+   "id": "L80-24",
+   "title": "学校の発明まつり",
+   "titleEn": "The School Invention Fair",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-24.webp",
+   "thumb": "scenes/L80-24-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "An abstract sculpture of coloured shapes greets visitors at the school invention fair. Beside it, a ruthless collector sweeps all the free components into his bag, ignoring the disappointed children behind him. A curved mirror can distort a volunteer's reflection into a wonderfully narrow figure. At another table, a pupil removes sand to undermine the base of a model tower and demonstrate unstable ground. A trader explains why old electronic models depreciate, displaying a scratched calculator beside a few coins. Two finalists contend for a silver cup at the far end of the hall. A smiling helper tries to induce a visitor to pedal a generator by offering a bowl of strawberries. Striped feathers illustrate an inherited trait in a family of model birds. A spinning-toy craze has attracted a long queue nearby. One polished crystal seems to sparkle under a lamp. Finally, several identical wooden ducks help a tutor explain the plural without any writing.",
+   "words": [
+    {
+     "en": "abstract",
+     "x": 0.087,
+     "y": 0.163,
+     "ja": "【adj】抽象的な /【n】要旨、抄録",
+     "role": "幾何学形だけの抽象彫刻",
+     "hook": "abs-（離して）＋tract（引く）＝具体から引き離す。attract と同根。abstract art＝抽象芸術。"
+    },
+    {
+     "en": "ruthless",
+     "x": 0.075,
+     "y": 0.505,
+     "ja": "無慈悲な、非情な、容赦ない",
+     "role": "部品を独占する非情な収集家",
+     "hook": "ruth（哀れみ）＋less（ない）＝情け容赦ない。他人の困り顔にも構わず独占する。"
+    },
+    {
+     "en": "distort",
+     "x": 0.33399999999999996,
+     "y": 0.235,
+     "ja": "~を歪める、~を曲げて伝える",
+     "role": "姿をゆがめる曲面鏡",
+     "hook": "dis-（ばらばらに）＋tort（ねじる）＝ねじ曲げる。distort an image＝像をゆがめる。"
+    },
+    {
+     "en": "undermine",
+     "x": 0.17300000000000001,
+     "y": 0.925,
+     "ja": "~を徐々に損なう、~を弱体化させる",
+     "role": "塔の土台を掘る生徒",
+     "hook": "under（下を）＋mine（掘る）＝土台の下を掘り崩す。比喩で信頼や権威にも使う。"
+    },
+    {
+     "en": "depreciate",
+     "x": 0.379,
+     "y": 0.602,
+     "ja": "価値が下がる、~の価値を下げる",
+     "role": "価値が落ちた古い計算機",
+     "hook": "de-（下へ）＋preci（価格）＝価値が下がる。appreciate の逆。depreciate in value＝価値が下がる。"
+    },
+    {
+     "en": "contend",
+     "x": 0.48200000000000004,
+     "y": 0.2,
+     "ja": "(with)~と争う、~と主張する",
+     "role": "優勝杯を争う二人の決勝者",
+     "hook": "con-（共に）＋tend（張る）＝互いに力を張り合う。contend for a prize＝賞を争う。"
+    },
+    {
+     "en": "induce",
+     "x": 0.62,
+     "y": 0.278,
+     "ja": "~を勧めて~させる、~を引き起こす",
+     "role": "果物で参加を促す係員",
+     "hook": "in-（中へ）＋duce（導く）＝気持ちを導く。introduce と同根。induce A to do＝Aにする気を起こさせる。"
+    },
+    {
+     "en": "trait",
+     "x": 0.815,
+     "y": 0.395,
+     "ja": "特徴、特性",
+     "role": "親子の縞模様という特徴",
+     "hook": "tractus（引いた線）由来＝筆致→特徴。tract と同根。an inherited trait＝遺伝した特徴。"
+    },
+    {
+     "en": "craze",
+     "x": 0.835,
+     "y": 0.225,
+     "ja": "熱狂、大流行",
+     "role": "同じ玩具に熱中する列",
+     "hook": "a craze for toys＝玩具の大流行。皆が同じ物に夢中。"
+    },
+    {
+     "en": "sparkle",
+     "x": 0.631,
+     "y": 0.8079999999999999,
+     "ja": "【v】きらりと輝く /【n】輝き、きらめき",
+     "role": "きらきら光る水晶",
+     "hook": "sparkle in the light＝光を受けてきらめく。小さな輝きが点在。"
+    },
+    {
+     "en": "plural",
+     "x": 0.816,
+     "y": 0.826,
+     "ja": "【n】複数形 /【adj】複数の",
+     "role": "複数の木のアヒル",
+     "hook": "plus（より多い）由来。plural＝複数（形）。対はsingular（単数）で、singleではない。"
+    }
+   ]
+  },
+  {
+   "id": "L80-25",
+   "title": "キャンプ場の小さな騒動",
+   "titleEn": "A Small Revolt at the Campsite",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-25.webp",
+   "thumb": "scenes/L80-25-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A cheerful uprising begins when the young campers raise their hands together and refuse another morning of washing pans. Their leader laughs, then struggles to pull on his stiff new boots. A senior volunteer decides to initiate a shelter-building challenge instead. An incompetent beginner has assembled his tent upside down, so an older camper offers quiet help. Across the clearing, the caretaker and her dog dwell in a small stone cottage. One walker chooses to deviate from the main path and crosses the grass towards them. A makeshift awning of blankets protects the cooking area from a light shower. The shrewd quartermaster chooses dry timber from beneath a covered pile rather than the cheaper wet logs. A camper rings a handbell to summon everyone for lunch. Beside him, two friends speculate about the approaching clouds. Finally, the safety instructor will deem the completed shelter suitable, giving its young builders an approving smile and a raised thumb.",
+   "words": [
+    {
+     "en": "uprising",
+     "x": 0.1,
+     "y": 0.32,
+     "ja": "反乱、蜂起",
+     "role": "皿洗いに反対する子供たち",
+     "hook": "uprising＝集団で立ち上がる反抗。ここでは平和な小さな反乱。"
+    },
+    {
+     "en": "stiff",
+     "x": 0.135,
+     "y": 0.77,
+     "ja": "硬い、こわばった、(態度が)堅苦しい",
+     "role": "曲がりにくい新品のブーツ",
+     "hook": "stiff leather＝硬く曲がりにくい革。柔らかな靴と履き心地が違う。"
+    },
+    {
+     "en": "initiate",
+     "x": 0.245,
+     "y": 0.53,
+     "ja": "~を始める、~に着手する、~を加入させる",
+     "role": "支柱を渡して始める女性係員",
+     "hook": "in-（中へ）＋ire（行く）＝入り始める。initial と同根。initiate a project＝計画を始める。"
+    },
+    {
+     "en": "incompetent",
+     "x": 0.5,
+     "y": 0.405,
+     "ja": "無能な、力量不足の",
+     "role": "逆さのテントに困る初心者",
+     "hook": "in-（不）＋competent（有能な）。incompetent＝必要な力量が不足した。人格でなく作業能力の不足。"
+    },
+    {
+     "en": "dwell",
+     "x": 0.255,
+     "y": 0.205,
+     "ja": "住む、(on)~をくよくよ考える",
+     "role": "小屋で暮らす管理人",
+     "hook": "dwell in＝そこに住む。通過するのでなく生活の場所。"
+    },
+    {
+     "en": "deviate",
+     "x": 0.43,
+     "y": 0.255,
+     "ja": "(from)~からそれる、~を逸脱する",
+     "role": "本道からそれて草を歩く人",
+     "hook": "de-（離れて）＋via（道）＝道からそれる。deviate from a path＝決まった筋を外れる。"
+    },
+    {
+     "en": "makeshift",
+     "x": 0.68,
+     "y": 0.2,
+     "ja": "間に合わせの、その場しのぎの",
+     "role": "毛布を張った間に合わせの屋根",
+     "hook": "makeshift shelter＝間に合わせの避難所。手元の物で急場をしのぐ。"
+    },
+    {
+     "en": "shrewd",
+     "x": 0.755,
+     "y": 0.445,
+     "ja": "鋭い、抜け目のない",
+     "role": "乾いた薪を選ぶ抜け目ない係",
+     "hook": "a shrewd choice＝抜け目ない選択。見かけの安さより使える物を選ぶ。"
+    },
+    {
+     "en": "summon",
+     "x": 0.325,
+     "y": 0.83,
+     "ja": "~を呼び出す、~を召喚する、(勇気を)奮い起こす",
+     "role": "昼食に皆を呼ぶ鐘係",
+     "hook": "monere（知らせる）由来。monitor と同根。summon everyone＝皆を呼び集める。"
+    },
+    {
+     "en": "speculate",
+     "x": 0.66,
+     "y": 0.86,
+     "ja": "~を推測する、投機する",
+     "role": "雲を見て予想する二人",
+     "hook": "spec（見る）由来＝見張り台から眺めて推し量る。speculate about the weather＝天気を推測する。"
+    },
+    {
+     "en": "deem",
+     "x": 0.955,
+     "y": 0.75,
+     "ja": "~と考える、~とみなす",
+     "role": "安全とみなして認める指導員",
+     "hook": "deem it suitable＝適切だとみなす。検討後に評価を下す。"
+    }
+   ]
+  },
+  {
+   "id": "L80-26",
+   "title": "思い出の庭をつくる",
+   "titleEn": "Planting a Garden of Memories",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-26.webp",
+   "thumb": "scenes/L80-26-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the village memorial garden, grief is visible in a man's bowed head as he holds an old photograph. Beside the path, a gardener clears a ditch so rainwater can drain away. Visitors must comply with the request to leave their bicycles outside. An acquaintance from the man's walking club greets him with a modest wave. His spouse waits nearby, wearing a matching wedding ring. At the gate, a wreath is a tribute to a much-loved local teacher. A grandmother shows affection by gently hugging her grandson. Further along, a solitary chair faces the flower beds, offering somewhere quiet to sit. Bright ribbons flutter above the entrance. A prominent stone arch helps arriving visitors find the garden without asking for directions. Finally, a volunteer adds compost to nourish a young rose bush, helping everyone turn remembrance into patient care.",
+   "words": [
+    {
+     "en": "grief",
+     "x": 0.16,
+     "y": 0.73,
+     "ja": "深い悲しみ、悲嘆",
+     "role": "写真を抱いて悲しむ男性",
+     "hook": "gravis（重い）由来＝心が重い。grieve/gravity と同根。deep grief＝深い悲嘆。"
+    },
+    {
+     "en": "ditch",
+     "x": 0.27,
+     "y": 0.61,
+     "ja": "【n】溝、どぶ /【v】~を捨てる、~を見捨てる",
+     "role": "小道脇の排水溝",
+     "hook": "ditch＝地面を掘った細長い溝。道沿いに雨水が流れる"
+    },
+    {
+     "en": "comply",
+     "x": 0.11,
+     "y": 0.33,
+     "ja": "(with)~に従う、~に応じる",
+     "role": "自転車を門外に置く来園者",
+     "hook": "comply with a request＝要請に従う。頼まれて行動を合わせる"
+    },
+    {
+     "en": "acquaintance",
+     "x": 0.41,
+     "y": 0.41,
+     "ja": "知り合い、面識",
+     "role": "軽く手を振る顔見知り",
+     "hook": "cognitus（知られた）由来＝見知った人。cognition と同根。acquaintance＝顔見知り。親友ほど近くない"
+    },
+    {
+     "en": "spouse",
+     "x": 0.58,
+     "y": 0.51,
+     "ja": "配偶者",
+     "role": "結婚指輪をした配偶者",
+     "hook": "spondere（誓約する）由来＝誓い合った相手。respond と同根。spouse＝夫または妻"
+    },
+    {
+     "en": "tribute",
+     "x": 0.44,
+     "y": 0.73,
+     "ja": "捧げ物、賛辞、貢ぎ物",
+     "role": "先生に捧げる花輪",
+     "hook": "tribuere（分け与える）由来＝捧げ物。contribute と同根。a tribute to someone＝人への敬意の表現"
+    },
+    {
+     "en": "affection",
+     "x": 0.75,
+     "y": 0.43,
+     "ja": "愛情、好意",
+     "role": "孫を優しく抱く祖母",
+     "hook": "affect（心に作用する）の名詞＝心が向かうこと。show affection＝愛情を示す"
+    },
+    {
+     "en": "solitary",
+     "x": 0.92,
+     "y": 0.34,
+     "ja": "唯一の、ただ一つの、孤独な",
+     "role": "離れた所に一脚だけある椅子",
+     "hook": "solus（ひとり）由来。solo/sole と同根。a solitary chair＝ぽつんと一脚だけの椅子"
+    },
+    {
+     "en": "flutter",
+     "x": 0.15,
+     "y": 0.08,
+     "ja": "【v】羽ばたく、ひらひら舞う /【n】羽ばたき",
+     "role": "風にひらひらするリボン",
+     "hook": "flutter＝小刻みにひらひら動く。重い物の大きな揺れとは違う"
+    },
+    {
+     "en": "prominent",
+     "x": 0.58,
+     "y": 0.18,
+     "ja": "顕著な、卓越した、目立つ",
+     "role": "低い塀から目立つ石の門",
+     "hook": "pro-（前へ）＋minere（突き出る）＝突き出て目立つ。a prominent landmark＝目立つ目印"
+    },
+    {
+     "en": "nourish",
+     "x": 0.91,
+     "y": 0.73,
+     "ja": "~に栄養を与える、~を育てる",
+     "role": "バラに堆肥を与える人",
+     "hook": "nutrire（養う）由来。nutrition と同根。nourish plants＝植物に養分を与える"
+    }
+   ]
+  },
+  {
+   "id": "L80-27",
+   "title": "家具修理工房の一日",
+   "titleEn": "A Day in the Restoration Workshop",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-27.webp",
+   "thumb": "scenes/L80-27-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A melancholy customer brings an old family stool to the restoration workshop, sighing over its faded seat. The restorer explains that unprotected paper is susceptible to damp, pointing to a curled drawing beside a dripping window. She uses a bright lamp to discern a tiny crack in a wooden bowl. At another bench, an assistant polishes a handle; a newcomer does likewise with a separate handle. A decorative tile will adhere to its backing once the glue dries. Only a fraction of a round cushion remains on a separate section of bench. Across the room, a blue streak marks a freshly painted cupboard. An expert arrives to appraise an antique clock before any repairs begin. Another worker adds a crossbar to reinforce a wobbly chair. A ceramic plate can shatter if dropped, so its broken pieces wait safely in a shallow tray. A diligent apprentice patiently sorts every spare screw.",
+   "words": [
+    {
+     "en": "melancholy",
+     "x": 0.07,
+     "y": 0.39,
+     "ja": "【n】憂鬱、哀愁 /【adj】物悲しい",
+     "role": "古い椅子を持つ物悲しい客",
+     "hook": "melan（黒い）＋chole（胆汁）＝黒胆汁の多い憂鬱気質。しんみりした物悲しさ、思い出に沈む"
+    },
+    {
+     "en": "susceptible",
+     "x": 0.18,
+     "y": 0.31,
+     "ja": "(to)~の影響を受けやすい、~にかかりやすい",
+     "role": "湿気で丸まった紙",
+     "hook": "sus-（下から）＋cept（受ける）＝影響を受けやすい。accept と同根。susceptible to damp＝湿気に弱い"
+    },
+    {
+     "en": "discern",
+     "x": 0.28,
+     "y": 0.51,
+     "ja": "~を見分ける、~を識別する",
+     "role": "細いひびを見分ける修理人",
+     "hook": "dis-（分けて）＋cern（ふるい分ける）＝見分ける。discern a crack＝注意してひびを見分ける"
+    },
+    {
+     "en": "likewise",
+     "x": 0.33,
+     "y": 0.19,
+     "ja": "同様に、同じように",
+     "role": "同じ手つきで磨く新人",
+     "hook": "do likewise＝同じようにする。隣の人の動作をそっくり再現"
+    },
+    {
+     "en": "adhere",
+     "x": 0.35,
+     "y": 0.74,
+     "ja": "(to)~にくっつく、~を順守する",
+     "role": "接着剤で板に付くタイル",
+     "hook": "ad-（〜に）＋here（くっつく）。adhesive（接着剤）と同根。adhere to＝ぴったりくっつく"
+    },
+    {
+     "en": "fraction",
+     "x": 0.31,
+     "y": 0.9,
+     "ja": "断片、ごくわずか、分数",
+     "role": "丸い座布団の小さな一片",
+     "hook": "fract（砕く）由来＝砕けた一部。fracture と同根。a fraction of＝全体のごく一部"
+    },
+    {
+     "en": "streak",
+     "x": 0.94,
+     "y": 0.18,
+     "ja": "筋、しま、(勝敗などの)連続",
+     "role": "戸棚を縦に走る青い筋",
+     "hook": "a streak of paint＝塗料の細長い筋。点ではなく線状の跡"
+    },
+    {
+     "en": "appraise",
+     "x": 0.61,
+     "y": 0.41,
+     "ja": "~を査定する、~を評価する",
+     "role": "時計を査定する鑑定家",
+     "hook": "ap-（〜に）＋praise（価格）＝値をつける。price と同根。appraise an antique＝骨董品を査定する"
+    },
+    {
+     "en": "reinforce",
+     "x": 0.74,
+     "y": 0.37,
+     "ja": "~を強化する、~を補強する",
+     "role": "椅子に補強材を付ける人",
+     "hook": "re-（さらに）＋in＋force（力）＝力を足して強くする。reinforce a chair＝椅子を補強する"
+    },
+    {
+     "en": "shatter",
+     "x": 0.56,
+     "y": 0.88,
+     "ja": "~を粉々に砕く、砕け散る",
+     "role": "盆の中の粉々になった皿",
+     "hook": "shatter＝粉々に砕ける。一本のひびで済む crack と区別"
+    },
+    {
+     "en": "diligent",
+     "x": 0.86,
+     "y": 0.6,
+     "ja": "勤勉な、熱心な",
+     "role": "ねじを丁寧に分ける見習い",
+     "hook": "a diligent apprentice＝こつこつ手を抜かない見習い"
+    }
+   ]
+  },
+  {
+   "id": "L80-28",
+   "title": "埠頭の公開調停",
+   "titleEn": "A Public Hearing on the Wharf",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-28.webp",
+   "thumb": "scenes/L80-28-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A temporary hearing opens beside the wharf, where fishing boats rest against thick mooring ropes. The plaintiff, a small stallholder, presents a damaged tray and asks for compensation. A harbour inspector points at an overflowing rubbish bin to condemn the careless dumping nearby. The mediator remains impartial, placing equal piles of speaking tokens before both parties. A volunteer readily offers a spare chair without waiting to be asked. Some traders resent a wealthy owner's private barrier across their shared walkway. Their coalition brings together fish sellers and boat repairers, who link arms despite their different work clothes. Beyond them, an obvious injustice leaves one wheelchair user blocked while other visitors pass freely. A legal officer prepares to prosecute the company responsible if the obstruction continues. Two spectators mock the stallholder with exaggerated gestures, but an indifferent tourist ignores the whole discussion and studies a shell instead. The mediator calls everyone back to practical solutions.",
+   "words": [
+    {
+     "en": "wharf",
+     "x": 0.47,
+     "y": 0.21,
+     "ja": "波止場、埠頭",
+     "role": "船が横付けする木の埠頭",
+     "hook": "wharf＝船が横付けする荷役用の岸。船と足場の位置で覚える"
+    },
+    {
+     "en": "plaintiff",
+     "x": 0.23,
+     "y": 0.6,
+     "ja": "原告",
+     "role": "損害を訴える露店主",
+     "hook": "plaint（嘆き・訴え）由来。complain と同根。plaintiff＝民事訴訟を起こす原告"
+    },
+    {
+     "en": "condemn",
+     "x": 0.15,
+     "y": 0.34,
+     "ja": "~を非難する、~に有罪判決を下す",
+     "role": "投棄を非難する港の検査員",
+     "hook": "con-（強意）＋demn（罰する）＝罪を宣告する。damn と同根。condemn dumping＝投棄を強く非難する"
+    },
+    {
+     "en": "impartial",
+     "x": 0.44,
+     "y": 0.62,
+     "ja": "公平な、偏らない",
+     "role": "両者に同数の札を渡す調停人",
+     "hook": "im-（不）＋partial（一方に偏った）＝どちらにも偏らない。同じ発言機会を両側に配る"
+    },
+    {
+     "en": "readily",
+     "x": 0.31,
+     "y": 0.37,
+     "ja": "容易に、快く、直ちに",
+     "role": "進んで椅子を差し出す人",
+     "hook": "readily offer help＝快くすぐに手助けする。ためらわない差し出し方"
+    },
+    {
+     "en": "resent",
+     "x": 0.55,
+     "y": 0.3,
+     "ja": "~に憤る、~を不快に思う",
+     "role": "私設の柵に憤る商人",
+     "hook": "re-（強く）＋sent（感じる）＝根に持つ。resent unfair treatment＝不公平な扱いに憤る"
+    },
+    {
+     "en": "coalition",
+     "x": 0.83,
+     "y": 0.2,
+     "ja": "同盟、連合、連立",
+     "role": "異なる職業が腕を組む連合",
+     "hook": "co-（共に）＋alescere（育つ）＝一つに合わさる。coalesce と同根。form a coalition＝連合する"
+    },
+    {
+     "en": "injustice",
+     "x": 0.73,
+     "y": 0.51,
+     "ja": "不正義、不公平",
+     "role": "一人だけ通れない不公平",
+     "hook": "in-（不）＋justice（正義）。injustice＝公平が損なわれた状態。同じ道なのに一人だけ拒まれる"
+    },
+    {
+     "en": "prosecute",
+     "x": 0.65,
+     "y": 0.29,
+     "ja": "~を起訴する、~を訴追する",
+     "role": "訴追の書類を提出する法務官",
+     "hook": "pro-（前へ）＋secute（追う）＝罪を追及する。pursue と同根。prosecute a company＝刑事訴追する"
+    },
+    {
+     "en": "mock",
+     "x": 0.17,
+     "y": 0.81,
+     "ja": "~をあざける、~をばかにする",
+     "role": "大げさにまねてあざける傍聴人",
+     "hook": "mock someone＝ばかにしてまねる。普通の模倣と違い嘲り顔"
+    },
+    {
+     "en": "indifferent",
+     "x": 0.86,
+     "y": 0.82,
+     "ja": "(to)~に無関心な、平凡な",
+     "role": "揉め事を無視して貝を見る観光客",
+     "hook": "in-（ない）＋different（違いがある）＝どうでも同じ→無関心。indifferent to＝〜に無関心"
+    }
+   ]
+  },
+  {
+   "id": "L80-29",
+   "title": "山の宿から朝の散歩",
+   "titleEn": "A Morning Walk from the Mountain Lodge",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-29.webp",
+   "thumb": "scenes/L80-29-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the mountain lodge, one visitor admits that he begins every unfamiliar walk with dread, gripping his rucksack straps tightly. Near the entrance, loose stones make another walker stumble, although her companion catches her elbow. A waxed jacket can repel water during the guide's quick demonstration. Across the valley, a fabulous waterfall glows in the morning light. Nobody wants to intrude on the quiet picnic of a couple beside the path. Ferns thrive in a sheltered patch behind their bench. A young climber asks a peer of the same age to check his bootlaces. His old flask is apt to leak, so a little water escapes from its lid. Further uphill, a broad cave offers shade. Dry leaves swirl around a separate stone hollow. Above the distant ridge, a dark cloud seems an omen of afternoon rain, encouraging the group to finish early.",
+   "words": [
+    {
+     "en": "dread",
+     "x": 0.1,
+     "y": 0.73,
+     "ja": "【v】~をひどく恐れる /【n】恐怖、不安",
+     "role": "出発をひどく恐れる宿泊客",
+     "hook": "dread a journey＝先の旅をひどく恐れる。まだ起きないことへの重い不安"
+    },
+    {
+     "en": "stumble",
+     "x": 0.21,
+     "y": 0.47,
+     "ja": "つまずく、よろめく、(on)~に偶然出くわす",
+     "role": "石につまずく散歩客",
+     "hook": "stumble over a stone＝石につまずく。足先が障害物に引っかかる"
+    },
+    {
+     "en": "repel",
+     "x": 0.37,
+     "y": 0.4,
+     "ja": "~を追い払う、~を撃退する、~をはじく",
+     "role": "水をはじくワックス加工の上着",
+     "hook": "re-（押し返す）＋pel（押す）。expel と同根。repel water＝水をはじく"
+    },
+    {
+     "en": "fabulous",
+     "x": 0.44,
+     "y": 0.23,
+     "ja": "非常に素晴らしい、途方もない",
+     "role": "朝日に輝く見事な滝",
+     "hook": "fable（寓話）の形容詞＝作り話のよう→素晴らしい。a fabulous view＝とても素晴らしい眺め"
+    },
+    {
+     "en": "intrude",
+     "x": 0.41,
+     "y": 0.74,
+     "ja": "(on)~に侵入する、~に立ち入る",
+     "role": "二人の昼食に踏み込みかける人",
+     "hook": "in-（中へ）＋trude（押す）＝押し入る。intrude on privacy＝私的な時間に立ち入る"
+    },
+    {
+     "en": "thrive",
+     "x": 0.55,
+     "y": 0.4,
+     "ja": "繁栄する、よく育つ、成功する",
+     "role": "日陰で青々と育つシダ",
+     "hook": "plants thrive＝植物がよく育つ。元気な葉が密に広がる"
+    },
+    {
+     "en": "peer",
+     "x": 0.78,
+     "y": 0.42,
+     "ja": "同僚、仲間、同年代の人",
+     "role": "靴ひもを見合う同年代の仲間",
+     "hook": "par（同等の）由来。pair/par と同根。a peer＝同年代や同等の立場の仲間"
+    },
+    {
+     "en": "apt",
+     "x": 0.89,
+     "y": 0.8,
+     "ja": "(to)~しがちな、適切な",
+     "role": "漏れやすい古い水筒",
+     "hook": "aptus（合った）由来。aptitude と同根。be apt to leak＝漏れがちだ。起きやすい性質"
+    },
+    {
+     "en": "cave",
+     "x": 0.93,
+     "y": 0.32,
+     "ja": "【n】洞窟 /【v】(in)陥没する、屈する",
+     "role": "岩壁に開く大きな洞窟",
+     "hook": "cavus（空洞の）由来。cavity と同根。cave＝岩の中に続く自然の穴"
+    },
+    {
+     "en": "swirl",
+     "x": 0.92,
+     "y": 0.56,
+     "ja": "【v】渦巻く /【n】渦、渦巻き模様",
+     "role": "石のくぼみに渦巻く枯れ葉",
+     "hook": "swirl＝渦を描いて動く。葉の軌道が円になって内側へ回る"
+    },
+    {
+     "en": "omen",
+     "x": 0.83,
+     "y": 0.04,
+     "ja": "前兆、きざし",
+     "role": "雨の前兆の黒い雲",
+     "hook": "a bad omen＝悪い前兆。雨そのものより、来そうだと知らせる雲"
+    }
+   ]
+  },
+  {
+   "id": "L80-30",
+   "title": "地域アトリエの壁画公開",
+   "titleEn": "The Community Mural Opening",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-30.webp",
+   "thumb": "scenes/L80-30-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A pushy organiser tries to intimidate a new volunteer by standing much too close with his chest puffed out. Nearby, a queer artist proudly carries a rainbow fan to the community mural opening. The neighbourhood's notorious paint spiller arrives with splashes all over his trousers, and several residents protect their clean shoes. Two decorators toil over a heavy bucket of plaster while a late guest drops a glove in his haste. On the small stage, a dancer moves with grace, balancing smoothly on one foot. A teacher uses colourful shapes to stimulate a child's curiosity. At a quiet table, an elderly visitor finds profound meaning in a photograph of several generations holding hands. The old ticket booth is deserted, its window empty. The mural's orange circle is distinct from its blue square. Finally, a restorer handles a delicate paper lantern with the utmost care before hanging it above the gathering.",
+   "words": [
+    {
+     "en": "intimidate",
+     "x": 0.07,
+     "y": 0.5,
+     "ja": "~を怖がらせる、~を脅す",
+     "role": "威圧的に立ちはだかる運営員",
+     "hook": "in-（〜に）＋timid（臆病な）＝おびえさせる。intimidate someone＝威圧して萎縮させる"
+    },
+    {
+     "en": "queer",
+     "x": 0.22,
+     "y": 0.36,
+     "ja": "奇妙な、風変わりな ※現在は性的少数者を指す語として使うのが主流",
+     "role": "虹色の扇を持つクィアの画家",
+     "hook": "queer＝性的少数者を表す語で、当事者が誇りを込めて使う。古くは「奇妙な」の意、侮蔑に使われた歴史もある。"
+    },
+    {
+     "en": "notorious",
+     "x": 0.3,
+     "y": 0.36,
+     "ja": "悪名高い、悪評の高い",
+     "role": "服が塗料まみれの評判の悪い人",
+     "hook": "notus（知られた）由来。notice と同根＝悪く知られた。notorious for＝〜の悪評で知られる"
+    },
+    {
+     "en": "toil",
+     "x": 0.55,
+     "y": 0.54,
+     "ja": "【v】骨折って働く /【n】労苦、骨折り",
+     "role": "重いしっくいを練る作業員",
+     "hook": "toil over a task＝骨を折って働く。重い物と汗で労苦を表す"
+    },
+    {
+     "en": "haste",
+     "x": 0.3,
+     "y": 0.76,
+     "ja": "急ぐこと、性急さ",
+     "role": "急いで手袋を落とす来客",
+     "hook": "in haste＝大急ぎで。急ぐせいで手袋まで落としてしまう"
+    },
+    {
+     "en": "grace",
+     "x": 0.59,
+     "y": 0.18,
+     "ja": "優雅さ、恩寵、猶予",
+     "role": "片足で優雅に立つ踊り手",
+     "hook": "gratia（好意）由来。grateful と同根。move with grace＝優雅に動く"
+    },
+    {
+     "en": "stimulate",
+     "x": 0.73,
+     "y": 0.42,
+     "ja": "~を刺激する、~を促進する",
+     "role": "図形で子供の好奇心を刺激する先生",
+     "hook": "stimulus（突き棒）由来＝つついて動かす。stimulate curiosity＝好奇心を刺激する"
+    },
+    {
+     "en": "profound",
+     "x": 0.93,
+     "y": 0.49,
+     "ja": "深遠な、深い、重大な",
+     "role": "家族写真を深く受け止める来場者",
+     "hook": "fundus（底）由来＝底が深い。fundamental と同根。profound meaning＝深い意味"
+    },
+    {
+     "en": "deserted",
+     "x": 0.1,
+     "y": 0.14,
+     "ja": "人けのない、見捨てられた",
+     "role": "無人になった古い券売小屋",
+     "hook": "de-（解く）＋serere（つなぐ）＝縁を切り見捨てる。desert（砂漠）と同根。deserted＝人が去って無人の"
+    },
+    {
+     "en": "distinct",
+     "x": 0.43,
+     "y": 0.14,
+     "ja": "明確な、はっきりした、(from)別個の",
+     "role": "明確に違う丸と四角",
+     "hook": "distinguish（区別する）と同根。distinct from＝はっきり別の。色も輪郭も違い、混ざらない"
+    },
+    {
+     "en": "utmost",
+     "x": 0.84,
+     "y": 0.68,
+     "ja": "【adj】最大限の、極度の /【n】最大限",
+     "role": "最大限の注意で灯籠を扱う修復人",
+     "hook": "ut（外）＋most（最も）＝最も外側→最大限。with the utmost care＝最大限の注意で"
+    }
+   ]
+  },
+  {
+   "id": "L80-31",
+   "title": "渡り鳥公園の遠足",
+   "titleEn": "An Outing to the Waterbird Park",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-31.webp",
+   "thumb": "scenes/L80-31-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A horrible sandwich, green at the edges, ruins one visitor's picnic at the waterbird park. His attempt to push through a firmly locked gate is futile, so he puts his lunch away. Above the lake, geese migrate in a long formation towards warmer country. A ranger uses a welcoming gesture to urge the visitors towards an open path. Near the picnic benches, disorder appears as a jumble of fallen baskets and tangled straps. One cheeky pupil tries to defy the boundary rope by stepping over it. At a demonstration pool, a moving wooden duck can delude real ducks into following it. A separate feeding bowl is devoid of food. Beside the cottage, a camper kneels to compress a sleeping bag into a tiny sack. The schoolchildren conform to their teacher's arrangement, standing neatly in matching hats. Swallows reside in a nest beneath the cottage roof, safely above everyone's reach.",
+   "words": [
+    {
+     "en": "horrible",
+     "x": 0.10400000000000001,
+     "y": 0.883,
+     "ja": "ひどい、恐ろしい",
+     "role": "縁にカビのあるひどいサンド",
+     "hook": "horrere（身の毛がよだつ）由来。horror と同根。a horrible sandwich＝ひどいサンド"
+    },
+    {
+     "en": "futile",
+     "x": 0.14300000000000002,
+     "y": 0.491,
+     "ja": "無駄な、無益な",
+     "role": "施錠された門を無駄に押す人",
+     "hook": "a futile attempt＝無駄な試み。力を入れても鍵は開かない"
+    },
+    {
+     "en": "migrate",
+     "x": 0.47200000000000003,
+     "y": 0.12300000000000001,
+     "ja": "移住する、(鳥が)渡る",
+     "role": "遠くへ渡る雁の群れ",
+     "hook": "migrare（移り住む）由来。immigrant と同根。birds migrate＝鳥が季節に応じて渡る"
+    },
+    {
+     "en": "urge",
+     "x": 0.385,
+     "y": 0.43799999999999994,
+     "ja": "【v】~を強く促す、~を駆り立てる /【n】衝動",
+     "role": "進むよう強く促す公園員",
+     "hook": "urgere（押す・迫る）由来。urgent と同根。urge someone to move＝動くよう強く促す"
+    },
+    {
+     "en": "disorder",
+     "x": 0.461,
+     "y": 0.792,
+     "ja": "混乱、無秩序、(心身の)障害",
+     "role": "籠とひもが乱雑に散らかる所",
+     "hook": "dis-（反）＋order（秩序）。disorder＝秩序のない混乱。物が決まった位置を失って絡む"
+    },
+    {
+     "en": "defy",
+     "x": 0.532,
+     "y": 0.511,
+     "ja": "~に反抗する、~を拒む、~を寄せつけない",
+     "role": "立入ロープを越えようとする生徒",
+     "hook": "de-（離れる）＋fidus（忠実な）＝忠誠を捨てて逆らう。faith と同根。conform の逆"
+    },
+    {
+     "en": "delude",
+     "x": 0.6920000000000001,
+     "y": 0.495,
+     "ja": "~を欺く、~を惑わす",
+     "role": "木製のカモにだまされる本物のカモ",
+     "hook": "de-＋ludere（遊ぶ・からかう）＝欺く。illusion と同根。delude someone into believing＝思い込ませる"
+    },
+    {
+     "en": "devoid",
+     "x": 0.7240000000000001,
+     "y": 0.878,
+     "ja": "(of)~がない、~を欠いた",
+     "role": "中が完全に空の餌入れ",
+     "hook": "void（空の）由来＝中身が空っぽ。devoid of food＝食べ物が全くない"
+    },
+    {
+     "en": "compress",
+     "x": 0.914,
+     "y": 0.624,
+     "ja": "~を圧縮する、~を要約する",
+     "role": "寝袋を小袋へ圧縮する人",
+     "hook": "com-（共に）＋press（押す）＝押し縮める。compress a sleeping bag＝寝袋を圧縮する"
+    },
+    {
+     "en": "conform",
+     "x": 0.6829999999999999,
+     "y": 0.305,
+     "ja": "(to)~に順応する、~に従う",
+     "role": "同じ帽子で整列する子供たち",
+     "hook": "con-（共に）＋form（形）＝形を合わせる。conform to a pattern＝型に合わせる。defy の逆"
+    },
+    {
+     "en": "reside",
+     "x": 0.946,
+     "y": 0.16399999999999998,
+     "ja": "(in)~に居住する、~にある",
+     "role": "軒下に住むツバメの巣",
+     "hook": "re-（後ろに）＋side（座る）＝居座る→住む。resident と同根。reside in a place＝そこに居住する"
+    }
+   ]
+  },
+  {
+   "id": "L80-32",
+   "title": "農園組合の見学会",
+   "titleEn": "Open Day at the Farm Co-operative",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-32.webp",
+   "thumb": "scenes/L80-32-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the farm co-operative's open day, a mechanic uses a pump to expel muddy water from a blocked pipe. At a separate kitchen table, onions make a cook weep into her handkerchief. An impatient buyer taps his foot beside an empty vegetable crate. Two neighbouring seed trays show only a marginal difference in growth. An apple tree covered in blossom offers the prospect of an excellent autumn harvest. A child is preoccupied with a ladybird and misses the tractor demonstration. Nearby, a wheelbarrow rests on the brink of a shallow pond. A breach in the fence allows a curious lamb to visit the herb beds. One visitor points at a goat to allege that it ate his flowers, although he has no evidence. Another finally decides to succumb to temptation and takes a slice of cake. At the design bench, a young farmer begins to conceive a new shelter by arranging a tiny cardboard roof over toy animals.",
+   "words": [
+    {
+     "en": "expel",
+     "x": 0.13,
+     "y": 0.4,
+     "ja": "~を追放する、~を放出する",
+     "role": "管から泥水を排出する整備士",
+     "hook": "ex-（外へ）＋pel（押す）。propel/repel と同根。expel water from a pipe＝管から水を押し出す"
+    },
+    {
+     "en": "weep",
+     "x": 0.08,
+     "y": 0.67,
+     "ja": "泣く、涙を流す",
+     "role": "玉ねぎで涙を流す料理人",
+     "hook": "weep＝涙を流す。泣き叫ばなくても静かに涙がこぼれる"
+    },
+    {
+     "en": "impatient",
+     "x": 0.24,
+     "y": 0.43,
+     "ja": "せっかちな、(with)~にいらいらして",
+     "role": "足を鳴らして待つせっかちな客",
+     "hook": "im-（不）＋patient（耐える）＝待てない。impatient with waiting＝待つのにいらいら"
+    },
+    {
+     "en": "marginal",
+     "x": 0.43,
+     "y": 0.86,
+     "ja": "わずかな、周辺の、限界の (marginal cost = 限界費用)",
+     "role": "ごくわずかだけ違う二つの苗箱",
+     "hook": "margin（縁・余白）の形容詞＝端のわずかな。a marginal difference＝ごく小さな差"
+    },
+    {
+     "en": "prospect",
+     "x": 0.45,
+     "y": 0.13,
+     "ja": "見通し、展望、可能性",
+     "role": "実りを期待させる花盛りのリンゴ",
+     "hook": "pro-（前を）＋spect（見る）＝先の見通し。retrospect の逆。the prospect of a harvest＝収穫の見込み"
+    },
+    {
+     "en": "preoccupied",
+     "x": 0.4,
+     "y": 0.58,
+     "ja": "(with)~に没頭した、~に気を取られた",
+     "role": "テントウムシに気を取られる子",
+     "hook": "pre-（先に）＋occupied（占められた）＝心が先に占められる。他が目に入らない"
+    },
+    {
+     "en": "brink",
+     "x": 0.53,
+     "y": 0.49,
+     "ja": "瀬戸際、ふち (on the brink of = ~の瀬戸際で)",
+     "role": "池のふちぎりぎりの一輪車",
+     "hook": "on the brink of＝ぎりぎりの端で。あと少しで水に入る位置"
+    },
+    {
+     "en": "breach",
+     "x": 0.65,
+     "y": 0.37,
+     "ja": "【n】違反、破れ目 /【v】(約束・法を)破る",
+     "role": "羊が通り抜ける柵の破れ目",
+     "hook": "break（壊す）と同根＝破れ目。a breach in a fence＝柵の破れ目。連続する防壁が一か所切れる"
+    },
+    {
+     "en": "allege",
+     "x": 0.83,
+     "y": 0.34,
+     "ja": "~を(証拠なしに)主張する、~と申し立てる",
+     "role": "証拠なくヤギを疑う見学客",
+     "hook": "allege that＝証拠が確定しない段階で申し立てる。指さしても証明ではない"
+    },
+    {
+     "en": "succumb",
+     "x": 0.73,
+     "y": 0.76,
+     "ja": "(to)~に屈する、~に負ける",
+     "role": "誘惑に負けてケーキを取る人",
+     "hook": "suc-（下に）＋cumb（横たわる）＝倒れ伏す→屈する。succumb to temptation＝誘惑に屈する"
+    },
+    {
+     "en": "conceive",
+     "x": 0.92,
+     "y": 0.58,
+     "ja": "~を心に抱く、~を思いつく、妊娠する",
+     "role": "模型で新しい小屋を発想する農家",
+     "hook": "con-（すっかり）＋ceive（取る）＝心に取り込む。concept と同根。conceive an idea＝考えを思いつく"
+    }
+   ]
+  },
+  {
+   "id": "L80-33",
+   "title": "乗馬クラブの小さな騒動",
+   "titleEn": "Small Surprises at the Riding Club",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-33.webp",
+   "thumb": "scenes/L80-33-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "At the riding club, a beginner holds one rein loosely while a quiet pony waits beside her. A puddle reflects the stable roof after the morning shower. Further along the practice lane, a low wooden obstacle gives another pony an easy jumping exercise. A nervous horse starts to retreat from a flapping tarpaulin, so its rider gives it space. Two helpers show mutual support by steadying opposite ends of a heavy mounting block. Near the picnic table, a girl tries to tease her dog by hiding a biscuit behind her back. An instructor raises a firm hand to assert her right to keep the riding lane clear. A frantic parent searches an open bag for a missing car key. Paper litter collects beside a bin. On a whim, a visitor buys a ridiculous feathery hat. His friend's irrational fear of a tiny toy spider makes her climb onto a perfectly safe bench.",
+   "words": [
+    {
+     "en": "rein",
+     "x": 0.257,
+     "y": 0.7070000000000001,
+     "ja": "【n】手綱、統制 /【v】~を制御する",
+     "role": "ポニーにつながる一本の手綱",
+     "hook": "retain（引き留める）と同根。rein＝馬を制御する手綱。rain（雨）とは綴りを分ける"
+    },
+    {
+     "en": "puddle",
+     "x": 0.11,
+     "y": 0.938,
+     "ja": "水たまり",
+     "role": "厩舎を映す水たまり",
+     "hook": "puddle＝雨上がりの地面の小さな水たまり"
+    },
+    {
+     "en": "obstacle",
+     "x": 0.628,
+     "y": 0.322,
+     "ja": "障害、障害物、妨げ",
+     "role": "進路を横切る低い障害柵",
+     "hook": "ob-（前に）＋sta（立つ）＝立ちはだかる物。obstacle＝進行を妨げる物"
+    },
+    {
+     "en": "retreat",
+     "x": 0.46299999999999997,
+     "y": 0.32899999999999996,
+     "ja": "【v】退却する、後退する /【n】退却、隠れ家",
+     "role": "シートから後ずさりする馬",
+     "hook": "re-（後ろへ）＋treat（引く）＝引き下がる。retract と同根。retreat from＝そこから後退する"
+    },
+    {
+     "en": "mutual",
+     "x": 0.462,
+     "y": 0.591,
+     "ja": "お互いの、相互の、共通の",
+     "role": "互いに支え合う二人の係員",
+     "hook": "mutare（交換する）由来＝互いにやり取りする。mutual support＝相互の支援"
+    },
+    {
+     "en": "tease",
+     "x": 0.655,
+     "y": 0.695,
+     "ja": "~をからかう、~をじらす",
+     "role": "ビスケットを隠して犬をじらす子",
+     "hook": "tease a dog＝犬をじらす。軽い遊びの仕草で、威圧とは分ける"
+    },
+    {
+     "en": "assert",
+     "x": 0.774,
+     "y": 0.365,
+     "ja": "~を断言する、~を強く主張する",
+     "role": "練習路を守る権利を主張する指導員",
+     "hook": "assert one's right＝権利をはっきり主張する。揺らがない手と姿勢"
+    },
+    {
+     "en": "frantic",
+     "x": 0.875,
+     "y": 0.628,
+     "ja": "取り乱した、必死の",
+     "role": "鍵を必死で探す親",
+     "hook": "frenzy（熱狂）と同根。a frantic search＝取り乱した必死の捜索"
+    },
+    {
+     "en": "litter",
+     "x": 0.838,
+     "y": 0.925,
+     "ja": "【n】くず、ごみ /【v】~を散らかす",
+     "role": "ごみ箱脇に散らばるくず",
+     "hook": "litter＝公共の場所に捨てられたごみ。箱の外への散乱"
+    },
+    {
+     "en": "whim",
+     "x": 0.171,
+     "y": 0.44,
+     "ja": "気まぐれ、思いつき",
+     "role": "思いつきで派手な帽子を買う客",
+     "hook": "on a whim＝気まぐれで。必要性よりその場の気分で買う"
+    },
+    {
+     "en": "irrational",
+     "x": 0.919,
+     "y": 0.209,
+     "ja": "不合理な、理性を欠いた",
+     "role": "玩具のクモを過剰に恐れる大人",
+     "hook": "ir-（不）＋rational（理にかなう）。reason と同根。irrational fear＝理屈に合わない恐怖"
+    }
+   ]
+  },
+  {
+   "id": "L80-34",
+   "title": "蒸気機関の博物館",
+   "titleEn": "The Steam Engine Museum",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-34.webp",
+   "thumb": "scenes/L80-34-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A troop of scouts enters the steam engine museum in an orderly group. At the entrance, a careless adult begins to abuse a delicate ticket lever by leaning his whole weight on it. Beyond him, a small visitor watches a huge polished engine in awe. Through the windows, the old brick chimney rises above the roof. An engineer uses a gauge to assess the condition of a separate wheel axle. On a nearby bench, a visitor pauses to contemplate two possible routes around a model railway. A guide makes the gear mechanism intelligible by turning a large demonstration wheel slowly while a child nods in understanding. Another child tries to interfere with the moving display by reaching over its low guard, and a volunteer gently stops him. Upstairs, a climber hopes to attain the observation platform and is just taking the final step. Down below, an idle lathe waits with its drive belt hanging loose.",
+   "words": [
+    {
+     "en": "troop",
+     "x": 0.12,
+     "y": 0.44,
+     "ja": "(通例 -s で)軍隊、群れ",
+     "role": "隊列で入館するスカウトの一隊",
+     "hook": "a troop of scouts＝スカウトの一隊。集団で行動する仲間"
+    },
+    {
+     "en": "abuse",
+     "x": 0.09,
+     "y": 0.71,
+     "ja": "【v】~を悪用する、~を虐待する、~を罵倒する /【n】乱用、虐待、悪口",
+     "role": "細いレバーに全体重をかける客",
+     "hook": "ab-（外れて）＋use（使う）＝用途を外れて使う。interfere の妨害とは区別"
+    },
+    {
+     "en": "awe",
+     "x": 0.27,
+     "y": 0.52,
+     "ja": "畏敬の念、畏怖",
+     "role": "巨大な機関を畏敬の目で見る子",
+     "hook": "in awe of＝大きさや荘厳さに圧倒されて。恐怖より敬意が混じる"
+    },
+    {
+     "en": "chimney",
+     "x": 0.24,
+     "y": 0.16,
+     "ja": "煙突",
+     "role": "窓の外にそびえる古い煙突",
+     "hook": "chimney＝炉の煙を屋外へ導く縦の通路。屋根より高く伸びる"
+    },
+    {
+     "en": "assess",
+     "x": 0.47,
+     "y": 0.8,
+     "ja": "~を評価する、~を査定する",
+     "role": "車軸の状態を評価する技師",
+     "hook": "as-（そばに）＋sess（座る）＝判事の横に座り査定。assess the condition＝状態を評価する"
+    },
+    {
+     "en": "contemplate",
+     "x": 0.4,
+     "y": 0.53,
+     "ja": "~を熟考する、~をじっくり考える",
+     "role": "模型の二つの道を熟考する客",
+     "hook": "contemplate options＝選択肢をじっくり考える。手が止まり視線が留まる"
+    },
+    {
+     "en": "intelligible",
+     "x": 0.65,
+     "y": 0.52,
+     "ja": "わかりやすい、理解できる",
+     "role": "歯車を分かりやすく説明する案内人",
+     "hook": "intellect と同根＝理解されうる。an intelligible explanation＝理解できる説明"
+    },
+    {
+     "en": "interfere",
+     "x": 0.85,
+     "y": 0.47,
+     "ja": "(with)~を妨害する、(in)~に干渉する",
+     "role": "動く展示に手を出して邪魔する子",
+     "hook": "inter-（間に）＋ferire（打つ）＝間に割って入る。interfere with＝働きを妨害。abuse の誤用と区別"
+    },
+    {
+     "en": "attain",
+     "x": 0.84,
+     "y": 0.13,
+     "ja": "~を達成する、~を獲得する",
+     "role": "展望台へ最後の一段を登る客",
+     "hook": "at-（〜に）＋tain（触れる）＝手が届く。tangible と同根。attain a goal＝努力の末に到達する"
+    },
+    {
+     "en": "idle",
+     "x": 0.84,
+     "y": 0.78,
+     "ja": "【adj】使われていない、怠惰な /【v】怠ける",
+     "role": "動かず使われていない旋盤",
+     "hook": "an idle machine＝稼働していない機械。働く人の怠惰とは限らない"
+    }
+   ]
+  },
+  {
+   "id": "L80-35",
+   "title": "港の事務所の引っ越し",
+   "titleEn": "Moving Day at the Harbour Office",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-35.webp",
+   "thumb": "scenes/L80-35-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "A child feels terror when a huge sea-monster costume appears at the harbour office, although its wearer waves kindly from a distance. A somber usher in a dark grey suit prepares the farewell gathering nearby. On a packing table, an old music player can eject a disc with a gentle spring. A sane porter chooses the smooth ramp instead of balancing a trolley on the steps. After repeated administrative mistakes, the company must demote a supervisor; the director removes his ornate shoulder badge. At the refreshment stand, a small pinch of salt represents the advised intake for one meal. The office move brings upheaval, with drawers and packing boxes scattered everywhere. A new storage cabinet will displace a battered old cupboard, which workers slide aside. Beyond the quay, a majestic sailing ship fills the sky. At a separate bench, a resident pauses to mourn the harbour's old dog beside its framed photograph and a single lily.",
+   "words": [
+    {
+     "en": "terror",
+     "x": 0.06,
+     "y": 0.76,
+     "ja": "恐怖、テロ",
+     "role": "大きな怪獣の着ぐるみを恐れる子",
+     "hook": "terrere（怖がらせる）由来。terrify と同根。terror＝身がすくむほどの恐怖"
+    },
+    {
+     "en": "somber",
+     "x": 0.12,
+     "y": 0.41,
+     "ja": "陰気な、重苦しい、地味な",
+     "role": "地味な灰色の服の重々しい案内係",
+     "hook": "somberは米綴り、英国ではsombre。重々しい服と沈んだ表情。"
+    },
+    {
+     "en": "eject",
+     "x": 0.38,
+     "y": 0.57,
+     "ja": "~を放出する、~を追い出す",
+     "role": "再生機から押し出されるディスク",
+     "hook": "e-（外へ）＋ject（投げる）。inject の逆。eject a disc＝ディスクを排出する"
+    },
+    {
+     "en": "sane",
+     "x": 0.46,
+     "y": 0.31,
+     "ja": "正気の、健全な、分別のある",
+     "role": "台車を安全な坂へ向ける運搬係",
+     "hook": "sanus（健全な）由来。sanitary と同根、反対はinsane。a sane choice＝分別のある選択"
+    },
+    {
+     "en": "demote",
+     "x": 0.58,
+     "y": 0.54,
+     "ja": "~を降格させる",
+     "role": "上位の肩章を外される監督者",
+     "hook": "de-（下へ）＋mote（動かす）＝地位を下へ動かす。promote（上げる）の逆。"
+    },
+    {
+     "en": "intake",
+     "x": 0.57,
+     "y": 0.92,
+     "ja": "摂取、摂取量、受け入れ数",
+     "role": "一食分の塩の摂取量",
+     "hook": "in（中へ）＋take（取る）＝取り入れる量。salt intake＝塩分摂取量"
+    },
+    {
+     "en": "upheaval",
+     "x": 0.69,
+     "y": 0.27,
+     "ja": "激動、大変動",
+     "role": "引っ越しで大混乱の事務所",
+     "hook": "up（上へ）＋heave（持ち上げる）＝地盤ごと持ち上がる激変。引っ越しで日常が崩れる"
+    },
+    {
+     "en": "displace",
+     "x": 0.81,
+     "y": 0.39,
+     "ja": "~を移す、~を立ち退かせる、~に取って代わる",
+     "role": "古い戸棚を押しのける新しい棚",
+     "hook": "dis-（離して）＋place（置く）＝元の場所から押しのける。displace an old cabinet＝古い棚に取って代わる"
+    },
+    {
+     "en": "majestic",
+     "x": 0.33,
+     "y": 0.14,
+     "ja": "雄大な、荘厳な",
+     "role": "港の向こうの雄大な帆船",
+     "hook": "major（より大きい）と同根の majestas（偉大さ）由来。a majestic ship＝威厳ある雄大な船"
+    },
+    {
+     "en": "mourn",
+     "x": 0.76,
+     "y": 0.77,
+     "ja": "~を嘆く、~を追悼する",
+     "role": "港の老犬を追悼する住民",
+     "hook": "mourn the loss of＝失ったものを悼む。写真と一輪の花を前に偲ぶ"
+    }
+   ]
+  },
+  {
+   "id": "L80-36",
+   "title": "屋上温室の授業",
+   "titleEn": "A Lesson in the Rooftop Greenhouse",
+   "deck": "Lv80_0822",
+   "deckLabel": "Lv80 苦手語",
+   "image": "scenes/L80-36.webp",
+   "thumb": "scenes/L80-36-thumb.webp",
+   "w": 1600,
+   "h": 900,
+   "story": "After feeling faint in the heat, a pupil is fully conscious again, sitting upright and answering the school nurse. Nearby, an infamous snail rests beside several badly nibbled leaves. Gardeners must segregate unhealthy plants, so a worker places a brown-leafed seedling behind a small mesh screen. Touching a sensitive plant can provoke its leaves to close; a child tests this gently with a straw. An enormous sunflower seems to stun another visitor, who freezes with her mouth open. A tangled irrigation hose can perplex a beginner, who scratches his head over its loops. A caretaker pulls a heavy water barrel with all his might. On the demonstration table, a potato and a set of smooth stones have equivalent weight on balanced scales. The teacher will dismiss the class with a wave when watering ends. A remnant of the old brick shed survives in one corner. Beside it, a cardboard model introduces the school's new greenhouse scheme.",
+   "words": [
+    {
+     "en": "conscious",
+     "x": 0.2,
+     "y": 0.68,
+     "ja": "意識がある、(of)~に気づいている",
+     "role": "看護師の問いに応じる意識のある生徒",
+     "hook": "con-（共に）＋sci（知る）＝分かっている。science と同根。fully conscious＝意識がはっきりある"
+    },
+    {
+     "en": "infamous",
+     "x": 0.12,
+     "y": 0.87,
+     "ja": "悪名高い、不評の",
+     "role": "穴だらけの葉のそばの悪名高いカタツムリ",
+     "hook": "in-（否定）＋fama（評判）＝良い評判がない→悪名高い。infamous for＝〜の悪名で知られる"
+    },
+    {
+     "en": "segregate",
+     "x": 0.29,
+     "y": 0.5,
+     "ja": "~を隔離する、~を分離する、(人種などで)~を差別する",
+     "role": "病気の苗を隔離する園芸係",
+     "hook": "se-（離して）＋greg（群れ）＝群れから分ける。congregate と同根。segregate plants＝植物を隔離する"
+    },
+    {
+     "en": "provoke",
+     "x": 0.35,
+     "y": 0.72,
+     "ja": "~を怒らせる、~を挑発する、~を引き起こす",
+     "role": "刺激で葉を閉じさせる子供",
+     "hook": "pro-（前へ）＋voke（呼ぶ）＝呼び出す→引き起こす。vocal と同根。必ずしも怒らせる意味ではない"
+    },
+    {
+     "en": "stun",
+     "x": 0.45,
+     "y": 0.32,
+     "ja": "~を気絶させる、~を呆然とさせる",
+     "role": "巨大なヒマワリに呆然とする来場者",
+     "hook": "stun＝驚きで呆然。perplex の理解できない困惑と分け、動きが止まる"
+    },
+    {
+     "en": "perplex",
+     "x": 0.61,
+     "y": 0.46,
+     "ja": "~を当惑させる、~を困惑させる",
+     "role": "絡んだホースに当惑する初心者",
+     "hook": "per-（すっかり）＋plex（絡んだ）＝頭が絡まる。complex と同根。stun の驚きとは別の困惑"
+    },
+    {
+     "en": "might",
+     "x": 0.81,
+     "y": 0.39,
+     "ja": "力、権力",
+     "role": "全身の力で樽を引く管理人",
+     "hook": "with all one's might＝全力で。ここでは助動詞でなく名詞の力"
+    },
+    {
+     "en": "equivalent",
+     "x": 0.7,
+     "y": 0.71,
+     "ja": "【adj】(to)~と同等の /【n】同等のもの",
+     "role": "釣り合う芋と石の重さ",
+     "hook": "equi（等しい）＋valent（価値がある）＝同価値。equivalent weight＝同等の重さ"
+    },
+    {
+     "en": "dismiss",
+     "x": 0.89,
+     "y": 0.66,
+     "ja": "~を退ける、~を解雇する、~を解散させる",
+     "role": "授業を終えて生徒を帰す先生",
+     "hook": "dis-（離して）＋miss（送る）＝送り出す。admit/omit と同根。dismiss a class＝授業を終えて解散"
+    },
+    {
+     "en": "remnant",
+     "x": 0.07,
+     "y": 0.2,
+     "ja": "名残、残り、残骸",
+     "role": "古い小屋の壁の残り",
+     "hook": "remain（残る）と同根。a remnant of a wall＝壁の名残。一部分だけ残る"
+    },
+    {
+     "en": "scheme",
+     "x": 0.73,
+     "y": 0.26,
+     "ja": "【n】計画、構想、たくらみ /【v】たくらむ",
+     "role": "温室整備計画の立体模型",
+     "hook": "a greenhouse scheme＝温室整備の計画。英国用法では公的計画にも普通に使う"
+    }
+   ]
+  },
+  {
    "id": "s01-01",
    "title": "キャンパス到着と手続き",
    "titleEn": "Arrival and Administration",
