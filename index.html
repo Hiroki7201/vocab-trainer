@@ -333,6 +333,74 @@
   .sci-card .m{font-size:11.5px; color:var(--muted); font-weight:400; margin-top:2px;}
   .sci-card .m b{color:var(--ok);}
   .sci-card.last{border-color:var(--accent);}
+  .sci-head .sh-open{margin-left:auto; font-family:var(--sans);}
+
+  /* sheet: チェックシート（印刷PDFのPC版。□□□｜単語・発音｜下敷きで隠す訳と絵） */
+  body[data-view="sheet"] #topbar, body[data-view="sheet"] #mainWrap{display:none;}
+  .sh-wrap{max-width:1560px; margin:0 auto; padding:8px 20px 8px;}
+  .sh-top{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:2px 0 8px;}
+  .sh-head{flex:1 1 220px; min-width:0;}
+  .sh-title{font-family:var(--serif); font-size:20px; font-weight:600; line-height:1.2;}
+  .sh-sub{color:var(--muted); font-size:12px; margin-top:1px;}
+  .sh-rounds{display:flex; gap:4px;}
+  .sh-round{border:1px solid var(--line); background:var(--surface); color:var(--muted); border-radius:10px; padding:5px 11px; font-size:12.5px; cursor:pointer; font-family:var(--sans); line-height:1.25; text-align:center;}
+  .sh-round b{display:block; font-size:14px; color:var(--ink);}
+  .sh-round.active{border-color:var(--accent); background:var(--accent-soft); color:var(--accent);}
+  .sh-round.active b{color:var(--accent);}
+  .sh-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .sh-tab{position:relative; overflow:hidden; border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:5px 12px; font-size:12.5px; cursor:pointer; color:var(--ink); font-family:var(--sans);}
+  .sh-tab.active{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .sh-tab small{color:var(--muted); margin-left:6px; font-size:12px;}
+  .sh-tab i{position:absolute; left:0; bottom:0; height:3px; background:var(--ok);}
+  .sh-body{display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:18px; align-items:start;}
+  .sh-rows{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--surface);}
+  .sh-row{display:grid; grid-template-columns:84px 24px minmax(104px,1fr) minmax(84px,.82fr) minmax(0,1.75fr); align-items:center; column-gap:8px; padding:0 10px; min-height:42px; border-bottom:1px solid var(--line); cursor:pointer;}
+  .sh-row:last-child{border-bottom:0;}
+  .sh-row.cur{background:var(--accent-soft); box-shadow:inset 3px 0 0 var(--accent);}
+  .sh-boxes{display:flex; gap:4px;}
+  .sh-box{width:22px; height:22px; flex:none; border:1.5px solid var(--line); border-radius:6px; background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--muted); line-height:1; opacity:.85;}
+  .sh-box.act{border-color:var(--muted); opacity:1;}
+  .sh-box.on::after{content:"✓";}
+  .sh-box.on.act{background:var(--ok); border-color:var(--ok); color:#fff;}
+  .sh-row.cur .sh-box.act{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .sh-row.cur .sh-box.act.on{border-color:var(--ok);}
+  .sh-no{font-weight:700; font-size:13px; color:var(--muted); text-align:center;}
+  .sh-en{font-family:var(--serif); font-size:18.5px; font-weight:600; line-height:1.15; overflow-wrap:anywhere;}
+  .sh-ipa{color:var(--muted); font-size:12.5px; overflow-wrap:anywhere; line-height:1.2;}
+  .sh-ans{border-left:2px dashed var(--line); align-self:stretch; display:flex; flex-direction:column; justify-content:center; padding:3px 0 3px 10px; min-width:0;}
+  .sh-j{font-size:13.5px; font-weight:600; color:var(--accent); line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .sh-c{font-size:11.5px; color:var(--muted); line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px;}
+  .sh-rows.cover .sh-row:not(.show) .sh-ans{background:repeating-linear-gradient(135deg, transparent 0 7px, var(--surface2) 7px 14px);}
+  .sh-rows.cover .sh-row:not(.show) .sh-ans>*{visibility:hidden;}
+  .sh-right{min-width:0; position:sticky; top:8px;}
+  .sh-pic .sc-bubble{max-width:44%; overflow:hidden; text-overflow:ellipsis;}
+  .sh-pic.cover img{filter:blur(16px) saturate(.8); transform:scale(1.06);}
+  .sh-pic.cover .sc-pin, .sh-pic.cover .sc-bubble{display:none;}
+  .sh-veil{display:none; position:absolute; inset:0; align-items:center; justify-content:center; color:#fff; font-size:15px; font-weight:600; text-shadow:0 1px 6px rgba(0,0,0,.7); pointer-events:none;}
+  .sh-pic.cover .sh-veil{display:flex;}
+  .sh-pic .sc-pin{width:26px; height:26px; font-size:12.5px;}
+  .sh-detail{margin-top:10px; border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:11px 15px; min-height:112px;}
+  .sh-d-en{font-family:var(--serif); font-size:21px; font-weight:600; line-height:1.2;}
+  .sh-d-en span{font-family:var(--sans); font-size:13.5px; font-weight:400; color:var(--muted); margin-left:8px;}
+  .sh-d-ja{color:var(--accent); font-size:15px; font-weight:600; margin-top:3px;}
+  .sh-d-core{color:var(--muted); font-size:13px; margin-top:2px;}
+  .sh-d-hook{font-size:13px; line-height:1.55; margin-top:4px;}
+  .sh-d-role{color:var(--muted);}
+  .sh-d-hint{color:var(--faint); font-size:13px; margin-top:6px;}
+  .sh-foot{display:flex; gap:10px; align-items:center; margin-top:8px;}
+  .sh-foot .khint{flex:1 1 auto; margin:0; text-align:left; line-height:1.7;}
+  .sh-foot .btn{flex:none; font-size:11.5px; padding:5px 9px;}
+  @media (max-width:900px){
+    .sh-wrap{padding:8px 12px 30px;}
+    .sh-body{grid-template-columns:1fr;}
+    .sh-right{order:-1; position:sticky; top:0; z-index:5; background:var(--bg,var(--surface)); padding-bottom:6px;}
+    .sh-detail{padding:7px 11px; min-height:0; margin-top:6px;}
+    .sh-d-en{font-size:17px;}
+    .sh-d-hook, .sh-d-hint, .sh-foot{display:none;}
+    .sh-row{grid-template-columns:84px 20px minmax(0,1fr); padding:6px 8px;}
+    .sh-ipa{grid-column:3;}
+    .sh-ans{grid-column:1 / -1; border-left:0; border-top:2px dashed var(--line); padding:3px 0 0; min-height:38px; margin-top:4px;}
+  }
   .xbtn:disabled{opacity:.35; cursor:default;}
   .sc-nav{display:flex; gap:8px; align-items:center; margin-top:22px;}
   .sc-nav .btn{flex:1;}
@@ -813,6 +881,30 @@
   </div>
 </section>
 
+<!-- ============ SHEET（チェックシート：印刷PDFのPC版） ============ -->
+<section class="view" id="sheetView">
+  <div class="sh-wrap">
+    <div class="sh-top">
+      <button class="xbtn" id="shClose" title="閉じる (Esc)">×</button>
+      <div class="sh-head"><div class="sh-title" id="shTitle"></div><div class="sh-sub" id="shSub"></div></div>
+      <div class="sh-rounds" id="shRounds"></div>
+      <button class="btn ghost sm" id="shCover" title="訳と絵の隠す・見せるを切り替え (S)"></button>
+    </div>
+    <div class="sh-tabs" id="shTabs"></div>
+    <div class="sh-body">
+      <div class="sh-rows" id="shRows"></div>
+      <div class="sh-right">
+        <div class="sc-imgbox sh-pic" id="shPic"><img id="shImg" alt="" /><div id="shPins"></div><div class="sh-veil">→ で絵を表示</div></div>
+        <div class="sh-detail" id="shDetail"></div>
+        <div class="sh-foot">
+          <div class="khint"><kbd>↑</kbd><kbd>↓</kbd> 移動 ／ <kbd>Space</kbd>・<kbd>Enter</kbd> チェック（付けると次の語へ、もう一度で外す） ／ <kbd>→</kbd> 訳と絵を見る ／ <kbd>←</kbd> 隠す ／ <kbd>P</kbd> 発音 ／ <kbd>U</kbd> 次の未チェックへ ／ <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 周の切替 ／ <kbd>S</kbd> 下敷きなし ／ <kbd>Esc</kbd> 閉じる</div>
+          <button class="btn ghost sm danger" id="shReset">この周のチェックを全部外す</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div id="toast"></div>
 
 <script src="practice.js"></script>
@@ -828,7 +920,7 @@ const STORE_KEY = "vocab_srs_app_v1";
 const EL_API_BASE = "https://elevenlabs-proxy.h-honda-share.workers.dev";
 const $ = (id) => document.getElementById(id);
 
-let APP = { decks:{}, settings:defaultSettings(), study:defaultStudy(), goals:[], flash:{} };
+let APP = { decks:{}, settings:defaultSettings(), study:defaultStudy(), goals:[], flash:{}, sheet:{} };
 let storageOK = true;
 
 function defaultSettings(){
@@ -859,7 +951,8 @@ function loadAPP(){
     if(raw){ const o=JSON.parse(raw); APP.decks=o.decks||{}; APP.settings=Object.assign(defaultSettings(),o.settings||{});
       if(typeof APP.settings.repeat==="boolean" && o.settings && o.settings.enRepeat===undefined){ APP.settings.enRepeat=APP.settings.repeat?2:1; }
       APP.study = normalizeStudy(o.study); APP.goals = Array.isArray(o.goals) ? o.goals : [];
-      APP.flash = (o.flash && typeof o.flash==="object") ? o.flash : {}; }
+      APP.flash = (o.flash && typeof o.flash==="object") ? o.flash : {};
+      APP.sheet = (o.sheet && typeof o.sheet==="object") ? o.sheet : {}; }
   }catch(e){ storageOK=false; }
 }
 function saveAPP(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(APP)); }catch(e){ storageOK=false; } }
@@ -1224,6 +1317,7 @@ function renderHome(){
   if(SCN.list.length){ const last=SCN.list.find(x=>x.id===APP.settings.lastScene), cover=last||SCN.list[0], words=SCN.list.reduce((a,x)=>a+x.words.length,0);
     $("sceneList").innerHTML=`<div class="scenecard" data-sceneindex="1"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" />`
       +`<div class="dc-main"><div class="dc-name">場面の一覧を開く</div><div class="dc-chips"><span class="chip">${SCN.list.length}場面</span><span class="chip">${words}語</span></div></div></div>`
+      +shHomeCards()
       +(last?`<div class="scenecard" data-scene="${escapeHTML(last.id)}"><img src="${escapeHTML(last.thumb||last.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">前回の続き：${escapeHTML(last.title)}</div><div class="dc-chips"><span class="chip">${last.words.length}語</span>${last.deckLabel?`<span class="chip">${escapeHTML(last.deckLabel)}</span>`:""}</div></div></div>`:""); }
   else $("sceneList").innerHTML="";
   const cta=$("homeCta");
@@ -1603,10 +1697,10 @@ function sciCardHTML(s){ const pr=scProgress(s), last=APP.settings.lastScene===s
   return `<div class="sci-card${last?" last":""}" data-scene="${escapeHTML(s.id)}"><img src="${escapeHTML(s.thumb||s.image)}" alt="" loading="lazy" />`
     +`<div class="t">${escapeHTML(s.title)}<div class="m">${meta}${last?"・前回ここ":""}</div></div></div>`; }
 function openSceneIndex(){ stopSpeak(); for(const k in scDeckCache) delete scDeckCache[k];
-  const groups=[]; SCN.list.forEach(s=>{ const g=s.deckLabel||s.deck||"その他"; let gr=groups.find(x=>x.label===g); if(!gr){ gr={label:g, list:[]}; groups.push(gr); } gr.list.push(s); });
+  const groups=[]; SCN.list.forEach(s=>{ const g=s.deckLabel||s.deck||"その他"; let gr=groups.find(x=>x.label===g); if(!gr){ gr={label:g, deck:s.deck, list:[]}; groups.push(gr); } gr.list.push(s); });
   const words=SCN.list.reduce((a,s)=>a+s.words.length,0);
   $("sciSub").textContent=`${SCN.list.length}場面・${words}語　絵を開いて、番号と訳を同じページで覚える`;
-  $("sciBody").innerHTML=groups.map(gr=>`<div class="sci-head">${escapeHTML(gr.label)}<span class="chip">${gr.list.length}場面・${gr.list.reduce((a,s)=>a+s.words.length,0)}語</span></div>`
+  $("sciBody").innerHTML=groups.map(gr=>`<div class="sci-head">${escapeHTML(gr.label)}<span class="chip">${gr.list.length}場面・${gr.list.reduce((a,s)=>a+s.words.length,0)}語</span>${SHEET_DECKS.includes(gr.deck)?`<button class="btn solid sm sh-open" data-sheet="${escapeHTML(gr.deck)}">☑ チェックシート</button>`:""}</div>`
     +`<div class="sci-grid">${gr.list.map(sciCardHTML).join("")}</div>`).join("");
   showView("sceneIndex");
   const last=document.querySelector("#sciBody .sci-card.last"); if(last) last.scrollIntoView({block:"center"}); }
@@ -1671,6 +1765,86 @@ function scToggleHide(){ const g=$("scGrid"), on=!g.classList.contains("sc-hide"
   $("scHide").textContent=on?"訳を表示":"訳を隠す"; if(sc&&sc.cur>=0) scSelect(sc.cur,false); }
 function scClose(){ scStopStory(); stopSpeak(); const from=sc&&sc.from; sc=null;
   if(from==="index") openSceneIndex(); else if(from==="list" && curListId && APP.decks[curListId]) openList(curListId); else goHome(); }
+/* =========================================================================
+   チェックシート：印刷PDF（□□□｜単語・発音｜下敷きで隠す訳と絵）を PC でやる画面
+   チェックは自分の把握メモで、復習スケジュール（srs）や瞬間の成績には影響しない。
+   保存：APP.sheet[場面ID][単語小文字] = [1周目,2周目,3周目]（0/1）
+   ========================================================================= */
+const SHEET_DECKS=["Lv60_0822"], SHEET_ROUNDS=3;
+let sh=null;
+function shMarks(s,w){ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; return Array.isArray(m)?m:[]; }
+function shCount(list,round){ let on=0,n=0; list.forEach(s=>s.words.forEach(w=>{ n++; if(shMarks(s,w)[round]) on++; })); return {on,n}; }
+function shHomeCards(){ return SHEET_DECKS.map(deck=>{ const list=SCN.list.filter(x=>x.deck===deck); if(!list.length) return "";
+    const round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round), cover=list[0];
+    return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
+      +`<div class="dc-chips"><span class="chip">${round+1}周目 ${c.on}/${c.n}語</span></div></div></div>`; }).join(""); }
+function shScene_(){ return sh.list[sh.i]; }
+function shInfo(s,w){ const c=scCardFor(scDeckCached(s),w.en); return { ja:(c&&c.ja)||w.ja||"", ipa:(c&&c.ipa)||"", core:(c&&c.core)||"" }; }
+function shSavePos(){ if(!sh) return; const p=APP.settings.sheetPos||(APP.settings.sheetPos={});
+  p[sh.deck]={ scene:shScene_().id, row:sh.row, round:sh.round, cover:sh.cover }; saveAPP(); }
+function openSheet(deck, from){ const list=SCN.list.filter(s=>s.deck===deck); if(!list.length) return; scStopStory(); stopSpeak();
+  const pos=(APP.settings.sheetPos||{})[deck]||{}, i=Math.max(0,list.findIndex(s=>s.id===pos.scene));
+  sh={ deck, list, i, row:Math.min(pos.row||0,list[i].words.length-1), round:Math.min(pos.round||0,SHEET_ROUNDS-1), cover:pos.cover!==false, shown:false, from:from||"index" };
+  $("shTitle").textContent="チェックシート ・ "+(list[0].deckLabel||deck);
+  list.forEach(x=>{ const im=new Image(); im.src=x.image; });
+  shSceneRender(); showView("sheet"); }
+function shClose(){ shSavePos(); stopSpeak(); const from=sh&&sh.from; sh=null; if(from==="home") goHome(); else openSceneIndex(); }
+/* 場面が変わるときだけ絵と番号を作り直す（行の移動では画像を読み直さない） */
+function shSceneRender(){ const s=shScene_(), img=$("shImg"); img.alt=s.titleEn||s.title;
+  if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sh&&shScene_()===s) img.src=s.image; }; full.src=s.image; } else img.src=s.image;
+  $("shPins").innerHTML=s.words.map((w,i)=>`<button class="sc-pin" data-i="${i}" tabindex="-1" style="left:${w.x*100}%; top:${w.y*100}%;">${i+1}</button>`).join("")
+    +`<div class="sc-bubble" id="shBubble" style="display:none;"></div>`;
+  shPaint(); }
+function shPaint(){ const s=shScene_(), w=s.words[sh.row], open=!sh.cover||sh.shown;
+  const total=sh.list.reduce((a,x)=>a+x.words.length,0), cur=shCount(sh.list,sh.round);
+  $("shSub").textContent=`${s.title} ・ ${sh.round+1}周目 ${cur.on}/${total}語チェック（残り${total-cur.on}語）`;
+  $("shRounds").innerHTML=Array.from({length:SHEET_ROUNDS},(_,r)=>`<button class="sh-round${r===sh.round?" active":""}" data-r="${r}" tabindex="-1">${r+1}周目<b>${shCount(sh.list,r).on}</b></button>`).join("");
+  $("shCover").textContent=sh.cover?"下敷き：あり":"下敷き：なし";
+  $("shTabs").innerHTML=sh.list.map((x,i)=>{ const c=shCount([x],sh.round);
+    return `<button class="sh-tab${i===sh.i?" active":""}" data-i="${i}" tabindex="-1">${i+1}. ${escapeHTML(x.title)}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
+  const rows=$("shRows"); rows.classList.toggle("cover",sh.cover);
+  rows.innerHTML=s.words.map((x,r)=>{ const m=shMarks(s,x), inf=shInfo(s,x);
+    return `<div class="sh-row${r===sh.row?" cur":""}${r===sh.row&&sh.shown?" show":""}" data-r="${r}"><div class="sh-boxes">`
+      +Array.from({length:SHEET_ROUNDS},(_,k)=>`<span class="sh-box${m[k]?" on":""}${k===sh.round?" act":""}" data-k="${k}" role="checkbox" aria-checked="${!!m[k]}" title="${k+1}周目"></span>`).join("")
+      +`</div><div class="sh-no">${r+1}</div><div class="sh-en">${escapeHTML(x.en)}</div><div class="sh-ipa">${escapeHTML(inf.ipa)}</div>`
+      +`<div class="sh-ans"><div class="sh-j">${escapeHTML(inf.ja)}</div><div class="sh-c">${escapeHTML(inf.core)}</div></div></div>`; }).join("");
+  const row=rows.querySelector(".sh-row.cur"); if(row) row.scrollIntoView({block:"nearest"});
+  $("shPic").classList.toggle("cover",!open);
+  document.querySelectorAll("#shPins .sc-pin").forEach(b=>b.classList.toggle("on",open&&+b.dataset.i===sh.row));
+  const inf=shInfo(s,w), bub=$("shBubble");
+  if(open){ const below=w.y<0.16; bub.innerHTML=`<b>${escapeHTML(w.en)}</b>${escapeHTML(inf.ja.length>26?inf.ja.slice(0,26)+"…":inf.ja)}`;
+    bub.style.left=Math.max(22,Math.min(78,w.x*100))+"%"; bub.style.top=(w.y*100)+"%"; bub.style.transform=below?"translate(-50%, 20px)":""; bub.style.display=""; }
+  else bub.style.display="none";
+  const head=`<div class="sh-d-en">${escapeHTML(w.en)}<span>${escapeHTML(inf.ipa)}</span></div>`;
+  $("shDetail").innerHTML= open
+    ? head+`<div class="sh-d-ja">${escapeHTML(inf.ja)}</div>${inf.core?`<div class="sh-d-core">${escapeHTML(inf.core)}</div>`:""}`
+      +`<div class="sh-d-hook">${w.role?`<span class="sh-d-role">絵：${escapeHTML(w.role)}。</span>`:""}${escapeHTML(w.hook||"")}</div>`
+    : head+`<div class="sh-d-hint">意味と絵の場所を言えたら Space。出てこなければ → で訳と絵を見る。</div>`; }
+function shMove(d){ const s=shScene_(), r=sh.row+d; sh.shown=false;
+  if(r>=0&&r<s.words.length){ sh.row=r; shPaint(); return true; }
+  const j=sh.i+(d>0?1:-1);
+  if(j<0||j>=sh.list.length){ shPaint(); return false; }
+  sh.i=j; sh.row=d>0?0:sh.list[j].words.length-1; shSavePos(); shSceneRender(); return true; }
+function shGoScene(i){ if(!sh.list[i]||i===sh.i) return; sh.i=i; sh.row=0; sh.shown=false; shSavePos(); shSceneRender(); }
+/* チェックを付けたら次の語へ（紙で上から順に✓していく動き）。外したときはその場に留まる */
+function shToggle(r, round, advance){ const s=shScene_(), w=s.words[r], key=w.en.toLowerCase();
+  const bySc=APP.sheet[s.id]||(APP.sheet[s.id]={}), m=Array.isArray(bySc[key])?bySc[key]:(bySc[key]=Array(SHEET_ROUNDS).fill(0));
+  m[round]=m[round]?0:1; shSavePos();
+  if(m[round]&&advance){ if(!shMove(1)){ const c=shCount(sh.list,round); toast(`最後の語です。${round+1}周目は ${c.on}/${c.n}語チェック`); } }
+  else shPaint(); }
+function shReveal(on){ if(!sh.cover){ if(on) speakSeq([enItem(shScene_().words[sh.row].en)]); return; }
+  if(sh.shown===on) return; sh.shown=on; shPaint(); if(on) speakSeq([enItem(shScene_().words[sh.row].en)]); else stopSpeak(); }
+function shSetRound(r){ if(r<0||r>=SHEET_ROUNDS) return; sh.round=r; sh.shown=false; shSavePos(); shPaint(); }
+function shToggleCover(){ sh.cover=!sh.cover; sh.shown=false; shSavePos(); shPaint(); }
+/* 次の未チェックへ（今の語の次から順に探し、最後まで行ったら先頭へ戻る） */
+function shNextOpen(){ const flat=[]; sh.list.forEach((s,i)=>s.words.forEach((w,r)=>flat.push({i,r,on:shMarks(s,w)[sh.round]})));
+  const at=flat.findIndex(x=>x.i===sh.i&&x.r===sh.row);
+  for(let k=1;k<=flat.length;k++){ const x=flat[(at+k)%flat.length]; if(!x.on){ const same=x.i===sh.i; sh.i=x.i; sh.row=x.r; sh.shown=false; if(same) shPaint(); else { shSavePos(); shSceneRender(); } return; } }
+  toast(`${sh.round+1}周目は全部チェック済みです`); }
+function shReset(){ const c=shCount(sh.list,sh.round); if(!c.on) return;
+  if(!confirm(`${sh.round+1}周目のチェック ${c.on}語分を全部外します。よろしいですか？`)) return;
+  sh.list.forEach(s=>s.words.forEach(w=>{ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; if(Array.isArray(m)) m[sh.round]=0; })); sh.shown=false; shSavePos(); shPaint(); }
+
 /* 瞬間モードの裏面に、その語の場面の該当部分を拡大して出す */
 function flSceneCrop(c){ const box=$("flScene"), hit=RecallPractice.sceneHit(fl&&fl.deckId,c.en);
   if(!hit){ box.style.display="none"; return; }
@@ -1717,7 +1891,7 @@ function backup(){ const copy=JSON.parse(JSON.stringify(APP)); if(copy.settings)
   download("recall-backup-"+dateStr(Date.now())+".json", JSON.stringify(copy), "application/json"); toast("バックアップを書き出しました（APIキーは除外）"); }
 function restore(file){ const r=new FileReader(); r.onload=e=>{ try{ const o=JSON.parse(e.target.result); if(!o.decks) throw 0;
   const curKey=APP.settings.elKey; APP.decks=o.decks; APP.settings=Object.assign(defaultSettings(),o.settings||{});
-  APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[]; APP.flash=(o.flash&&typeof o.flash==="object")?o.flash:{};
+  APP.study=normalizeStudy(o.study); APP.goals=Array.isArray(o.goals)?o.goals:[]; APP.flash=(o.flash&&typeof o.flash==="object")?o.flash:{}; APP.sheet=(o.sheet&&typeof o.sheet==="object")?o.sheet:{};
   if(!APP.settings.elKey&&curKey) APP.settings.elKey=curKey; saveAPP(); applyTheme(); renderHome(); toast("バックアップを読み込みました"); }
   catch(err){ toast("読み込めませんでした（JSON形式を確認）"); } }; r.readAsText(file); }
 function sampleCSV(){ download("sample_vocab.csv","﻿english,japanese,ipa,chunk,chunk_meaning,mnemonic,example,example_ja\n"+
@@ -2004,9 +2178,17 @@ function bind(){
   $("filterFlashBtn").onclick=()=>{ if(!curFiltered.length){ toast("対象の単語がありません"); return; } startFlash(curListId, curFiltered.slice()); };
 
   // 場面で覚える
-  $("sceneList").addEventListener("click",e=>{ if(e.target.closest("[data-sceneindex]")){ openSceneIndex(); return; } const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "home"); });
+  $("sceneList").addEventListener("click",e=>{ const shb=e.target.closest("[data-sheet]"); if(shb){ openSheet(shb.dataset.sheet,"home"); return; } if(e.target.closest("[data-sceneindex]")){ openSceneIndex(); return; } const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "home"); });
   $("listScenes").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "list"); });
-  $("sciBody").addEventListener("click",e=>{ const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "index"); });
+  $("sciBody").addEventListener("click",e=>{ const shb=e.target.closest("[data-sheet]"); if(shb){ openSheet(shb.dataset.sheet,"index"); return; } const b=e.target.closest("[data-scene]"); if(b) openScene(b.dataset.scene, "index"); });
+  $("shClose").onclick=()=>shClose(); $("shCover").onclick=e=>{ e.currentTarget.blur(); shToggleCover(); }; $("shReset").onclick=e=>{ e.currentTarget.blur(); shReset(); };
+  $("shRows").addEventListener("click",e=>{ const row=e.target.closest(".sh-row"); if(!row||!sh) return; const r=+row.dataset.r, box=e.target.closest(".sh-box");
+    if(box){ sh.row=r; sh.shown=false; shToggle(r,+box.dataset.k,false); return; }
+    if(r===sh.row&&sh.shown){ shReveal(false); return; } sh.row=r; sh.shown=false; shPaint(); shReveal(true); });
+  $("shPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(!b||!sh) return; sh.row=+b.dataset.i; sh.shown=false; shPaint(); shReveal(true); });
+  $("shPic").addEventListener("click",e=>{ if(sh&&!e.target.closest(".sc-pin")&&sh.cover) shReveal(!sh.shown); });
+  $("shRounds").addEventListener("click",e=>{ const b=e.target.closest(".sh-round"); if(b&&sh) shSetRound(+b.dataset.r); });
+  $("shTabs").addEventListener("click",e=>{ const b=e.target.closest(".sh-tab"); if(b&&sh) shGoScene(+b.dataset.i); });
   $("sciClose").onclick=goHome; $("scPrev").onclick=$("scPrevTop").onclick=()=>scGo(-1); $("scNext").onclick=$("scNextTop").onclick=()=>scGo(1);
   $("scIndex").onclick=()=>{ scStopStory(); stopSpeak(); sc=null; openSceneIndex(); };
   $("scPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(b) scSelect(+b.dataset.i, true); });
@@ -2104,6 +2286,20 @@ function bind(){
   // キーボード
   document.addEventListener("keydown",e=>{
     if(/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+    if(document.body.dataset.view==="sheet"){ if(!sh||e.metaKey||e.ctrlKey||e.altKey) return;
+      if(document.activeElement&&document.activeElement.tagName==="BUTTON") document.activeElement.blur();
+      const k=e.key, code=e.code;  /* 日本語入力ONでも効くよう文字キーは code で見る */
+      if(k==="ArrowDown"||k==="ArrowUp"){ e.preventDefault(); shMove(k==="ArrowDown"?1:-1); return; }
+      if(code==="Space"||k===" "||k==="Enter"){ e.preventDefault(); if(!e.repeat) shToggle(sh.row,sh.round,true); return; }
+      if(e.repeat) return;
+      if(k==="ArrowRight"){ e.preventDefault(); shReveal(true); return; }
+      if(k==="ArrowLeft"){ e.preventDefault(); shReveal(false); return; }
+      if(k==="Escape"){ e.preventDefault(); shClose(); return; }
+      if(/^Digit[1-9]$/.test(code)){ e.preventDefault(); shSetRound(+code.slice(5)-1); return; }
+      if(code==="KeyS"){ e.preventDefault(); shToggleCover(); return; }
+      if(code==="KeyP"){ e.preventDefault(); speakSeq([enItem(shScene_().words[sh.row].en)]); return; }
+      if(code==="KeyU"){ e.preventDefault(); shNextOpen(); return; }
+      return; }
     if(document.body.dataset.view==="sceneIndex"){ if(e.key==="Escape"){ e.preventDefault(); goHome(); } return; }
     if(document.body.dataset.view==="scene"){ if(!sc||e.repeat) return; const n=sc.s.words.length;
       if(e.key==="ArrowRight"){ e.preventDefault(); scSelect(sc.cur<0?0:(sc.cur+1)%n, true); }
