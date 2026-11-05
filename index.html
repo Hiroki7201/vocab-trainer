@@ -339,8 +339,15 @@
   body[data-view="sheet"] #topbar, body[data-view="sheet"] #mainWrap{display:none;}
   .sh-wrap{max-width:1560px; margin:0 auto; padding:8px 20px 8px;}
   .sh-top{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:2px 0 8px;}
-  .sh-head{flex:1 1 220px; min-width:0;}
-  .sh-title{font-family:var(--serif); font-size:20px; font-weight:600; line-height:1.2;}
+  .sh-head{flex:1 1 220px; min-width:0; position:relative;}
+  .sh-title{font-family:var(--serif); font-size:20px; font-weight:600; line-height:1.2; display:block; max-width:100%; padding:0; border:0; background:none; color:var(--ink); text-align:left; cursor:pointer;}
+  .sh-title:hover{color:var(--accent);}
+  .sh-menu{position:absolute; top:100%; left:0; z-index:60; width:min(430px,calc(100vw - 76px)); max-height:78vh; overflow-y:auto; margin-top:4px; padding:5px; border:1px solid var(--line); border-radius:14px; background:var(--surface); box-shadow:0 8px 28px rgba(0,0,0,.22);}
+  .sh-mi{position:relative; overflow:hidden; display:flex; align-items:baseline; justify-content:space-between; gap:12px; width:100%; padding:7px 11px; border:0; border-radius:9px; background:none; color:var(--ink); font-family:var(--sans); font-size:14px; text-align:left; cursor:pointer;}
+  .sh-mi small{flex:none; color:var(--muted); font-size:12px;}
+  .sh-mi i{position:absolute; left:0; bottom:0; height:2px; background:var(--ok);}
+  .sh-mi.cur{font-weight:700;}
+  .sh-mi.hi, .sh-mi:hover{background:var(--accent-soft);}
   .sh-sub{color:var(--muted); font-size:12px; margin-top:1px;}
   .sh-rounds{display:flex; gap:4px;}
   .sh-round{border:1px solid var(--line); background:var(--surface); color:var(--muted); border-radius:10px; padding:5px 11px; font-size:12.5px; cursor:pointer; font-family:var(--sans); line-height:1.25; text-align:center;}
@@ -352,6 +359,8 @@
   .sh-tab.active{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
   .sh-tab small{color:var(--muted); margin-left:6px; font-size:12px;}
   .sh-tab i{position:absolute; left:0; bottom:0; height:3px; background:var(--ok);}
+  .sh-tabs.many .sh-tab{padding:5px 9px;}
+  .sh-tabs.many .sh-tab small{margin-left:4px;}
   .sh-body{display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,1fr); gap:18px; align-items:start;}
   .sh-rows{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--surface);}
   .sh-row{display:grid; grid-template-columns:84px 24px minmax(104px,1fr) minmax(84px,.82fr) minmax(0,1.75fr); align-items:center; column-gap:8px; padding:0 10px; min-height:42px; border-bottom:1px solid var(--line); cursor:pointer;}
@@ -370,6 +379,8 @@
   .sh-ans{border-left:2px dashed var(--line); align-self:stretch; display:flex; flex-direction:column; justify-content:center; padding:3px 0 3px 10px; min-width:0;}
   .sh-j{font-size:13.5px; font-weight:600; color:var(--accent); line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .sh-c{font-size:11.5px; color:var(--muted); line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px;}
+  .sh-rows.dense .sh-row{min-height:36px;}
+  .sh-rows.dense .sh-ans{padding-top:1px; padding-bottom:1px;}
   .sh-rows.cover .sh-row:not(.show) .sh-ans{background:repeating-linear-gradient(135deg, transparent 0 7px, var(--surface2) 7px 14px);}
   .sh-rows.cover .sh-row:not(.show) .sh-ans>*{visibility:hidden;}
   .sh-right{min-width:0; position:sticky; top:8px;}
@@ -886,7 +897,7 @@
   <div class="sh-wrap">
     <div class="sh-top">
       <button class="xbtn" id="shClose" title="閉じる (Esc)">×</button>
-      <div class="sh-head"><div class="sh-title" id="shTitle"></div><div class="sh-sub" id="shSub"></div></div>
+      <div class="sh-head"><button class="sh-title" id="shTitle" title="デッキを切り替え (D)"></button><div class="sh-sub" id="shSub"></div><div class="sh-menu" id="shMenu" style="display:none;"></div></div>
       <div class="sh-rounds" id="shRounds"></div>
       <button class="btn ghost sm" id="shCover" title="訳と絵の隠す・見せるを切り替え (S)"></button>
     </div>
@@ -897,7 +908,7 @@
         <div class="sc-imgbox sh-pic" id="shPic"><img id="shImg" alt="" /><div id="shPins"></div><div class="sh-veil">→ で絵を表示</div></div>
         <div class="sh-detail" id="shDetail"></div>
         <div class="sh-foot">
-          <div class="khint"><kbd>↑</kbd><kbd>↓</kbd> 移動 ／ <kbd>Space</kbd>・<kbd>Enter</kbd> チェック（付けると次の語へ、もう一度で外す） ／ <kbd>→</kbd> 訳と絵を見る ／ <kbd>←</kbd> 隠す ／ <kbd>P</kbd> 発音 ／ <kbd>U</kbd> 次の未チェックへ ／ <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 周の切替 ／ <kbd>S</kbd> 下敷きなし ／ <kbd>Esc</kbd> 閉じる</div>
+          <div class="khint"><kbd>↑</kbd><kbd>↓</kbd> 移動 ／ <kbd>Space</kbd>・<kbd>Enter</kbd> チェック（付けると次の語へ、もう一度で外す） ／ <kbd>→</kbd> 訳と絵を見る ／ <kbd>←</kbd> 隠す ／ <kbd>P</kbd> 発音 ／ <kbd>U</kbd> 次の未チェックへ ／ <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 周の切替 ／ <kbd>S</kbd> 下敷きなし ／ <kbd>D</kbd> デッキ切替 ／ <kbd>Esc</kbd> 閉じる</div>
           <button class="btn ghost sm danger" id="shReset">この周のチェックを全部外す</button>
         </div>
       </div>
@@ -1700,7 +1711,7 @@ function openSceneIndex(){ stopSpeak(); for(const k in scDeckCache) delete scDec
   const groups=[]; SCN.list.forEach(s=>{ const g=s.deckLabel||s.deck||"その他"; let gr=groups.find(x=>x.label===g); if(!gr){ gr={label:g, deck:s.deck, list:[]}; groups.push(gr); } gr.list.push(s); });
   const words=SCN.list.reduce((a,s)=>a+s.words.length,0);
   $("sciSub").textContent=`${SCN.list.length}場面・${words}語　絵を開いて、番号と訳を同じページで覚える`;
-  $("sciBody").innerHTML=groups.map(gr=>`<div class="sci-head">${escapeHTML(gr.label)}<span class="chip">${gr.list.length}場面・${gr.list.reduce((a,s)=>a+s.words.length,0)}語</span>${SHEET_DECKS.includes(gr.deck)?`<button class="btn solid sm sh-open" data-sheet="${escapeHTML(gr.deck)}">☑ チェックシート</button>`:""}</div>`
+  $("sciBody").innerHTML=groups.map(gr=>`<div class="sci-head">${escapeHTML(gr.label)}<span class="chip">${gr.list.length}場面・${gr.list.reduce((a,s)=>a+s.words.length,0)}語</span>${shDecks().includes(gr.deck)?`<button class="btn solid sm sh-open" data-sheet="${escapeHTML(gr.deck)}">☑ チェックシート</button>`:""}</div>`
     +`<div class="sci-grid">${gr.list.map(sciCardHTML).join("")}</div>`).join("");
   showView("sceneIndex");
   const last=document.querySelector("#sciBody .sci-card.last"); if(last) last.scrollIntoView({block:"center"}); }
@@ -1770,39 +1781,49 @@ function scClose(){ scStopStory(); stopSpeak(); const from=sc&&sc.from; sc=null;
    チェックは自分の把握メモで、復習スケジュール（srs）や瞬間の成績には影響しない。
    保存：APP.sheet[場面ID][単語小文字] = [1周目,2周目,3周目]（0/1）
    ========================================================================= */
-const SHEET_DECKS=["Lv60_0822"], SHEET_ROUNDS=3;
+const SHEET_SKIP=["Lv80_0822"], SHEET_ROUNDS=3;  /* Lv80 はまだ対象外。ここから外せば出る */
 let sh=null;
 function shMarks(s,w){ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; return Array.isArray(m)?m:[]; }
 function shCount(list,round){ let on=0,n=0; list.forEach(s=>s.words.forEach(w=>{ n++; if(shMarks(s,w)[round]) on++; })); return {on,n}; }
-function shHomeCards(){ return SHEET_DECKS.map(deck=>{ const list=SCN.list.filter(x=>x.deck===deck); if(!list.length) return "";
-    const round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round), cover=list[0];
-    return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
-      +`<div class="dc-chips"><span class="chip">${round+1}周目 ${c.on}/${c.n}語</span></div></div></div>`; }).join(""); }
+function shDecks(){ const out=[]; SCN.list.forEach(s=>{ if(s.deck&&!SHEET_SKIP.includes(s.deck)&&!out.includes(s.deck)) out.push(s.deck); }); return out; }
+function shDeckStat(deck){ const list=SCN.list.filter(x=>x.deck===deck), round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round); return { list, round, on:c.on, n:c.n }; }
+function shHomeCards(){ const decks=shDecks(); if(!decks.length) return "";
+  const deck=decks.includes(APP.settings.sheetLast)?APP.settings.sheetLast:decks[0], st=shDeckStat(deck), cover=st.list[0];
+  return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
+    +`<div class="dc-chips"><span class="chip">${st.round+1}周目 ${st.on}/${st.n}語</span><span class="chip">全${decks.length}デッキを切替可</span></div></div></div>`; }
 function shScene_(){ return sh.list[sh.i]; }
 function shInfo(s,w){ const c=scCardFor(scDeckCached(s),w.en); return { ja:(c&&c.ja)||w.ja||"", ipa:(c&&c.ipa)||"", core:(c&&c.core)||"" }; }
 function shSavePos(){ if(!sh) return; const p=APP.settings.sheetPos||(APP.settings.sheetPos={});
-  p[sh.deck]={ scene:shScene_().id, row:sh.row, round:sh.round, cover:sh.cover }; saveAPP(); }
+  p[sh.deck]={ scene:shScene_().id, row:sh.row, round:sh.round, cover:sh.cover }; APP.settings.sheetLast=sh.deck; saveAPP(); }
 function openSheet(deck, from){ const list=SCN.list.filter(s=>s.deck===deck); if(!list.length) return; scStopStory(); stopSpeak();
   const pos=(APP.settings.sheetPos||{})[deck]||{}, i=Math.max(0,list.findIndex(s=>s.id===pos.scene));
   sh={ deck, list, i, row:Math.min(pos.row||0,list[i].words.length-1), round:Math.min(pos.round||0,SHEET_ROUNDS-1), cover:pos.cover!==false, shown:false, from:from||"index" };
-  $("shTitle").textContent="チェックシート ・ "+(list[0].deckLabel||deck);
-  list.forEach(x=>{ const im=new Image(); im.src=x.image; });
-  shSceneRender(); showView("sheet"); }
-function shClose(){ shSavePos(); stopSpeak(); const from=sh&&sh.from; sh=null; if(from==="home") goHome(); else openSceneIndex(); }
+  $("shTitle").textContent="チェックシート ・ "+(list[0].deckLabel||deck)+" ▾";
+  shSavePos(); shSceneRender(); showView("sheet"); }
+function shClose(){ shMenuOpen(false); shSavePos(); stopSpeak(); const from=sh&&sh.from; sh=null; if(from==="home") goHome(); else openSceneIndex(); }
+/* デッキ切替メニュー（↑↓とEnter、またはクリック） */
+function shMenuRender(){ $("shMenu").innerHTML=shDecks().map((d,i)=>{ const st=shDeckStat(d);
+    return `<button class="sh-mi${d===sh.deck?" cur":""}${i===sh.menu?" hi":""}" data-deck="${escapeHTML(d)}" tabindex="-1"><span>${escapeHTML(st.list[0].deckLabel||d)}</span><small>${st.round+1}周目 ${st.on}/${st.n}語</small><i style="width:${st.n?st.on/st.n*100:0}%"></i></button>`; }).join("");
+  const hi=$("shMenu").querySelector(".sh-mi.hi"); if(hi) hi.scrollIntoView({block:"nearest"}); }
+function shMenuOpen(on){ if(!sh) return; sh.menu=on?Math.max(0,shDecks().indexOf(sh.deck)):null; $("shMenu").style.display=on?"":"none"; if(on) shMenuRender(); }
+function shMenuMove(d){ const n=shDecks().length; sh.menu=(sh.menu+d+n)%n; shMenuRender(); }
+function shMenuPick(deck){ shMenuOpen(false); if(deck===sh.deck) return; shSavePos(); openSheet(deck, sh.from); }
 /* 場面が変わるときだけ絵と番号を作り直す（行の移動では画像を読み直さない） */
 function shSceneRender(){ const s=shScene_(), img=$("shImg"); img.alt=s.titleEn||s.title;
   if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sh&&shScene_()===s) img.src=s.image; }; full.src=s.image; } else img.src=s.image;
   $("shPins").innerHTML=s.words.map((w,i)=>`<button class="sc-pin" data-i="${i}" tabindex="-1" style="left:${w.x*100}%; top:${w.y*100}%;">${i+1}</button>`).join("")
     +`<div class="sc-bubble" id="shBubble" style="display:none;"></div>`;
+  [sh.i-1,sh.i+1].forEach(j=>{ const x=sh.list[j]; if(x){ const im=new Image(); im.src=x.image; } });
   shPaint(); }
 function shPaint(){ const s=shScene_(), w=s.words[sh.row], open=!sh.cover||sh.shown;
   const total=sh.list.reduce((a,x)=>a+x.words.length,0), cur=shCount(sh.list,sh.round);
   $("shSub").textContent=`${s.title} ・ ${sh.round+1}周目 ${cur.on}/${total}語チェック（残り${total-cur.on}語）`;
   $("shRounds").innerHTML=Array.from({length:SHEET_ROUNDS},(_,r)=>`<button class="sh-round${r===sh.round?" active":""}" data-r="${r}" tabindex="-1">${r+1}周目<b>${shCount(sh.list,r).on}</b></button>`).join("");
   $("shCover").textContent=sh.cover?"下敷き：あり":"下敷き：なし";
-  $("shTabs").innerHTML=sh.list.map((x,i)=>{ const c=shCount([x],sh.round);
-    return `<button class="sh-tab${i===sh.i?" active":""}" data-i="${i}" tabindex="-1">${i+1}. ${escapeHTML(x.title)}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
-  const rows=$("shRows"); rows.classList.toggle("cover",sh.cover);
+  const many=sh.list.length>5; $("shTabs").classList.toggle("many",many);
+  $("shTabs").innerHTML=sh.list.map((x,i)=>{ const c=shCount([x],sh.round), label=(many&&i!==sh.i)?`${i+1}`:`${i+1}. ${escapeHTML(x.title)}`;
+    return `<button class="sh-tab${i===sh.i?" active":""}" data-i="${i}" tabindex="-1" title="${escapeHTML(x.title)}">${label}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
+  const rows=$("shRows"); rows.classList.toggle("cover",sh.cover); rows.classList.toggle("dense",s.words.length>12);
   rows.innerHTML=s.words.map((x,r)=>{ const m=shMarks(s,x), inf=shInfo(s,x);
     return `<div class="sh-row${r===sh.row?" cur":""}${r===sh.row&&sh.shown?" show":""}" data-r="${r}"><div class="sh-boxes">`
       +Array.from({length:SHEET_ROUNDS},(_,k)=>`<span class="sh-box${m[k]?" on":""}${k===sh.round?" act":""}" data-k="${k}" role="checkbox" aria-checked="${!!m[k]}" title="${k+1}周目"></span>`).join("")
@@ -2189,6 +2210,9 @@ function bind(){
   $("shPic").addEventListener("click",e=>{ if(sh&&!e.target.closest(".sc-pin")&&sh.cover) shReveal(!sh.shown); });
   $("shRounds").addEventListener("click",e=>{ const b=e.target.closest(".sh-round"); if(b&&sh) shSetRound(+b.dataset.r); });
   $("shTabs").addEventListener("click",e=>{ const b=e.target.closest(".sh-tab"); if(b&&sh) shGoScene(+b.dataset.i); });
+  $("shTitle").onclick=()=>{ if(sh) shMenuOpen(sh.menu==null); };
+  $("shMenu").addEventListener("click",e=>{ const b=e.target.closest(".sh-mi"); if(b&&sh) shMenuPick(b.dataset.deck); });
+  document.addEventListener("click",e=>{ if(sh&&sh.menu!=null&&!e.target.closest("#shMenu,#shTitle")) shMenuOpen(false); });
   $("sciClose").onclick=goHome; $("scPrev").onclick=$("scPrevTop").onclick=()=>scGo(-1); $("scNext").onclick=$("scNextTop").onclick=()=>scGo(1);
   $("scIndex").onclick=()=>{ scStopStory(); stopSpeak(); sc=null; openSceneIndex(); };
   $("scPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(b) scSelect(+b.dataset.i, true); });
@@ -2289,6 +2313,12 @@ function bind(){
     if(document.body.dataset.view==="sheet"){ if(!sh||e.metaKey||e.ctrlKey||e.altKey) return;
       if(document.activeElement&&document.activeElement.tagName==="BUTTON") document.activeElement.blur();
       const k=e.key, code=e.code;  /* 日本語入力ONでも効くよう文字キーは code で見る */
+      if(sh.menu!=null){ e.preventDefault();
+        if(k==="ArrowDown"||k==="ArrowUp") shMenuMove(k==="ArrowDown"?1:-1);
+        else if(e.repeat) return;
+        else if(code==="Space"||k===" "||k==="Enter") shMenuPick(shDecks()[sh.menu]);
+        else if(k==="Escape"||code==="KeyD") shMenuOpen(false);
+        return; }
       if(k==="ArrowDown"||k==="ArrowUp"){ e.preventDefault(); shMove(k==="ArrowDown"?1:-1); return; }
       if(code==="Space"||k===" "||k==="Enter"){ e.preventDefault(); if(!e.repeat) shToggle(sh.row,sh.round,true); return; }
       if(e.repeat) return;
@@ -2299,6 +2329,7 @@ function bind(){
       if(code==="KeyS"){ e.preventDefault(); shToggleCover(); return; }
       if(code==="KeyP"){ e.preventDefault(); speakSeq([enItem(shScene_().words[sh.row].en)]); return; }
       if(code==="KeyU"){ e.preventDefault(); shNextOpen(); return; }
+      if(code==="KeyD"){ e.preventDefault(); shMenuOpen(true); return; }
       return; }
     if(document.body.dataset.view==="sceneIndex"){ if(e.key==="Escape"){ e.preventDefault(); goHome(); } return; }
     if(document.body.dataset.view==="scene"){ if(!sc||e.repeat) return; const n=sc.s.words.length;
