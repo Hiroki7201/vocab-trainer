@@ -403,6 +403,8 @@
   .sh-foot .btn{flex:none; font-size:11.5px; padding:5px 9px;}
   @media (max-width:900px){
     .sh-wrap{padding:8px 12px 30px;}
+    .sh-tabs.many{flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;}
+    .sh-tabs.many .sh-tab{flex:none; white-space:nowrap;}
     .sh-body{grid-template-columns:1fr;}
     .sh-right{order:-1; position:sticky; top:0; z-index:5; background:var(--bg,var(--surface)); padding-bottom:6px;}
     .sh-detail{padding:7px 11px; min-height:0; margin-top:6px;}
@@ -1781,11 +1783,11 @@ function scClose(){ scStopStory(); stopSpeak(); const from=sc&&sc.from; sc=null;
    チェックは自分の把握メモで、復習スケジュール（srs）や瞬間の成績には影響しない。
    保存：APP.sheet[場面ID][単語小文字] = [1周目,2周目,3周目]（0/1）
    ========================================================================= */
-const SHEET_SKIP=["Lv80_0822"], SHEET_ROUNDS=3;  /* Lv80 はまだ対象外。ここから外せば出る */
+const SHEET_ROUNDS=3;
 let sh=null;
 function shMarks(s,w){ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; return Array.isArray(m)?m:[]; }
 function shCount(list,round){ let on=0,n=0; list.forEach(s=>s.words.forEach(w=>{ n++; if(shMarks(s,w)[round]) on++; })); return {on,n}; }
-function shDecks(){ const out=[]; SCN.list.forEach(s=>{ if(s.deck&&!SHEET_SKIP.includes(s.deck)&&!out.includes(s.deck)) out.push(s.deck); }); return out; }
+function shDecks(){ const out=[]; SCN.list.forEach(s=>{ if(s.deck&&!out.includes(s.deck)) out.push(s.deck); }); return out; }
 function shDeckStat(deck){ const list=SCN.list.filter(x=>x.deck===deck), round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round); return { list, round, on:c.on, n:c.n }; }
 function shHomeCards(){ const decks=shDecks(); if(!decks.length) return "";
   const deck=decks.includes(APP.settings.sheetLast)?APP.settings.sheetLast:decks[0], st=shDeckStat(deck), cover=st.list[0];
@@ -1823,6 +1825,7 @@ function shPaint(){ const s=shScene_(), w=s.words[sh.row], open=!sh.cover||sh.sh
   const many=sh.list.length>5; $("shTabs").classList.toggle("many",many);
   $("shTabs").innerHTML=sh.list.map((x,i)=>{ const c=shCount([x],sh.round), label=(many&&i!==sh.i)?`${i+1}`:`${i+1}. ${escapeHTML(x.title)}`;
     return `<button class="sh-tab${i===sh.i?" active":""}" data-i="${i}" tabindex="-1" title="${escapeHTML(x.title)}">${label}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
+  const tabs=$("shTabs"), at=tabs.querySelector(".active"); if(at) tabs.scrollLeft=at.offsetLeft-tabs.offsetLeft-(tabs.clientWidth-at.offsetWidth)/2;
   const rows=$("shRows"); rows.classList.toggle("cover",sh.cover); rows.classList.toggle("dense",s.words.length>12);
   rows.innerHTML=s.words.map((x,r)=>{ const m=shMarks(s,x), inf=shInfo(s,x);
     return `<div class="sh-row${r===sh.row?" cur":""}${r===sh.row&&sh.shown?" show":""}" data-r="${r}"><div class="sh-boxes">`
