@@ -1789,10 +1789,12 @@ function shMarks(s,w){ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; return
 function shCount(list,round){ let on=0,n=0; list.forEach(s=>s.words.forEach(w=>{ n++; if(shMarks(s,w)[round]) on++; })); return {on,n}; }
 function shDecks(){ const out=[]; SCN.list.forEach(s=>{ if(s.deck&&!out.includes(s.deck)) out.push(s.deck); }); return out; }
 function shDeckStat(deck){ const list=SCN.list.filter(x=>x.deck===deck), round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round); return { list, round, on:c.on, n:c.n }; }
+/* ホームには Lv60・Lv80 と、前回使ったデッキのカードを出す（他の分野は D のメニューから） */
 function shHomeCards(){ const decks=shDecks(); if(!decks.length) return "";
-  const deck=decks.includes(APP.settings.sheetLast)?APP.settings.sheetLast:decks[0], st=shDeckStat(deck), cover=st.list[0];
-  return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
-    +`<div class="dc-chips"><span class="chip">${st.round+1}周目 ${st.on}/${st.n}語</span><span class="chip">全${decks.length}デッキを切替可</span></div></div></div>`; }
+  const last=decks.includes(APP.settings.sheetLast)?APP.settings.sheetLast:decks[0], show=decks.filter(d=>/^Lv/.test(d)||d===last);
+  return show.map((deck,i)=>{ const st=shDeckStat(deck), cover=st.list[0];
+    return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
+      +`<div class="dc-chips"><span class="chip">${st.round+1}周目 ${st.on}/${st.n}語</span>${i===show.length-1?`<span class="chip">全${decks.length}デッキを切替可</span>`:""}</div></div></div>`; }).join(""); }
 function shScene_(){ return sh.list[sh.i]; }
 function shInfo(s,w){ const c=scCardFor(scDeckCached(s),w.en); return { ja:(c&&c.ja)||w.ja||"", ipa:(c&&c.ipa)||"", core:(c&&c.core)||"" }; }
 function shSavePos(){ if(!sh) return; const p=APP.settings.sheetPos||(APP.settings.sheetPos={});
