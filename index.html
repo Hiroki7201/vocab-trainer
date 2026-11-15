@@ -354,6 +354,12 @@
   .sh-round b{display:block; font-size:14px; color:var(--ink);}
   .sh-round.active{border-color:var(--accent); background:var(--accent-soft); color:var(--accent);}
   .sh-round.active b{color:var(--accent);}
+  .sh-fields{display:flex; gap:5px; flex-wrap:wrap; margin-bottom:7px; padding-bottom:7px; border-bottom:1px solid var(--line);}
+  .sh-field{position:relative; overflow:hidden; border:1px solid var(--line); background:var(--surface2); border-radius:9px; padding:4px 10px; font-size:12px; cursor:pointer; color:var(--ink); font-family:var(--sans);}
+  .sh-field.active{border-color:var(--accent); background:var(--accent-soft); color:var(--accent); font-weight:600; box-shadow:0 0 0 1px var(--accent);}
+  .sh-field small{color:var(--muted); margin-left:5px; font-size:11px; font-weight:400;}
+  .sh-field.active small{color:var(--accent);}
+  .sh-field i{position:absolute; left:0; bottom:0; height:2.5px; background:var(--ok);}
   .sh-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
   .sh-tab{position:relative; overflow:hidden; border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:5px 12px; font-size:12.5px; cursor:pointer; color:var(--ink); font-family:var(--sans);}
   .sh-tab.active{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
@@ -403,6 +409,8 @@
   .sh-foot .btn{flex:none; font-size:11.5px; padding:5px 9px;}
   @media (max-width:900px){
     .sh-wrap{padding:8px 12px 30px;}
+    .sh-fields{flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;}
+    .sh-fields .sh-field{flex:none; white-space:nowrap;}
     .sh-tabs.many{flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;}
     .sh-tabs.many .sh-tab{flex:none; white-space:nowrap;}
     .sh-body{grid-template-columns:1fr;}
@@ -903,6 +911,7 @@
       <div class="sh-rounds" id="shRounds"></div>
       <button class="btn ghost sm" id="shCover" title="訳と絵の隠す・見せるを切り替え (S)"></button>
     </div>
+    <div class="sh-fields" id="shFields" style="display:none;"></div>
     <div class="sh-tabs" id="shTabs"></div>
     <div class="sh-body">
       <div class="sh-rows" id="shRows"></div>
@@ -1787,22 +1796,35 @@ const SHEET_ROUNDS=3;
 let sh=null;
 function shMarks(s,w){ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; return Array.isArray(m)?m:[]; }
 function shCount(list,round){ let on=0,n=0; list.forEach(s=>s.words.forEach(w=>{ n++; if(shMarks(s,w)[round]) on++; })); return {on,n}; }
+function shIsLv(deck){ return /^Lv/.test(deck||""); }
 function shDecks(){ const out=[]; SCN.list.forEach(s=>{ if(s.deck&&!out.includes(s.deck)) out.push(s.deck); }); return out; }
+function shFieldDecks(){ return shDecks().filter(d=>!shIsLv(d)); }
 function shDeckStat(deck){ const list=SCN.list.filter(x=>x.deck===deck), round=((APP.settings.sheetPos||{})[deck]||{}).round||0, c=shCount(list,round); return { list, round, on:c.on, n:c.n }; }
-/* ホームには Lv60・Lv80 と、前回使ったデッキのカードを出す（他の分野は D のメニューから） */
+/* ホームには Lv60・Lv80 と、その下に分野別（13分野まとめ）のチェックシートカードを出す */
 function shHomeCards(){ const decks=shDecks(); if(!decks.length) return "";
-  const last=decks.includes(APP.settings.sheetLast)?APP.settings.sheetLast:decks[0], show=decks.filter(d=>/^Lv/.test(d)||d===last);
-  return show.map((deck,i)=>{ const st=shDeckStat(deck), cover=st.list[0];
+  const lvHtml=decks.filter(shIsLv).map(deck=>{ const st=shDeckStat(deck), cover=st.list[0];
     return `<div class="scenecard" data-sheet="${escapeHTML(deck)}"><img src="${escapeHTML(cover.thumb||cover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：${escapeHTML(cover.deckLabel||deck)}</div>`
-      +`<div class="dc-chips"><span class="chip">${st.round+1}周目 ${st.on}/${st.n}語</span>${i===show.length-1?`<span class="chip">全${decks.length}デッキを切替可</span>`:""}</div></div></div>`; }).join(""); }
+      +`<div class="dc-chips"><span class="chip">${st.round+1}周目 ${st.on}/${st.n}語</span></div></div></div>`; }).join("");
+  const fDecks=shFieldDecks(); if(!fDecks.length) return lvHtml;
+  const fScenes=SCN.list.filter(s=>!shIsLv(s.deck));
+  const lastF=fDecks.includes(APP.settings.sheetFieldLast)?APP.settings.sheetFieldLast:fDecks[0];
+  const fRound=Number.isInteger(APP.settings.sheetFieldRound)?Math.min(APP.settings.sheetFieldRound,SHEET_ROUNDS-1):(((APP.settings.sheetPos||{})[lastF]||{}).round||0);
+  const fc=shCount(fScenes,fRound), fCover=SCN.list.find(s=>s.deck===lastF)||fScenes[0];
+  const fHtml=`<div class="scenecard" data-sheet="${escapeHTML(lastF)}"><img src="${escapeHTML(fCover.thumb||fCover.image)}" alt="" loading="lazy" /><div class="dc-main"><div class="dc-name">☑ チェックシート：分野別</div>`
+    +`<div class="dc-chips"><span class="chip">${fRound+1}周目 ${fc.on}/${fc.n}語</span><span class="chip">${fDecks.length}分野・${fScenes.length}場面</span><span class="chip">${APP.settings.sheetFieldLast?"前回：":"最初："}${escapeHTML(fCover.deckLabel||lastF)}</span></div></div></div>`;
+  return lvHtml+fHtml; }
 function shScene_(){ return sh.list[sh.i]; }
 function shInfo(s,w){ const c=scCardFor(scDeckCached(s),w.en); return { ja:(c&&c.ja)||w.ja||"", ipa:(c&&c.ipa)||"", core:(c&&c.core)||"" }; }
 function shSavePos(){ if(!sh) return; const p=APP.settings.sheetPos||(APP.settings.sheetPos={});
-  p[sh.deck]={ scene:shScene_().id, row:sh.row, round:sh.round, cover:sh.cover }; APP.settings.sheetLast=sh.deck; saveAPP(); }
-function openSheet(deck, from){ const list=SCN.list.filter(s=>s.deck===deck); if(!list.length) return; scStopStory(); stopSpeak();
-  const pos=(APP.settings.sheetPos||{})[deck]||{}, i=Math.max(0,list.findIndex(s=>s.id===pos.scene));
-  sh={ deck, list, i, row:Math.min(pos.row||0,list[i].words.length-1), round:Math.min(pos.round||0,SHEET_ROUNDS-1), cover:pos.cover!==false, shown:false, from:from||"index" };
-  $("shTitle").textContent="チェックシート ・ "+(list[0].deckLabel||deck)+" ▾";
+  p[sh.deck]={ scene:shScene_().id, row:sh.row, round:sh.round, cover:sh.cover }; APP.settings.sheetLast=sh.deck;
+  if(sh.isField){ APP.settings.sheetFieldLast=sh.deck; APP.settings.sheetFieldRound=sh.round; }
+  saveAPP(); }
+function openSheet(deck, from, opts){ const list=SCN.list.filter(s=>s.deck===deck); if(!list.length) return; scStopStory(); stopSpeak();
+  const isField=!shIsLv(deck), pos=(APP.settings.sheetPos||{})[deck]||{}, i=Math.max(0,list.findIndex(s=>s.id===pos.scene));
+  const round=(opts&&typeof opts.round==="number")?opts.round:(isField&&Number.isInteger(APP.settings.sheetFieldRound)?APP.settings.sheetFieldRound:(pos.round||0));
+  const cover=(opts&&typeof opts.cover==="boolean")?opts.cover:(pos.cover!==false);
+  sh={ deck, isField, list, i, row:Math.min(pos.row||0,list[i].words.length-1), round:Math.min(round,SHEET_ROUNDS-1), cover, shown:false, from:from||"index" };
+  $("shTitle").textContent="チェックシート ・ "+(isField?"分野別：":"")+(list[0].deckLabel||deck)+" ▾";
   shSavePos(); shSceneRender(); showView("sheet"); }
 function shClose(){ shMenuOpen(false); shSavePos(); stopSpeak(); const from=sh&&sh.from; sh=null; if(from==="home") goHome(); else openSceneIndex(); }
 /* デッキ切替メニュー（↑↓とEnter、またはクリック） */
@@ -1811,7 +1833,9 @@ function shMenuRender(){ $("shMenu").innerHTML=shDecks().map((d,i)=>{ const st=s
   const hi=$("shMenu").querySelector(".sh-mi.hi"); if(hi) hi.scrollIntoView({block:"nearest"}); }
 function shMenuOpen(on){ if(!sh) return; sh.menu=on?Math.max(0,shDecks().indexOf(sh.deck)):null; $("shMenu").style.display=on?"":"none"; if(on) shMenuRender(); }
 function shMenuMove(d){ const n=shDecks().length; sh.menu=(sh.menu+d+n)%n; shMenuRender(); }
-function shMenuPick(deck){ shMenuOpen(false); if(deck===sh.deck) return; shSavePos(); openSheet(deck, sh.from); }
+function shMenuPick(deck){ shMenuOpen(false); if(deck===sh.deck) return; shSavePos();
+  const sameGroup=sh.isField&&!shIsLv(deck);
+  openSheet(deck, sh.from, sameGroup?{round:sh.round,cover:sh.cover}:undefined); }
 /* 場面が変わるときだけ絵と番号を作り直す（行の移動では画像を読み直さない） */
 function shSceneRender(){ const s=shScene_(), img=$("shImg"); img.alt=s.titleEn||s.title;
   if(s.thumb){ img.src=s.thumb; const full=new Image(); full.onload=()=>{ if(sh&&shScene_()===s) img.src=s.image; }; full.src=s.image; } else img.src=s.image;
@@ -1821,9 +1845,17 @@ function shSceneRender(){ const s=shScene_(), img=$("shImg"); img.alt=s.titleEn|
   shPaint(); }
 function shPaint(){ const s=shScene_(), w=s.words[sh.row], open=!sh.cover||sh.shown;
   const total=sh.list.reduce((a,x)=>a+x.words.length,0), cur=shCount(sh.list,sh.round);
-  $("shSub").textContent=`${s.title} ・ ${sh.round+1}周目 ${cur.on}/${total}語チェック（残り${total-cur.on}語）`;
+  let sub=`${s.title} ・ ${sh.round+1}周目 ${cur.on}/${total}語チェック（残り${total-cur.on}語）`;
+  if(sh.isField){ const allF=shCount(SCN.list.filter(x=>!shIsLv(x.deck)),sh.round); sub+=` ／ 分野別計 ${allF.on}/${allF.n}語`; }
+  $("shSub").textContent=sub;
   $("shRounds").innerHTML=Array.from({length:SHEET_ROUNDS},(_,r)=>`<button class="sh-round${r===sh.round?" active":""}" data-r="${r}" tabindex="-1">${r+1}周目<b>${shCount(sh.list,r).on}</b></button>`).join("");
   $("shCover").textContent=sh.cover?"下敷き：あり":"下敷き：なし";
+  const fbox=$("shFields");
+  if(sh.isField){ const fDecks=shFieldDecks(); fbox.style.display="";
+    fbox.innerHTML=fDecks.map(d=>{ const list=SCN.list.filter(x=>x.deck===d), c=shCount(list,sh.round), label=(list[0]&&list[0].deckLabel)||d;
+      return `<button class="sh-field${d===sh.deck?" active":""}" data-deck="${escapeHTML(d)}" tabindex="-1">${escapeHTML(label)}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
+    const af=fbox.querySelector(".active"); if(af) fbox.scrollLeft=af.offsetLeft-fbox.offsetLeft-(fbox.clientWidth-af.offsetWidth)/2;
+  } else { fbox.style.display="none"; fbox.innerHTML=""; }
   const many=sh.list.length>5; $("shTabs").classList.toggle("many",many);
   $("shTabs").innerHTML=sh.list.map((x,i)=>{ const c=shCount([x],sh.round), label=(many&&i!==sh.i)?`${i+1}`:`${i+1}. ${escapeHTML(x.title)}`;
     return `<button class="sh-tab${i===sh.i?" active":""}" data-i="${i}" tabindex="-1" title="${escapeHTML(x.title)}">${label}<small>${c.on}/${c.n}</small><i style="width:${c.n?c.on/c.n*100:0}%"></i></button>`; }).join("");
@@ -1868,7 +1900,8 @@ function shNextOpen(){ const flat=[]; sh.list.forEach((s,i)=>s.words.forEach((w,
   for(let k=1;k<=flat.length;k++){ const x=flat[(at+k)%flat.length]; if(!x.on){ const same=x.i===sh.i; sh.i=x.i; sh.row=x.r; sh.shown=false; if(same) shPaint(); else { shSavePos(); shSceneRender(); } return; } }
   toast(`${sh.round+1}周目は全部チェック済みです`); }
 function shReset(){ const c=shCount(sh.list,sh.round); if(!c.on) return;
-  if(!confirm(`${sh.round+1}周目のチェック ${c.on}語分を全部外します。よろしいですか？`)) return;
+  const label=(sh.list[0]&&sh.list[0].deckLabel)||sh.deck;
+  if(!confirm(`「${label}」の${sh.round+1}周目のチェック ${c.on}語分を全部外します。よろしいですか？`)) return;
   sh.list.forEach(s=>s.words.forEach(w=>{ const m=(APP.sheet[s.id]||{})[w.en.toLowerCase()]; if(Array.isArray(m)) m[sh.round]=0; })); sh.shown=false; shSavePos(); shPaint(); }
 
 /* 瞬間モードの裏面に、その語の場面の該当部分を拡大して出す */
@@ -2214,6 +2247,7 @@ function bind(){
   $("shPins").addEventListener("click",e=>{ const b=e.target.closest(".sc-pin"); if(!b||!sh) return; sh.row=+b.dataset.i; sh.shown=false; shPaint(); shReveal(true); });
   $("shPic").addEventListener("click",e=>{ if(sh&&!e.target.closest(".sc-pin")&&sh.cover) shReveal(!sh.shown); });
   $("shRounds").addEventListener("click",e=>{ const b=e.target.closest(".sh-round"); if(b&&sh) shSetRound(+b.dataset.r); });
+  $("shFields").addEventListener("click",e=>{ const b=e.target.closest(".sh-field"); if(b&&sh&&b.dataset.deck!==sh.deck){ shSavePos(); openSheet(b.dataset.deck,sh.from,{round:sh.round,cover:sh.cover}); } });
   $("shTabs").addEventListener("click",e=>{ const b=e.target.closest(".sh-tab"); if(b&&sh) shGoScene(+b.dataset.i); });
   $("shTitle").onclick=()=>{ if(sh) shMenuOpen(sh.menu==null); };
   $("shMenu").addEventListener("click",e=>{ const b=e.target.closest(".sh-mi"); if(b&&sh) shMenuPick(b.dataset.deck); });
